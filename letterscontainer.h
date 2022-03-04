@@ -9,23 +9,24 @@ class LettersContainer : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LettersContainer(QWidget *parent = nullptr);
+    explicit LettersContainer(int, int, QWidget *parent = nullptr);
     virtual ~LettersContainer();
 private:
-    int xPos;   // x pos in main windows#
-    int yPos;   // y pos in main window
-    int w;      // number of letters wide
-    int h;      // number of letters high
+    int width;      // number of letters wide
+    int height;      // number of letters high
 
+    QGridLayout *layout;
     std::vector<std::vector<LetterWidget*>> letters; // 2d vector of letter widgets
-//    std::vector<LetterWidget*> letters;
 public:
-    int getXPos() {return xPos;};
-    int getYPos() {return yPos;};
+    int getW() {return width;};
+    int getH() {return height;};
 
-    int getW() {return w;};
-    int getH() {return h;};
+    void setLetterColour(std::string,int,int);
+    void setLetterText(char,int,int);
+    void setLetterHighlight(int,int);
+    void setLetterUnhighlight(int,int);
 
+    void updateLetterStyles();
 
 signals:
 

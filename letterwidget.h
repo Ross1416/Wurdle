@@ -3,6 +3,7 @@
 
 #include<QLabel>
 #include <QWidget>
+#include<QHBoxLayout>
 #include<string>
 
 class LetterWidget : public QWidget
@@ -10,28 +11,24 @@ class LetterWidget : public QWidget
     Q_OBJECT
 
 private:
+    QHBoxLayout *layout;
     QLabel *letter;
-    int x;
-    int y;
     std::string colour;
-
+    bool highlight;
+//    std::string borderColour;
 
 public:
     explicit LetterWidget(QWidget *parent = nullptr);
-    void setLetter(char l) {letter->setText(QString(l));};
+    virtual ~LetterWidget();
+
+    void setLetter(char);
     std::string getLetter() {return letter->text().toStdString();};
 
     void setColour(std::string);
-//    int getX() {return x;};
-//    int getY() {return y;};
+    void setHighlight();
+    void setUnhighlight();
 
-
-//    void setX(int a) {x = a;};
-//    void setY(int b) {y = b;};
-
-//public slots:
-
-//signals:
+    void updateStyle();
 
 };
 
