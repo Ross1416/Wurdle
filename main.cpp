@@ -8,8 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    // update
-
+    // I'm messing with your files, I'm a file goblin.
     return a.exec();
 
 }
