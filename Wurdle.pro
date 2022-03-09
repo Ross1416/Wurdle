@@ -10,13 +10,11 @@ CONFIG += c++11
 
 SOURCES += \
     letterscontainer.cpp \
-    letterscontainer.cpp \
     letterwidget.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    letterscontainer.h \
     letterscontainer.h \
     letterwidget.h \
     mainwindow.h

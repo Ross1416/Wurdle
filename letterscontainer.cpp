@@ -17,12 +17,19 @@ LettersContainer::LettersContainer(int w, int h, QWidget *parent)
         std::vector<LetterWidget*> row;
         for (int i=0; i<width;i++)
         {
-            QWidget *widget = new QWidget;
-            LetterWidget *newLetter = new LetterWidget(widget);
+//            QWidget *widget = new QWidget;
+            LetterWidget *newLetter = new LetterWidget(this); // DO QT WIDGET POINTERS DELETE AUTOMATICALLY?
             row.push_back(newLetter);
             layout->addWidget(newLetter,j,i);
         }
         letters.push_back(row);
+
+        // do i need to delete row??
+//        for (int j=0; j<height;j++)
+//        {
+//            delete row[j];
+//        }
+
     }
 }
 

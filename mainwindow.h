@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include"letterwidget.h"
+#include "letterscontainer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +17,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+//    LetterContainer *letterContainer;
+
+    void SetupValidWordsScrollArea();
+    void SetupUsefulWordsScrollArea();
+    void SetupLetterContainer(int, int);
 
 private:
     Ui::MainWindow *ui;
