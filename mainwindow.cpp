@@ -94,7 +94,7 @@ void MainWindow::SetupValidWordsScrollArea()
 
 void MainWindow::SetupUsefulWordsScrollArea()
 {
-// testing change
+// testing change 2
 }
 
 void MainWindow::SetupLetterContainer(int w, int h)
