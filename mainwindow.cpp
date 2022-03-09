@@ -101,6 +101,7 @@ void MainWindow::SetupLetterContainer(int w, int h)
 {
 //    QWidget *widget = new QWidget();
 //    widget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    //g
     auto letterContainer = new LettersContainer(w, h, ui->containerWidget);
 
     QHBoxLayout *boxlayout = new QHBoxLayout(ui->containerWidget);
