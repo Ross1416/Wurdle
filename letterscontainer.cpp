@@ -61,14 +61,29 @@ void LettersContainer::setCurrentLetterText(char c)
     letters[this->getSelectedRow()][this->getSelectedColumn()]->setLetter(c);
 }
 
+char LettersContainer::getCurrentLetterText()
+{
+    return letters[this->getSelectedRow()][this->getSelectedColumn()]->getLetter().c_str()[0];
+}
+
+void LettersContainer::highlightCurrentLetter()
+{
+    letters[this->getSelectedRow()][this->getSelectedColumn()]->highlight();
+}
+
+void LettersContainer::unhighlightCurrentLetter()
+{
+    letters[this->getSelectedRow()][this->getSelectedColumn()]->unhighlight();
+}
+
 void LettersContainer::setLetterHighlight(int x, int y)
 {
-    letters[y][x]->setHighlight();
+    letters[y][x]->highlight();
 }
 
 void LettersContainer::setLetterUnhighlight(int x, int y)
 {
-    letters[y][x]->setUnhighlight();
+    letters[y][x]->unhighlight();
 }
 
 void LettersContainer::setSelectedRow(int row)
@@ -81,7 +96,7 @@ void LettersContainer::incrementSelectedRow()
     this->selectedRow = this->selectedRow + 1;
 }
 
-void LettersContainer::incrementSelectedLetter()
+void LettersContainer::incrementSelectedColumn()
 {
     if (this->selectedColumn < this->width-1)
     {
@@ -90,7 +105,7 @@ void LettersContainer::incrementSelectedLetter()
     }
 }
 
-void LettersContainer::decrementSelectedLetter()
+void LettersContainer::decrementSelectedColumn()
 {
     if (this->selectedColumn > 0)
     {
@@ -98,14 +113,10 @@ void LettersContainer::decrementSelectedLetter()
     }
 }
 
+
 void LettersContainer::setSelectedColumn(int col)
 {
     this->selectedColumn = col;
-}
-
-void LettersContainer::incrementSelectedColumn()
-{
-    this->selectedColumn = this->selectedColumn + 1;
 }
 
 void LettersContainer::updateLetterStyles()

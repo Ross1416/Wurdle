@@ -26,6 +26,9 @@ public:
     void setLetterColour(std::string,int,int);
     void setLetterText(char,int,int);
     void setCurrentLetterText(char);
+    char getCurrentLetterText();
+    void highlightCurrentLetter();
+    void unhighlightCurrentLetter();
     void setLetterHighlight(int,int);
     void setLetterUnhighlight(int,int);
 
@@ -33,16 +36,17 @@ public:
     void incrementSelectedRow();
     int getSelectedRow() {return selectedRow;};
 
-    void incrementSelectedLetter();
-    void decrementSelectedLetter();
-
     void setSelectedColumn(int);
+
     void incrementSelectedColumn();
+    void decrementSelectedColumn();
+
     int getSelectedColumn() {return selectedColumn;};
 
 
 
     void updateLetterStyles();
+
 
 signals:
 

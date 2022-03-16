@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     ui->wurdleTitleLabel->setContentsMargins(0,0,0,0);
 
     SetupLetterContainer(5,6);
+    letterContainer->highlightCurrentLetter();
+    letterContainer->updateLetterStyles();
     SetupValidWordsScrollArea();
 }
 
@@ -76,22 +78,34 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     // Remove letter and decrement selected letter
     if (event->key() == Qt::Key_Backspace)
     {
-        letterContainer->setCurrentLetterText(' ');
-        letterContainer->decrementSelectedLetter();
+        if (letterContainer->getCurrentLetterText() == ' ')
+        {
+            letterContainer->unhighlightCurrentLetter();
+            letterContainer->decrementSelectedColumn();
+            letterContainer->highlightCurrentLetter();
+            letterContainer->setCurrentLetterText(' ');
+        }
+        else
+        {
+            letterContainer->setCurrentLetterText(' ');
+        }
+
     }
     else
     {
         // Check if key pressed is a letter
-        if (event->key() > 0x41 && event->key() < 0x5a)
+        if (event->key() >= 0x41 && event->key() <= 0x5a)
         {
             std::string keyStr = event->text().toStdString();
-            char key = keyStr.c_str()[0];
+            char key = toupper(keyStr.c_str()[0]);
 
             letterContainer->setCurrentLetterText(key);
-            letterContainer->incrementSelectedLetter();
+            letterContainer->unhighlightCurrentLetter();
+            letterContainer->incrementSelectedColumn();
+            letterContainer->highlightCurrentLetter();
         }
     }
-
+    letterContainer->updateLetterStyles();
 
 }
 
