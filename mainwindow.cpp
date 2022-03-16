@@ -72,10 +72,26 @@ void MainWindow::SetupLetterContainer(int w, int h)
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    std::string keyStr = event->text().toStdString();
-    char key = keyStr.c_str()[0];
 
-    letterContainer->setCurrentLetterText(key);
+    // Remove letter and decrement selected letter
+    if (event->key() == Qt::Key_Backspace)
+    {
+        letterContainer->setCurrentLetterText(' ');
+        letterContainer->decrementSelectedLetter();
+    }
+    else
+    {
+        // Check if key pressed is a letter
+        if (event->key() > 0x41 && event->key() < 0x5a)
+        {
+            std::string keyStr = event->text().toStdString();
+            char key = keyStr.c_str()[0];
+
+            letterContainer->setCurrentLetterText(key);
+            letterContainer->incrementSelectedLetter();
+        }
+    }
+
 
 }
 

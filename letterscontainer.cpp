@@ -58,7 +58,7 @@ void LettersContainer::setLetterText(char c, int x, int y)
 
 void LettersContainer::setCurrentLetterText(char c)
 {
-    letters[this->getSelectedColumn()][this->getSelectedRow()]->setLetter(c);
+    letters[this->getSelectedRow()][this->getSelectedColumn()]->setLetter(c);
 }
 
 void LettersContainer::setLetterHighlight(int x, int y)
@@ -79,6 +79,23 @@ void LettersContainer::setSelectedRow(int row)
 void LettersContainer::incrementSelectedRow()
 {
     this->selectedRow = this->selectedRow + 1;
+}
+
+void LettersContainer::incrementSelectedLetter()
+{
+    if (this->selectedColumn < this->width-1)
+    {
+        this->selectedColumn = this->selectedColumn + 1;
+
+    }
+}
+
+void LettersContainer::decrementSelectedLetter()
+{
+    if (this->selectedColumn > 0)
+    {
+        this->selectedColumn = this->selectedColumn - 1;
+    }
 }
 
 void LettersContainer::setSelectedColumn(int col)

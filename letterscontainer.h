@@ -33,6 +33,9 @@ public:
     void incrementSelectedRow();
     int getSelectedRow() {return selectedRow;};
 
+    void incrementSelectedLetter();
+    void decrementSelectedLetter();
+
     void setSelectedColumn(int);
     void incrementSelectedColumn();
     int getSelectedColumn() {return selectedColumn;};
