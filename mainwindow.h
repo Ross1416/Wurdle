@@ -18,12 +18,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-//    LetterContainer *letterContainer;
+    LettersContainer *letterContainer;
 
     void SetupValidWordsScrollArea();
     void SetupUsefulWordsScrollArea();
     void SetupLetterContainer(int, int);
 
+
+    void keyPressEvent(QKeyEvent *event);
 private:
     Ui::MainWindow *ui;
 };

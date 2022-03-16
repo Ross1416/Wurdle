@@ -4,6 +4,8 @@
 //#include "letterwidget.h"
 #include "letterscontainer.h"
 #include<QGridLayout>
+#include<QKeyEvent>
+#include<iostream>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
@@ -13,51 +15,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
 
     SetupLetterContainer(5,6);
     SetupValidWordsScrollArea();
-//    auto *letter = new LetterWidget();
-
-
-//    QGridLayout *layout = new QGridLayout;
-//    layout->setAlignment(Qt::AlignCenter);
-//    layout->SetMinAndMaxSize(0);
-//    layout->addWidget(letter);
-//    layout->setHorizontalSpacing(0);
-//    layout->setVerticalSpacing(0);
-//    layout->addWidget(letterContainer);
-
-
-////    ui->centralwidget->setLayout(layout);
-////    letter->setLetter('B');
-
-//    letterContainer->setLetterColour("green", 4,5);
-//    letterContainer->setLetterText('H',3,2);
-
-//    letterContainer->setLetterColour("red", 2,1);
-//    letterContainer->setLetterText('L',2,1);
-
-//    letterContainer->setLetterColour("grey",0,0);
-//    letterContainer->setLetterText('A',0,0);
-
-//    letterContainer->setLetterHighlight(0,0);
-
-//    letterContainer->updateLetterStyles();
-
-
-//    auto *text2 = new QLabel();
-//    text2->setText("Wurdle");
-
-//    auto *text3 = new QLabel();
-//    text3->setText("Wurdle");
-
-//    text->setContentsMargins(5,0,5,0);
-//    text2->setContentsMargins(5,0,5,0);
-//    text3->setContentsMargins(5,0,5,0);
-
-//    scrollLayout->addWidget(text,0,0);
-//    scrollLayout->addWidget(text2,1,0);
-//    scrollLayout->addWidget(text3,0,1);
-//    ui->validWordsScrollArea->setLayout(scrollLayout);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -102,7 +59,7 @@ void MainWindow::SetupLetterContainer(int w, int h)
 //    QWidget *widget = new QWidget();
 //    widget->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     //g
-    auto letterContainer = new LettersContainer(w, h, ui->containerWidget);
+    letterContainer = new LettersContainer(w, h, ui->containerWidget);
 
     QHBoxLayout *boxlayout = new QHBoxLayout(ui->containerWidget);
 
@@ -112,4 +69,13 @@ void MainWindow::SetupLetterContainer(int w, int h)
     boxlayout->addWidget(letterContainer);
 }
 
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    std::string keyStr = event->text().toStdString();
+    char key = keyStr.c_str()[0];
+
+    letterContainer->setCurrentLetterText(key);
+
+}
 

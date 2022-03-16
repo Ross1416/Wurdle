@@ -11,6 +11,7 @@ LettersContainer::LettersContainer(int w, int h, QWidget *parent)
 
     this->width = w;
     this->height = h;
+    this->selectedRow = 0;
 
     for (int j=0; j<height;j++)
     {
@@ -55,6 +56,11 @@ void LettersContainer::setLetterText(char c, int x, int y)
     letters[y][x]->setLetter(c);
 }
 
+void LettersContainer::setCurrentLetterText(char c)
+{
+    letters[this->getSelectedColumn()][this->getSelectedRow()]->setLetter(c);
+}
+
 void LettersContainer::setLetterHighlight(int x, int y)
 {
     letters[y][x]->setHighlight();
@@ -63,6 +69,26 @@ void LettersContainer::setLetterHighlight(int x, int y)
 void LettersContainer::setLetterUnhighlight(int x, int y)
 {
     letters[y][x]->setUnhighlight();
+}
+
+void LettersContainer::setSelectedRow(int row)
+{
+    this->selectedRow = row;
+}
+
+void LettersContainer::incrementSelectedRow()
+{
+    this->selectedRow = this->selectedRow + 1;
+}
+
+void LettersContainer::setSelectedColumn(int col)
+{
+    this->selectedColumn = col;
+}
+
+void LettersContainer::incrementSelectedColumn()
+{
+    this->selectedColumn = this->selectedColumn + 1;
 }
 
 void LettersContainer::updateLetterStyles()
