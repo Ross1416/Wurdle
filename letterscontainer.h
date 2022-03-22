@@ -43,7 +43,7 @@ public:
 
     int getSelectedColumn() {return selectedColumn;};
 
-
+    std::string getCurrentWord();
 
     void updateLetterStyles();
 

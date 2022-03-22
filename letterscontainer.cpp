@@ -114,6 +114,23 @@ void LettersContainer::decrementSelectedColumn()
     }
 }
 
+std::string LettersContainer::getCurrentWord()
+{
+    std::string currentWord = "";
+    for (int i = 0; i<width; i++)
+    {
+        std::string letter = letters[this->getSelectedRow()][i]->getLetter();
+        if (letter != " " && letter != "")
+            currentWord += letter;
+        else
+        {
+            currentWord = "";
+            break;
+        }
+    }
+    return currentWord;
+}
+
 
 void LettersContainer::setSelectedColumn(int col)
 {

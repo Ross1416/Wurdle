@@ -24,6 +24,7 @@ public:
     void SetupUsefulWordsScrollArea();
     void SetupLetterContainer(int, int);
 
+    void CheckWord();
 
     void keyPressEvent(QKeyEvent *event);
 private:

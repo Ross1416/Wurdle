@@ -7,6 +7,8 @@
 #include<QKeyEvent>
 #include<iostream>
 
+#include "guessWord.h"
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -71,6 +73,14 @@ void MainWindow::SetupLetterContainer(int w, int h)
     boxlayout->addWidget(letterContainer);
 }
 
+void MainWindow::CheckWord()
+{
+    if (letterContainer->getCurrentWord() != "")
+    {
+        std::cout<<letterContainer->getCurrentWord()<<std::endl;
+    }
+}
+
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
@@ -91,6 +101,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
 
     }
+    else if (event->key() == Qt::Key_Return)
+    {
+        this->CheckWord();
+    }
     else
     {
         // Check if key pressed is a letter
@@ -104,8 +118,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             letterContainer->incrementSelectedColumn();
             letterContainer->highlightCurrentLetter();
         }
+
     }
     letterContainer->updateLetterStyles();
 
 }
+
+
 
