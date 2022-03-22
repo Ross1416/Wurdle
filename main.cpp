@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     w.show();
 
     // I'm messing with your files, I'm a file goblin.
+    //nice
     return a.exec();
 
 }
