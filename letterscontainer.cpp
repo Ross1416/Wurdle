@@ -12,6 +12,7 @@ LettersContainer::LettersContainer(int w, int h, QWidget *parent)
     this->width = w;
     this->height = h;
     this->selectedRow = 0;
+    this->selectedColumn = 0;
 
     for (int j=0; j<height;j++)
     {
