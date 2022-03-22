@@ -14,7 +14,7 @@ private:
     QHBoxLayout *layout;
     QLabel *letter;
     std::string colour;
-    bool highlight;
+    bool highlightState;
 //    std::string borderColour;
 
 public:
@@ -25,8 +25,8 @@ public:
     std::string getLetter() {return letter->text().toStdString();};
 
     void setColour(std::string);
-    void setHighlight();
-    void setUnhighlight();
+    void highlight();
+    void unhighlight();
 
     void updateStyle();
 

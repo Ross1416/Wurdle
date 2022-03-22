@@ -30,7 +30,7 @@ LetterWidget::LetterWidget(QWidget *parent) : QWidget{parent}
     // Add label to layout
 
     // set unhighlighted
-    highlight = false;
+    highlightState = false;
     layout->addWidget(letter);
 
 }
@@ -56,20 +56,20 @@ void LetterWidget::setColour(std::string colour)
 //    letter->setStyleSheet(QString::fromStdString(style));
 }
 
-void LetterWidget::setHighlight()
+void LetterWidget::highlight()
 {
-    highlight = true;
+    highlightState = true;
 }
 
-void LetterWidget::setUnhighlight()
+void LetterWidget::unhighlight()
 {
-    highlight = false;
+    highlightState = false;
 }
 
 void LetterWidget::updateStyle()
 {
     std::string borderColour;
-    if (highlight)
+    if (highlightState)
     {
         borderColour = "black";
     }
