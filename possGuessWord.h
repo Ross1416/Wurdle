@@ -28,7 +28,7 @@ public:
 	std::string displayColourVector(int i);
 	void setEntropy(float e);
 	void addEntropy(float a);
-	float calcEntropy(int possGuesses, int possAnswers, int validAnswers);
+    float calcEntropy(int possAnswers, int validAnswers);
 	void setGuessed(bool g);
 	void setNumCharacters(int n);
 };

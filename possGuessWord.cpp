@@ -47,11 +47,10 @@ void possGuessWord::setEntropy(float e) { entropy = e; }
 
 void possGuessWord::addEntropy(float a) { entropy += a; }
 
-float possGuessWord::calcEntropy(int possGuesses, int possAnswers, int validAnswers) {
-	if (validAnswers == 0) {
+float possGuessWord::calcEntropy(int possAnswers, int validAnswers) {
+    if (validAnswers == 0) {
 		return 0;
 	}
-    //float pGuesses = float(possGuesses);
 	float pAnswers = float(possAnswers);
 	float vAnswers = float(validAnswers);
 	return (1/pAnswers)*log2(pAnswers/vAnswers);
