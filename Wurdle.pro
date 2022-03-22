@@ -9,15 +9,25 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    answerWord.cpp \
+    guessWord.cpp \
     letterscontainer.cpp \
     letterwidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    possAnswerWord.cpp \
+    possGuessWord.cpp \
+    word.cpp
 
 HEADERS += \
+    answerWord.h \
+    guessWord.h \
     letterscontainer.h \
     letterwidget.h \
-    mainwindow.h
+    mainwindow.h \
+    possAnswerWord.h \
+    possGuessWord.h \
+    word.h
 
 FORMS += \
     mainwindow.ui
