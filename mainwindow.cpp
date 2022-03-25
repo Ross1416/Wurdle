@@ -9,6 +9,7 @@
 
 #include "guessWord.h"
 
+// MAINWINDOW CONSTRUCTOR
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -21,12 +22,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     SetupValidWordsScrollArea();
 }
 
+// MAINWINDOW DESTRUCTOR
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-
+// INITIAL SETUP OF VALID WORDS SCROLL AREA
 void MainWindow::SetupValidWordsScrollArea()
 {
     auto *innerWidget = new QWidget(ui->validWordsScrollArea);
@@ -53,11 +55,14 @@ void MainWindow::SetupValidWordsScrollArea()
 
 }
 
+// INITIAL SETUP OF USEFUL WORDS SCROLL AREA
 void MainWindow::SetupUsefulWordsScrollArea()
 {
 // testing change 4
 }
 
+
+// INITIAL SETUP OF LETTERCONTAINER
 void MainWindow::SetupLetterContainer(int w, int h)
 {
 //    QWidget *widget = new QWidget();
@@ -77,11 +82,11 @@ void MainWindow::CheckWord()
 {
     if (letterContainer->getCurrentWord() != "")
     {
-        std::cout<<letterContainer->getCurrentWord()<<std::endl;
+        // DO SOMETHING HERE
     }
 }
 
-
+// KEYPRESS HANDLER
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 
@@ -101,6 +106,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
 
     }
+    // If return/enter key is pressed
     else if (event->key() == Qt::Key_Return)
     {
         this->CheckWord();

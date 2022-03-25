@@ -6,6 +6,9 @@
 #include<QHBoxLayout>
 #include<string>
 
+// LETTER WIDGET
+// Individual widget with a rounded square containing single character
+
 class LetterWidget : public QWidget
 {
     Q_OBJECT

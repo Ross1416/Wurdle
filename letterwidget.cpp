@@ -5,7 +5,7 @@
 #include "letterwidget.h"
 #include<iostream>
 
-
+// LETTER WIDGET CONSTRUCTOR
 LetterWidget::LetterWidget(QWidget *parent) : QWidget{parent}
 {
     // Create layout
@@ -35,18 +35,19 @@ LetterWidget::LetterWidget(QWidget *parent) : QWidget{parent}
 
 }
 
+// LETTER WIDGET DESTRUCTOR
 LetterWidget::~LetterWidget()
 {
 
 }
 
-// SET THE LETTERWIDGET LABEL TEXT
+// SET THE LETTER WIDGET LABEL TEXT
 void LetterWidget::setLetter(char l)
 {
     letter->setText(QString(l));
 }
 
-// SET THE LETTERWIDGET BACKGROUND COLOUR
+// SET THE LETTER WIDGET BACKGROUND COLOUR
 void LetterWidget::setColour(std::string colour)
 {
 //    QVariant qColour = QString::fromStdString(colour);
@@ -56,16 +57,19 @@ void LetterWidget::setColour(std::string colour)
 //    letter->setStyleSheet(QString::fromStdString(style));
 }
 
+// SET THE HIGHLIGHT STATE TRUE (to apply this the letter widget's  style sheet must be updated)
 void LetterWidget::highlight()
 {
     highlightState = true;
 }
 
+// SET THE HIGHLIGHT STATE FALSE (to apply this the letter widget's  style sheet must be updated)
 void LetterWidget::unhighlight()
 {
     highlightState = false;
 }
 
+// UPDATE THE LETTER WIDGET STYLESHEET
 void LetterWidget::updateStyle()
 {
     std::string borderColour;

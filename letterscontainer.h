@@ -5,6 +5,10 @@
 #include <vector>
 #include "letterwidget.h"
 
+// LETTER CONTAINER
+// Widget that contains and handles all the individual letter widgets contained with in this.
+// Only a single instance of this should be in the program.
+
 class LettersContainer : public QWidget
 {
     Q_OBJECT
