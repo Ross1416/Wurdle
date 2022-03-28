@@ -12,7 +12,7 @@ possGuessWord::possGuessWord() {
 	createColourVector();
 }
 
-possGuessWord::possGuessWord(std::string c, float e, bool g, int n) {
+possGuessWord::possGuessWord(const std::string c, const float e, const bool g, const int n) {
 	content = c;
 	entropy = e;
 	guessed = g;
@@ -21,13 +21,16 @@ possGuessWord::possGuessWord(std::string c, float e, bool g, int n) {
 }
 
 //Getters and Setters
-float possGuessWord::getEntropy() { return entropy; }
+float possGuessWord::getEntropy() const { return entropy; }
 
-bool possGuessWord::getGuessed() { return guessed; }
+bool possGuessWord::getGuessed() const { return guessed; }
 
-int possGuessWord::getColourVector(int i) { return colourVector[i]; }
+int possGuessWord::getColourVector(const int i) const { return colourVector[i]; }
 
-int possGuessWord::getNumCharacters() { return numCharacters; }
+std::vector<uint8_t> possGuessWord::getColourVector() const { return colourVector; }
+
+
+int possGuessWord::getNumCharacters() const { return numCharacters; }
 
 void possGuessWord::createColourVector() { //Create vector of colours for each character
 	colourVector.clear();
@@ -36,24 +39,25 @@ void possGuessWord::createColourVector() { //Create vector of colours for each c
 	}
 }
 
-void possGuessWord::createColourVector(int n) {
+void possGuessWord::createColourVector(const int n) {
 	colourVector.clear();
 	for (int i = 0; i < n; i++) {
 		colourVector.push_back(0);
 	}
 }
 
-void possGuessWord::setEntropy(float e) { entropy = e; }
+void possGuessWord::setEntropy(const float e) { entropy = e; }
 
-void possGuessWord::addEntropy(float a) { entropy += a; }
+void possGuessWord::addEntropy(const float a) { entropy += a; }
 
-float possGuessWord::calcEntropy(int possAnswers, int validAnswers) {
-    if (validAnswers == 0) {
+float possGuessWord::calcEntropy(const int possAnswers, const int arg2, const int validAnswers) const {
+	if (validAnswers == 0) {
 		return 0;
 	}
 	float pAnswers = float(possAnswers);
 	float vAnswers = float(validAnswers);
-	return (1/pAnswers)*log2(pAnswers/vAnswers);
+	float a2 = float(arg2); 
+	return (1/pAnswers)*log2(a2/vAnswers);
 }
 
 void possGuessWord::setGuessed(bool g) { guessed = g; }
@@ -62,6 +66,7 @@ void possGuessWord::setColourVector(int i, int s) {
 	colourVector[i] = s;
 }
 
+//Iterator version
 void possGuessWord::determineColourVector(possAnswerWord* iter) {
 	createColourVector();
 	iter->createCheckedVector();
@@ -87,7 +92,37 @@ void possGuessWord::determineColourVector(possAnswerWord* iter) {
 	}
 }
 
-std::string possGuessWord::displayColourVector(int i) {
+
+//Vector Version
+void possGuessWord::determineColourVector(possAnswerWord vector) {
+	createColourVector();
+	vector.createCheckedVector();
+	for (int i = 0; i < numCharacters; i++) {//Loop through currentGuess and set greens
+
+		if (content[i] == vector.getContent()[i]) {
+			vector.setCheckedVector(i, true);
+			setColourVector(i, 3);
+		}
+	}
+	for (int i = 0; i < numCharacters; i++) {
+		if (getColourVector(i) == 3) {
+			continue;
+		}
+		for (int j = 0; j < numCharacters; j++) { //Loop through currentAnswer and set remaining yellows and greys
+			//If the current answer character hasn't been used AND the guess character isn't yellow AND the characters match, THEN set it to yellow
+			if ((content[i] == vector.getContent()[j]) && (!(vector.getCheckedVector(j))) && (colourVector[i] != 2)) {
+				vector.setCheckedVector(j, true);
+				setColourVector(i, 2);
+			}
+			//If the current answer character hasn't been used AND the guess character is blank, THEN set it to grey
+			else if (!(vector.getCheckedVector(j)) && (colourVector[i] == 0)) {
+				setColourVector(i, 1);
+			}
+		}
+	}
+}
+
+std::string possGuessWord::displayColourVector(const int i) const {
 	switch (colourVector[i]) {
 	case 0:
 		return "Blank";
@@ -102,4 +137,14 @@ std::string possGuessWord::displayColourVector(int i) {
 	}
 }
 
-void possGuessWord::setNumCharacters(int n) { numCharacters = n; }
+
+void possGuessWord::setNumCharacters(const int n) { numCharacters = n; }
+
+//Sorting by entropy
+bool possGuessWord::operator<(const possGuessWord& ref) const {
+	return (ref.entropy < entropy); //Overloads comparison operator, allowing the .sort() function to be used on a list
+}
+
+bool possGuessWord::compareEntropy(const possGuessWord x1, const possGuessWord x2) {
+	return (x1.entropy > x2.entropy);
+}

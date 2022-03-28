@@ -10,17 +10,25 @@ guessWord::~guessWord() {}
 		createColourVector();
 	}
 
-	guessWord::guessWord(std::string c, float e, int n) {
+	guessWord::guessWord(const std::string c, const float e, const int n) {
 		content = c;
 		entropy = e;
 		numCharacters = n;
 		createColourVector(numCharacters);
 	}
 
-	//Getters and Setters
-	float guessWord::getEntropy() { return entropy; }
+	guessWord::guessWord(const std::string c, const float e, const int n, const std::vector<uint8_t> cV) {
+		content = c;
+		entropy = e;
+		numCharacters = n;
+		createColourVector(numCharacters);
+		setColourVector(cV);
+	}
 
-	int guessWord::getColourVector(int i) { return colourVector[i]; }
+	//Getters and Setters
+	float guessWord::getEntropy() const { return entropy; }
+
+	int guessWord::getColourVector(const int i) const{ return colourVector[i]; }
 
 	void guessWord::createColourVector() { //Create vector of colours for each character
 		colourVector.clear();
@@ -29,14 +37,18 @@ guessWord::~guessWord() {}
 		}
 	}
 
-	void guessWord::createColourVector(int n) {
+	void guessWord::createColourVector(const int n) {
 		colourVector.clear();
 		for (int i = 0; i < n; i++) {
 			colourVector.push_back(0);
 		}
 	}
 
-	void guessWord::setColourVector(int i, int s) {
+	void guessWord::setColourVector(const std::vector<uint8_t> cV) {
+		colourVector = cV;
+	}
+
+	void guessWord::setColourVector(const int i, const uint8_t s) {
 		colourVector[i] = s;
 	}
 
@@ -65,7 +77,7 @@ guessWord::~guessWord() {}
 		}
 	}
 
-	std::string guessWord::displayColourVector(int i) {
+	std::string guessWord::displayColourVector(const int i) const{
 		switch (colourVector[i]) {
 		case 0:
 			return "Blank";
@@ -80,4 +92,4 @@ guessWord::~guessWord() {}
 		}
 	}
 
-	void guessWord::setEntropy(float e) { entropy = e; }
+	void guessWord::setEntropy(const float e) { entropy = e; }

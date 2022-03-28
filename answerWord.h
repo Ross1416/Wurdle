@@ -11,13 +11,13 @@ public:
 	//Constructors and destructor
 	~answerWord();
 	answerWord();
-	answerWord(std::string c, int n);
+	answerWord(const std::string c, const int n);
 	//Getters and Setters
-	std::vector<bool> getCheckedVector();
-	bool getCheckedVector(int i);
+	std::vector<bool> getCheckedVector() const;
+	bool getCheckedVector(const int i) const;
 	void createCheckedVector();
-	void createCheckedVector(int n);
-	void setCheckedVector(int i, bool b);
+	void createCheckedVector(const int n);
+	void setCheckedVector(const int i, const bool b);
 };
 
 #endif

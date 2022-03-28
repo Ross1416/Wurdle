@@ -16,17 +16,21 @@ public:
 	//Constructors and destructor
 	~possAnswerWord();
 	possAnswerWord();
-	possAnswerWord(std::string c, bool v, int n);
+	possAnswerWord(const std::string c, const bool v, const int n);
 	//Getters and setters
-	std::vector<bool> getCheckedVector();
-	bool getCheckedVector(int i);
-	bool getValid();
-	void setValid(bool v);
+	std::vector<bool> getCheckedVector() const;
+	bool getCheckedVector(const int i) const;
+	bool getValid() const;
+	void setValid(const bool v);
 	void createCheckedVector();
-	void createCheckedVector(int n);
-	void setCheckedVector(int i, bool b);
+	void createCheckedVector(const int n);
+	void setCheckedVector(const int i, const bool b);
+	//List version
 	void answerSetValid(guessWord* iter);
 	bool answerCheckValid(guessWord* iter);
+	//Vector version
+	void answerSetValid(guessWord vector);
+	bool answerCheckValid(guessWord vector);
 	bool answerCheckValid(class possGuessWord* iter);
 };
 

@@ -4,33 +4,42 @@
 #include "word.h"
 #include <list>
 #include <vector>
-#include "math.h"
+#include <fstream>
+#include <iostream>
+#include <stdint.h>
+#include "functions.h"
 
 class possGuessWord : public word {
 protected:
 	float entropy;
 	bool guessed;
-	std::vector<int> colourVector;
+	std::vector<uint8_t> colourVector;
 public:
 	//Constructors and destructor
 	~possGuessWord();
 	possGuessWord();
-	possGuessWord(std::string c, float e, bool g, int n);
+	possGuessWord(const std::string c, const float e, const bool g, const int n);
 	//Getters and Setters
-	float getEntropy();
-	bool getGuessed();
-	int getColourVector(int i);
-	int getNumCharacters();
+	float getEntropy() const;
+	bool getGuessed() const;
+	int getColourVector(const int i) const;
+	std::vector<uint8_t> getColourVector() const;
+
+	int getNumCharacters() const;
 	void createColourVector();
-	void createColourVector(int n);
-	void setColourVector(int i, int s);
+	void createColourVector(const int n);
+	void setColourVector(const int i, const int s);
 	void determineColourVector(class possAnswerWord* iter);
-	std::string displayColourVector(int i);
-	void setEntropy(float e);
-	void addEntropy(float a);
-    float calcEntropy(int possAnswers, int validAnswers);
-	void setGuessed(bool g);
-	void setNumCharacters(int n);
+	void determineColourVector(class possAnswerWord vector);
+	std::string displayColourVector(const int i) const;
+	void setEntropy(const float e);
+	void addEntropy(const float a);
+	float calcEntropy(const int possAnswers, const int arg2, const int validAnswers) const;
+	void setGuessed(const bool g);
+	void setNumCharacters(const int n);
+	//Sorting by entropy
+	bool operator<(const possGuessWord& ref) const;
+	bool compareEntropy(const possGuessWord x1, const possGuessWord x2);
 };
 
 #endif

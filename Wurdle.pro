@@ -10,6 +10,8 @@ CONFIG += c++11
 
 SOURCES += \
     answerWord.cpp \
+    entropy.cpp \
+    functions.cpp \
     guessWord.cpp \
     letterscontainer.cpp \
     letterwidget.cpp \
@@ -21,6 +23,8 @@ SOURCES += \
 
 HEADERS += \
     answerWord.h \
+    entropy.h \
+    functions.h \
     guessWord.h \
     letterscontainer.h \
     letterwidget.h \

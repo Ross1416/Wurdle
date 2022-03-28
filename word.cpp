@@ -7,15 +7,15 @@ word::word() {
 	content = "";
 }
 
-word::word(std::string c) {
+word::word(const std::string c) {
 	content = c;
 }
 
 //Getters and Setters
-std::string word::getContent() { return content; }
+std::string word::getContent() const { return content; }
 
-int word::getNumCharacters() { return numCharacters; }
+int word::getNumCharacters() const { return numCharacters; }
 
-void word::setContent(std::string c) { content = c; }
+void word::setContent(const std::string c) { content = c; }
 
-void word::setNumCharacters(int n) { numCharacters = n; }
+void word::setNumCharacters(const int n) { numCharacters = n; }

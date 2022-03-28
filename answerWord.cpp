@@ -9,7 +9,7 @@
 		createCheckedVector(5);
 	}
 
-	answerWord::answerWord(std::string c, int n) {
+	answerWord::answerWord(const std::string c, const int n) {
 		content = c;
 		numCharacters = n;
 		createCheckedVector(n);
@@ -17,9 +17,9 @@
 
 	//Getters and Setters
 
-	std::vector<bool> answerWord::getCheckedVector() { return checkedVector; }
+	std::vector<bool> answerWord::getCheckedVector() const { return checkedVector; }
 
-	bool answerWord::getCheckedVector(int i) { return checkedVector[i]; }
+	bool answerWord::getCheckedVector(const int i) const { return checkedVector[i]; }
 
 	void answerWord::createCheckedVector() {
 		checkedVector.clear();
@@ -28,13 +28,13 @@
 		}
 	}
 
-	void answerWord::createCheckedVector(int n) {
+	void answerWord::createCheckedVector(const int n) {
 		checkedVector.clear();
 		for (int i = 0; i < n; i++) {
 			checkedVector.push_back(false);
 		}
 	}
 
-	void answerWord::setCheckedVector(int i, bool b) {
+	void answerWord::setCheckedVector(const int i, const bool b) {
 		checkedVector[i] = b;
 	}

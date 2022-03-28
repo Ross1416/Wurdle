@@ -4,26 +4,29 @@
 #include "word.h"
 #include "answerWord.h"
 #include <vector>
+#include <stdint.h>
 
 class guessWord : public word {
 protected:
 	float entropy;
-	std::vector<int> colourVector;
+	std::vector<uint8_t> colourVector;
 public:
 	//Constructors and destructor
 	~guessWord();
 	guessWord();
-	guessWord(std::string c, float e, int n);
+	guessWord(const std::string c, const float e, const int n);
+	guessWord(const std::string c, const float e, const int n, const std::vector<uint8_t> cV);
 
 	//Getters and Setters
-	float getEntropy();
-	int getColourVector(int i);
+	float getEntropy() const;
+	int getColourVector(const int i) const;
 	void createColourVector(); //Create vector of colours for each character
-	void createColourVector(int n);
-	void setColourVector(int i, int s);
+	void createColourVector(const int n);
+	void setColourVector(const std::vector<uint8_t> cV);
+	void setColourVector(const int i, const uint8_t s);
 	void determineColourVector(answerWord a); //Sets the colours based on the current answer
-	std::string displayColourVector(int i); //Returns value of colour vector as a string value
-	void setEntropy(float e);
+	std::string displayColourVector(const int i) const; //Returns value of colour vector as a string value
+	void setEntropy(const float e);
 };
 
 #endif

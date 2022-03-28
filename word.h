@@ -11,12 +11,12 @@ public:
 	//Destructor and Constructors
 	~word();
 	word();
-	word(std::string c);
+	word(const std::string c);
 	//Getters and Setters
-	int getNumCharacters();
-	std::string getContent();
-	void setContent(std::string c);
-	void setNumCharacters(int n);
+	int getNumCharacters() const;
+	std::string getContent() const;
+	void setContent(const std::string c);
+	void setNumCharacters(const int n);
 };
 
 #endif
