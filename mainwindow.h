@@ -29,5 +29,10 @@ public:
     void keyPressEvent(QKeyEvent *event);
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void OpenSettingsMenu();
+
+
 };
 #endif // MAINWINDOW_H
