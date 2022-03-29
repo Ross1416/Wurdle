@@ -20,6 +20,7 @@ SOURCES += \
     mainwindow.cpp \
     possAnswerWord.cpp \
     possGuessWord.cpp \
+    settingsmenu.cpp \
     word.cpp
 
 HEADERS += \
@@ -33,10 +34,12 @@ HEADERS += \
     mainwindow.h \
     possAnswerWord.h \
     possGuessWord.h \
+    settingsmenu.h \
     word.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    settingsmenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

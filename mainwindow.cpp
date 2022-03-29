@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "settingsmenu.h"
 
 //#include "letterwidget.h"
 #include "letterscontainer.h"
@@ -19,6 +20,8 @@ MainWindow::MainWindow(Game& currentGame, QWidget *parent) : QMainWindow(parent)
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
     SetupValidWordsScrollArea();
+
+    connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
 }
 
 // MAINWINDOW DESTRUCTOR
@@ -60,7 +63,6 @@ void MainWindow::SetupUsefulWordsScrollArea()
 // testing change 4
 }
 
-
 // INITIAL SETUP OF LETTERCONTAINER
 void MainWindow::SetupLetterContainer(int w, int h)
 {
@@ -82,7 +84,7 @@ void MainWindow::CheckWord()
     //std::cout << currentGame.getNumCharacters() << std::endl;
     if (letterContainer->getCurrentWord() != "")
     {
-        // DO SOMETHING HERE
+
     }
 }
 
@@ -129,6 +131,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     letterContainer->updateLetterStyles();
 
 }
+// OPEN SETTINGS MENU DIALOG
+void MainWindow::OpenSettingsMenu()
+{
+    settingsMenu settings(this);
+    settings.exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
+}
+
+
 
 
 
