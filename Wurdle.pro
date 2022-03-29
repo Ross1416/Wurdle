@@ -12,6 +12,7 @@ SOURCES += \
     answerWord.cpp \
     entropy.cpp \
     functions.cpp \
+    game.cpp \
     guessWord.cpp \
     letterscontainer.cpp \
     letterwidget.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     answerWord.h \
     entropy.h \
     functions.h \
+    game.h \
     guessWord.h \
     letterscontainer.h \
     letterwidget.h \

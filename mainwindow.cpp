@@ -7,11 +7,10 @@
 #include<QKeyEvent>
 #include<iostream>
 
-#include "guessWord.h"
-
 // MAINWINDOW CONSTRUCTOR
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
+MainWindow::MainWindow(Game& currentGame, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
+    std::cout << currentGame.getNumCharacters() << std::endl;
     ui->setupUi(this);
     ui->centralwidget->setContentsMargins(0,0,0,0);
     ui->wurdleTitleLabel->setContentsMargins(0,0,0,0);
@@ -80,6 +79,7 @@ void MainWindow::SetupLetterContainer(int w, int h)
 
 void MainWindow::CheckWord()
 {
+    //std::cout << currentGame.getNumCharacters() << std::endl;
     if (letterContainer->getCurrentWord() != "")
     {
         // DO SOMETHING HERE

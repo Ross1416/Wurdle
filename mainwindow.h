@@ -6,6 +6,9 @@
 #include"letterwidget.h"
 #include "letterscontainer.h"
 
+#include "guessWord.h"
+#include "game.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,7 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(Game& currentGame, QWidget *parent = nullptr);
     ~MainWindow();
 
     LettersContainer *letterContainer;
