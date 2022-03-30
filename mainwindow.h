@@ -18,8 +18,10 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Game& currentGame, QWidget *parent = nullptr);
+    MainWindow(Game* currentGame, QWidget *parent = nullptr);
     ~MainWindow();
+
+    Game *game;
 
     LettersContainer *letterContainer;
 

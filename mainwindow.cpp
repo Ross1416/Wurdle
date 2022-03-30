@@ -9,9 +9,10 @@
 #include<iostream>
 
 // MAINWINDOW CONSTRUCTOR
-MainWindow::MainWindow(Game& currentGame, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
+MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
-    std::cout << currentGame.getNumCharacters() << std::endl;
+    game = currentGamePtr;
+
     ui->setupUi(this);
     ui->centralwidget->setContentsMargins(0,0,0,0);
     ui->wurdleTitleLabel->setContentsMargins(0,0,0,0);

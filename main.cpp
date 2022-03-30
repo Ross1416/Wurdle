@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     Game currentGame(5, 6);
     QApplication a(argc, argv);
-    MainWindow w(currentGame);
+    MainWindow w(&currentGame);
     w.show();
     //std::cout << currentGame.getNumCharacters() << std::endl;
 
