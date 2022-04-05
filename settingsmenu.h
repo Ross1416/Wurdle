@@ -1,6 +1,6 @@
 #ifndef SETTINGSMENU_H
 #define SETTINGSMENU_H
-
+#include"mainwindow.h"
 #include <QDialog>
 
 namespace Ui {
@@ -14,6 +14,7 @@ class settingsMenu : public QDialog
 public:
     explicit settingsMenu(QWidget *parent = nullptr);
     ~settingsMenu();
+    void ok();
 
 private:
     Ui::settingsMenu *ui;
@@ -21,6 +22,9 @@ private:
 public slots:
     void browseForAnswerList();
     void browseForGuessList();
+
+signals:
+    void ok_signal(int);
 };
 
 #endif // SETTINGSMENU_H

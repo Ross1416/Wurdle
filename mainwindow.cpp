@@ -17,7 +17,10 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     ui->centralwidget->setContentsMargins(0,0,0,0);
     ui->wurdleTitleLabel->setContentsMargins(0,0,0,0);
 
-    SetupLetterContainer(5,6);
+    letterContainerWidth = 5;
+    letterContainerHeight = 6;
+
+    SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
     SetupValidWordsScrollArea();
@@ -36,7 +39,7 @@ void MainWindow::SetupValidWordsScrollArea()
 {
     auto *innerWidget = new QWidget(ui->validWordsScrollArea);
 
-    auto *scrollLayout = new QGridLayout();
+    auto *scrollLayout = new QGridLayout(innerWidget);
     scrollLayout->setAlignment(Qt::AlignCenter);
 //    scrollLayout->setContentsMargins(10,10,10,10);
     scrollLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
@@ -132,12 +135,34 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     letterContainer->updateLetterStyles();
 
 }
+
+void MainWindow::Update()
+{
+    delete ui->containerWidget->layout();
+    SetupLetterContainer(letterContainerWidth,letterContainerHeight);
+    letterContainer->highlightCurrentLetter();
+    letterContainer->updateLetterStyles();
+//    delete ui->validWordsScrollArea->widget();
+//    SetupValidWordsScrollArea();
+}
+
 // OPEN SETTINGS MENU DIALOG
 void MainWindow::OpenSettingsMenu()
 {
-    settingsMenu settings(this);
-    settings.exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
+    settingsMenu *settings = new settingsMenu(this);
+//    connect(settings, &QDialog::accepted, this, &MainWindow::Update);
+    connect(settings, SIGNAL(ok_signal(int)), this, SLOT(GetSettings(int)));
+    settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
 }
+
+void MainWindow::GetSettings(int noOfGuesses)
+{
+//    std::cout<<"update "<<numberOfGuesses<<std::endl;
+    letterContainerHeight = noOfGuesses;
+    delete letterContainer;
+    Update();
+}
+
 
 
 

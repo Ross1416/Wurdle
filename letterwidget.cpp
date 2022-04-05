@@ -27,7 +27,8 @@ LetterWidget::LetterWidget(QWidget *parent) : QWidget{parent}
     letter->setMaximumWidth(40);
     letter->setMinimumHeight(40);
     letter->setMinimumWidth(40);
-    // Add label to layout
+
+    this->colour = "white";
 
     // set unhighlighted
     highlightState = false;

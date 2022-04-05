@@ -21,9 +21,7 @@ public:
     MainWindow(Game* currentGame, QWidget *parent = nullptr);
     ~MainWindow();
 
-    Game *game;
 
-    LettersContainer *letterContainer;
 
     void SetupValidWordsScrollArea();
     void SetupUsefulWordsScrollArea();
@@ -32,11 +30,18 @@ public:
     void CheckWord();
 
     void keyPressEvent(QKeyEvent *event);
+    void Update();
+
 private:
     Ui::MainWindow *ui;
+    Game *game;
+    LettersContainer *letterContainer;
+    int letterContainerWidth;
+    int letterContainerHeight;
 
 public slots:
     void OpenSettingsMenu();
+    void GetSettings(int);
 
 
 };
