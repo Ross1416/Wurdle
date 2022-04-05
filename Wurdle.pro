@@ -20,6 +20,7 @@ SOURCES += \
     mainwindow.cpp \
     possAnswerWord.cpp \
     possGuessWord.cpp \
+    settingsfilehandler.cpp \
     settingsmenu.cpp \
     word.cpp
 
@@ -34,6 +35,7 @@ HEADERS += \
     mainwindow.h \
     possAnswerWord.h \
     possGuessWord.h \
+    settingsfilehandler.h \
     settingsmenu.h \
     word.h
 

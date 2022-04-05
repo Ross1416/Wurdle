@@ -1,0 +1,5 @@
+GuessList:
+AnswerList:
+NoOfGuesses:
+WordLength:
+Language:

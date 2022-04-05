@@ -23,7 +23,7 @@ settingsMenu::~settingsMenu()
 // SIGNAL THAT EMITS SETTINGS WHEN OK BTN PRESSED
 void settingsMenu::ok()
 {
-    emit ok_signal(ui->noGuessesSpinBox->value());
+    emit ok_signal(ui->answerListLineEdit->text().toStdString(), ui->guessListLineEdit->text().toStdString(), ui->noGuessesSpinBox->value());
 }
 
 void settingsMenu::browseForAnswerList()

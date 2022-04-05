@@ -24,7 +24,7 @@ public slots:
     void browseForGuessList();
 
 signals:
-    void ok_signal(int);
+    void ok_signal(std::string, std::string, int);
 };
 
 #endif // SETTINGSMENU_H
