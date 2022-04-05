@@ -3,6 +3,7 @@
 #include "letterscontainer.h"
 #include<QGridLayout>
 #include<vector>
+#include<QTimer>
 
 //LETTER CONTAINER CONSTRUCTOR
 LettersContainer::LettersContainer(int w, int h, QWidget *parent)
@@ -101,8 +102,14 @@ void LettersContainer::setSelectedRow(int row)
 // INCREMENT SELECTED ROW BY 1
 void LettersContainer::incrementSelectedRow()
 {
-    // !!!!!!NEED TO CHECK FOR OUT OF BOUNDS
-    this->selectedRow = this->selectedRow + 1;
+    if (this->selectedRow < this->height-1)
+    {
+        this->unhighlightCurrentLetter();
+        this->selectedRow = this->selectedRow + 1;
+        this->setSelectedColumn(0);
+        this->highlightCurrentLetter();
+        this->updateLetterStyles();
+    }
 }
 
 // INCREMENTED SELECTED COLUMN BY 1
@@ -162,3 +169,32 @@ void LettersContainer::updateLetterStyles()
         }
     }
 }
+void LettersContainer::invalidGuess()
+{
+    for (int i=0; i<width;i++)
+    {
+        letters[this->selectedRow][i]->setColour("red");
+        letters[this->selectedRow][i]->updateStyle();
+    }
+    QTimer *timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(invalidGuessReset()));
+    timer->start(300);
+}
+
+void LettersContainer::invalidGuessReset()
+{
+    for (int i=0; i<width;i++)
+    {
+        letters[this->selectedRow][i]->setColour("white");
+        letters[this->selectedRow][i]->setLetter(' ');
+        letters[this->selectedRow][i]->updateStyle();
+    }
+    this->unhighlightCurrentLetter();
+    this->setSelectedColumn(0);
+    this->highlightCurrentLetter();
+    this->updateLetterStyles();
+}
+
+
+

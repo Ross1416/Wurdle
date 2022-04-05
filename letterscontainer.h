@@ -52,7 +52,11 @@ public:
     void updateLetterStyles();
 
 
+    void invalidGuess();
 signals:
+
+public slots:
+    void invalidGuessReset();
 
 };
 

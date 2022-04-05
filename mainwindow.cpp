@@ -7,7 +7,6 @@
 #include<QGridLayout>
 #include<QKeyEvent>
 #include<iostream>
-
 // MAINWINDOW CONSTRUCTOR
 MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
@@ -25,6 +24,8 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     letterContainer->updateLetterStyles();
     SetupValidWordsScrollArea();
 
+
+    // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
 }
 
@@ -88,7 +89,8 @@ void MainWindow::CheckWord()
     //std::cout << currentGame.getNumCharacters() << std::endl;
     if (letterContainer->getCurrentWord() != "")
     {
-
+//        letterContainer->incrementSelectedRow();
+//        letterContainer->invalidGuess();
     }
 }
 

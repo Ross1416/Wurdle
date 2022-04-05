@@ -9,10 +9,10 @@ settingsMenu::settingsMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->answerListBrowseBtn, &QPushButton::clicked, this, &settingsMenu::browseForAnswerList);
     connect(ui->guessListBrowseBtn, &QPushButton::clicked, this, &settingsMenu::browseForGuessList);
     connect(ui->dialogBtnBox, &QDialogButtonBox::accepted, this, &settingsMenu::ok);
-//    connect(ui->dialogBtnBox, &QDialogButtonBox::accepted, this, ok_);
 }
 
 settingsMenu::~settingsMenu()
@@ -20,6 +20,7 @@ settingsMenu::~settingsMenu()
     delete ui;
 }
 
+// SIGNAL THAT EMITS SETTINGS WHEN OK BTN PRESSED
 void settingsMenu::ok()
 {
     emit ok_signal(ui->noGuessesSpinBox->value());
