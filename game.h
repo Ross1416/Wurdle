@@ -51,6 +51,8 @@ public:
     std::vector<possAnswerWord> getPossAnswerVector() const;
     std::vector<guessWord> getGuessedVector() const;
 
+    void readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
+    void readUnprocGuesses(); //Function for reading in the txt for the possGuessVector
 };
 
 #endif // GAME_H

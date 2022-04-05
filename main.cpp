@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-    Game currentGame(5, 6);
+    Game currentGame(5, 6); //A game object is initialised with the default number of characters 5 and the default max guesses 6
     QApplication a(argc, argv);
     MainWindow w(&currentGame);
     w.show();

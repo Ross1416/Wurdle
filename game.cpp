@@ -67,3 +67,39 @@ std::vector<possAnswerWord> Game::getPossAnswerVector() const {
 std::vector<guessWord> Game::getGuessedVector() const {
     return guessedVector;
 }
+
+void Game::readUnprocAnswers() {
+    int i = 0;
+    possAnswerVector.clear();
+    std::ifstream answerInFile(answerList);
+    if (answerInFile.is_open()) {
+        for (std::string line; getline(answerInFile, line);) {
+            if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
+                continue;
+            }
+            possAnswerWord* x = new possAnswerWord(line, true, numCharacters);
+            possAnswerVector.push_back(*x);
+            i++;
+        }
+    }
+    answerInFile.close();
+    totalPossGuesses = i;
+}
+
+void Game::readUnprocGuesses() {
+    int i = 0;
+    possGuessVector.clear();
+    std::ifstream guessInFile(guessList);
+    if (guessInFile.is_open()) {
+        for (std::string line; getline(guessInFile, line);) {
+            if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
+                continue;
+            }
+            possGuessWord* x = new possGuessWord(line, 0, false, numCharacters);
+            possGuessVector.push_back(*x);
+            i++;
+        }
+    }
+    guessInFile.close();
+    totalPossGuesses = i;
+}
