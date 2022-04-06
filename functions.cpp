@@ -1,5 +1,6 @@
 #include "functions.h"
 
+/*
 //Reading in an unprocessed file, returns total possGuesses
 int readUnprocFile(const std::string filename, const int numCharacters, std::list<possGuessWord>& list) {
 	int i = 0;
@@ -34,6 +35,7 @@ int readUnprocFile(const std::string filename, const int numCharacters, std::vec
 	guessInFile.close();
 	return i;
 }
+*/
 
 /*
 int readProcFile(const std::string filename, std::list<possGuessWord>& list) {
@@ -78,6 +80,7 @@ void writeProcFile(const std::string filename, std::list<possGuessWord>& list) {
 }
 */
 
+/*
 //Reading in an unprocessed file, returns total possAnswers
 int readUnprocFile(const std::string filename, const int numCharacters, std::list<possAnswerWord>& list) {
 	int i = 0;
@@ -127,11 +130,13 @@ std::string displayColourVector(const uint8_t i) {
 		return "Blank";
 	}
 }
+*/
 
 bool compareEntropy(const possGuessWord x1, const possGuessWord x2) {
 	return (x1.getEntropy() > x2.getEntropy());
 }
 
+/*
 void precomputeColours(std::vector<possGuessWord>& possGuessVector, const std::vector<possAnswerWord>& possAnswerVector, std::vector<std::vector<std::vector<uint8_t>>>& preprocColours){
 	for (unsigned int i = 0; i < possGuessVector.size(); i++) {
 		for (unsigned int j = 0; j < possAnswerVector.size(); j++) {
@@ -140,7 +145,9 @@ void precomputeColours(std::vector<possGuessWord>& possGuessVector, const std::v
 		}
 	}
 }
+*/
 
+/*
 void calcEntropies(std::vector<possGuessWord>& possGuessVector, const std::vector<possAnswerWord>& possAnswerVector, const std::vector<std::vector<std::vector<uint8_t>>>& preprocColours, std::vector<possGuessWord>& sortedVector, const int numCharacters, const int totalPossAnswers) {
 	//Stores the values needed for the entropy calculation
 	std::vector<entropy> entropyVector;
@@ -187,3 +194,4 @@ void calcEntropies(std::vector<possGuessWord>& possGuessVector, const std::vecto
 	sortedVector = possGuessVector;
 	std::sort(sortedVector.begin(), sortedVector.end(), compareEntropy);
 }
+*/

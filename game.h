@@ -3,6 +3,12 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
+#include <stdint.h>
+#include <math.h>
+#include <memory>
+#include "functions.h"
+#include "entropy.h"
 #include "possGuessWord.h"
 #include "possAnswerWord.h"
 #include "answerWord.h"
@@ -32,6 +38,8 @@ private:
     unsigned int totalGuesses;
 
     answerWord currentAnswer(); //Stores the answer
+
+    std::vector<std::vector<std::vector<uint8_t>>> preprocColours; //Stores the preprocessed Colour vectors for lookup table of possGuessWords and possAnswerWords
 public:
     //Destructor and Constructors
     ~Game();
@@ -53,6 +61,11 @@ public:
 
     void readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
     void readUnprocGuesses(); //Function for reading in the txt for the possGuessVector
+
+    void precomputeColours(); //Clears, resizes and calculates the precomputed colour vectors for the current possGuessVector and possAnswerVectors, stores result in the preprocColours vector
+
+    //bool compareEntropy(const possGuessWord x1, const possGuessWord x2);
+    void calcEntropies();
 };
 
 #endif // GAME_H

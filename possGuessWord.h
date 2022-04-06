@@ -7,7 +7,8 @@
 #include <fstream>
 #include <iostream>
 #include <stdint.h>
-#include "functions.h"
+//#include "functions.h"
+#include <math.h>
 
 class possGuessWord : public word {
 protected:
