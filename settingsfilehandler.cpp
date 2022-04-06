@@ -22,8 +22,8 @@ void SettingsFileHandler::CreateSettingsFile()
 {
     std::ofstream file;
     file.open(path);
-    file << "AnswerList:answerList.txt" << std::endl;
-    file << "GuessList:guessList.txt" << std::endl;
+    file << "AnswerList:" << QDir().absolutePath().toStdString() + "/" + "answerList.txt" << std::endl;
+    file << "GuessList:" << QDir().absolutePath().toStdString() + "/" + "guessList.txt" << std::endl;
     file << "NoOfGuesses:6" << std::endl;
     file.close();
 }
