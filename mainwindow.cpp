@@ -172,11 +172,13 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
 
     if (language == "English")
     {
-        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_en.qm");
+//        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_en.qm");
+        t.load(":/lang_en.qm");
     }
     else if (language == "French")
     {
-        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_fr.qm");
+//        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_fr.qm");
+        t.load(":/lang_fr.qm");
     }
     qApp->installTranslator(&t);
     ui->retranslateUi(this);
