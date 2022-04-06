@@ -1,5 +1,4 @@
 #include "letterscontainer.h"
-
 #include "letterscontainer.h"
 #include<QGridLayout>
 #include<vector>
@@ -169,6 +168,8 @@ void LettersContainer::updateLetterStyles()
         }
     }
 }
+
+// CALLED WHEN INVALID GUESS IS INPUT
 void LettersContainer::invalidGuess()
 {
     for (int i=0; i<width;i++)
@@ -182,6 +183,7 @@ void LettersContainer::invalidGuess()
     timer->start(300);
 }
 
+// RESET CURRENT ROW AFTER INVALID GUESS (DRIVEN BY TIMER)
 void LettersContainer::invalidGuessReset()
 {
     for (int i=0; i<width;i++)

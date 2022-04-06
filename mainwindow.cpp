@@ -7,6 +7,7 @@
 #include<QGridLayout>
 #include<QKeyEvent>
 #include<iostream>
+
 // MAINWINDOW CONSTRUCTOR
 MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
@@ -140,6 +141,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::Update()
 {
+    delete letterContainer;
     delete ui->containerWidget->layout();
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
@@ -153,15 +155,16 @@ void MainWindow::OpenSettingsMenu()
 {
     settingsMenu *settings = new settingsMenu(this);
 //    connect(settings, &QDialog::accepted, this, &MainWindow::Update);
-    connect(settings, SIGNAL(ok_signal(int)), this, SLOT(GetSettings(int)));
+    connect(settings, SIGNAL(ok_signal(std::string, std::string, int)), this, SLOT(GetSettings(std::string, std::string, int)));
     settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
 }
 
-void MainWindow::GetSettings(int noOfGuesses)
+void MainWindow::GetSettings(std::string answerListPath, std::string guessListPath,int noOfGuesses)
 {
 //    std::cout<<"update "<<numberOfGuesses<<std::endl;
+    game->setAnswerList(answerListPath);
+    game->setGuessList(guessListPath);
     letterContainerHeight = noOfGuesses;
-    delete letterContainer;
     Update();
 }
 
