@@ -155,7 +155,7 @@ void MainWindow::OpenSettingsMenu()
 {
     settingsMenu *settings = new settingsMenu(this);
 //    connect(settings, &QDialog::accepted, this, &MainWindow::Update);
-    connect(settings, SIGNAL(ok_signal(int)), this, SLOT(GetSettings(std::string, std::string, int)));
+    connect(settings, SIGNAL(ok_signal(std::string, std::string, int)), this, SLOT(GetSettings(std::string, std::string, int)));
     settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
 }
 

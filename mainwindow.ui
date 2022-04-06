@@ -34,8 +34,21 @@
   <property name="windowTitle">
    <string>Wurdle</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../icon/ee273-project-icon.ico</normaloff>../../icon/ee273-project-icon.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(240, 240, 240);</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>256</width>
+    <height>256</height>
+   </size>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
