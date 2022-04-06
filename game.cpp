@@ -105,6 +105,7 @@ void Game::readUnprocGuesses() {
 }
 
 void Game::precomputeColours() {
+    std::cout << "precomp started" << std::endl;
     preprocColours.clear(); //Clear the preprocColours vector
     preprocColours.resize(possGuessVector.size(), std::vector<std::vector<uint8_t>>(possAnswerVector.size(), std::vector<uint8_t>(numCharacters))); //Resizes the preprocColours vector to the correct size
     for (unsigned int i = 0; i < possGuessVector.size(); i++) { //Assigns the precomputed colour vectors for each cell in the lookup table
@@ -112,11 +113,14 @@ void Game::precomputeColours() {
             possGuessVector[i].determineColourVector(possAnswerVector[j]);
             preprocColours[i][j] = possGuessVector[i].getColourVector();
         }
+        //std::cout << i << std::endl;
     }
+    std::cout << "precomp complete" << std::endl;
 }
 
 void Game::calcEntropies() {
     //Stores the values needed for the entropy calculation
+    std::cout << "Started entropy calc" << std::endl;
     std::vector<entropy> entropyVector;
     bool found = false;
 
@@ -160,6 +164,7 @@ void Game::calcEntropies() {
     possGuessVectorSorted.clear();
     possGuessVectorSorted = possGuessVector;
     std::sort(possGuessVectorSorted.begin(), possGuessVectorSorted.end(), compareEntropy);
+    std::cout << "Finished entropy calc" << std::endl;
 }
 
 /*
