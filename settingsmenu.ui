@@ -40,6 +40,9 @@
      <height>32</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -262,7 +265,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="languageComboBox">
    <property name="geometry">
     <rect>
      <x>80</x>

@@ -24,6 +24,7 @@ void SettingsFileHandler::CreateSettingsFile()
     file.open(path);
     file << "AnswerList:" << QDir().absolutePath().toStdString() + "/" + "answerList.txt" << std::endl;
     file << "GuessList:" << QDir().absolutePath().toStdString() + "/" + "guessList.txt" << std::endl;
+    file << "Language:English" << std::endl;
     file << "NoOfGuesses:6" << std::endl;
     file.close();
 }

@@ -7,6 +7,7 @@
 #include<QGridLayout>
 #include<QKeyEvent>
 #include<iostream>
+#include<QTranslator>
 
 // MAINWINDOW CONSTRUCTOR
 MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
@@ -155,16 +156,30 @@ void MainWindow::OpenSettingsMenu()
 {
     settingsMenu *settings = new settingsMenu(this);
 //    connect(settings, &QDialog::accepted, this, &MainWindow::Update);
-    connect(settings, SIGNAL(ok_signal(std::string, std::string, int)), this, SLOT(GetSettings(std::string, std::string, int)));
+    connect(settings, SIGNAL(ok_signal(std::string, std::string, int, std::string)), this, SLOT(GetSettings(std::string, std::string, int, std::string)));
     settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
 }
 
-void MainWindow::GetSettings(std::string answerListPath, std::string guessListPath,int noOfGuesses)
+void MainWindow::GetSettings(std::string answerListPath, std::string guessListPath,int noOfGuesses, std::string language)
 {
 //    std::cout<<"update "<<numberOfGuesses<<std::endl;
     game->setAnswerList(answerListPath);
     game->setGuessList(guessListPath);
     letterContainerHeight = noOfGuesses;
+
+    QTranslator t;
+
+
+    if (language == "English")
+    {
+        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_en.qm");
+    }
+    else if (language == "French")
+    {
+        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_fr.qm");
+    }
+    qApp->installTranslator(&t);
+    ui->retranslateUi(this);
     Update();
 }
 

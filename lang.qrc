@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>languages/wurdle_fr.qm</file>
+    </qresource>
+</RCC>
