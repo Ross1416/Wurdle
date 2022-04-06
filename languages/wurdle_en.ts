@@ -79,20 +79,34 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../settingsmenu.cpp" line="35"/>
+        <location filename="../settingsmenu.cpp" line="20"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="21"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="51"/>
         <source>English</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../settingsmenu.cpp" line="36"/>
+        <location filename="../settingsmenu.cpp" line="52"/>
         <source>French</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../settingsmenu.cpp" line="53"/>
-        <location filename="../settingsmenu.cpp" line="60"/>
+        <location filename="../settingsmenu.cpp" line="70"/>
         <source>Choose answer list</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="77"/>
+        <source>Choose guess list</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

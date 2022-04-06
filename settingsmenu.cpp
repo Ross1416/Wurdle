@@ -7,12 +7,18 @@ settingsMenu::settingsMenu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settingsMenu)
 {
+
     ui->setupUi(this);
+
+
 //    settingsFile = SettingsFileHandler("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/settings.txt");
     settingsFile = SettingsFileHandler("settings.txt");
     settings = settingsFile.read();
     Setup();
 
+    // SET DIALOG BUTTONS SO THEY'RE TRANSLATABLE
+    ui->dialogBtnBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui->dialogBtnBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->answerListBrowseBtn, &QPushButton::clicked, this, &settingsMenu::browseForAnswerList);
@@ -23,6 +29,17 @@ settingsMenu::~settingsMenu()
 {
     delete ui;
 }
+
+//void settingsMenu::changeEvent(QEvent *event) {
+//    if (event->type() == QEvent::LanguageChange) {
+//        setWindowTitle(tr("Settings"));
+//        ui->retranslateUi(this);
+
+//    }
+//    else {
+//        QWidget::changeEvent(event);
+//    }
+//}
 
 void settingsMenu::Setup()
 {
@@ -57,7 +74,7 @@ void settingsMenu::browseForAnswerList()
 
 void settingsMenu::browseForGuessList()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose answer list"), "/","Text files (*.txt)");
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose guess list"), "/","Text files (*.txt)");
     if (fileName != "")
         ui->guessListLineEdit->setText(fileName);
 }

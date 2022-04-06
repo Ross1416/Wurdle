@@ -4,10 +4,7 @@
 
 //#include "letterwidget.h"
 #include "letterscontainer.h"
-#include<QGridLayout>
-#include<QKeyEvent>
-#include<iostream>
-#include<QTranslator>
+
 
 // MAINWINDOW CONSTRUCTOR
 MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
@@ -24,8 +21,8 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
-    SetupValidWordsScrollArea();
-
+    FillValidWordsScrollArea();
+    FillUsefulWordsScrollArea();
 
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
@@ -37,12 +34,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// INITIAL SETUP OF VALID WORDS SCROLL AREA
-void MainWindow::SetupValidWordsScrollArea()
+// FILL SCROLL AREA WITH VALID WORDS
+void MainWindow::FillValidWordsScrollArea()
 {
-    auto *innerWidget = new QWidget(ui->validWordsScrollArea);
+    delete ui->validWordsScrollArea->widget();
 
+    auto *innerWidget = new QWidget(ui->validWordsScrollArea);
     auto *scrollLayout = new QGridLayout(innerWidget);
+
     scrollLayout->setAlignment(Qt::AlignCenter);
 //    scrollLayout->setContentsMargins(10,10,10,10);
     scrollLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
@@ -50,22 +49,23 @@ void MainWindow::SetupValidWordsScrollArea()
     innerWidget->setLayout(scrollLayout);
     ui->validWordsScrollArea->setWidget(innerWidget);
 
+    int index = 0;
     for (int i=0; i<30; i++)
     {
         for (int j=0; j<4; j++)
         {
             auto *text = new QLabel();
-            text->setText("Wurdle");
+            text->setText("Wurlde");
             text->setContentsMargins(5,5,5,5);
             scrollLayout->addWidget(text,i,j);
+            index++;
         }
 
     }
-
 }
 
 // INITIAL SETUP OF USEFUL WORDS SCROLL AREA
-void MainWindow::SetupUsefulWordsScrollArea()
+void MainWindow::FillUsefulWordsScrollArea()
 {
 // testing change 4
 }
@@ -165,22 +165,23 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
 //    std::cout<<"update "<<numberOfGuesses<<std::endl;
     game->setAnswerList(answerListPath);
     game->setGuessList(guessListPath);
+    game->readUnprocAnswers();
+    game->readUnprocGuesses();
+
+
     letterContainerHeight = noOfGuesses;
-
-    QTranslator t;
-
 
     if (language == "English")
     {
 //        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_en.qm");
-        t.load(":/lang_en.qm");
+        translator.load(":/lang_en.qm");
     }
     else if (language == "French")
     {
 //        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_fr.qm");
-        t.load(":/lang_fr.qm");
+        translator.load(":/lang_fr.qm");
     }
-    qApp->installTranslator(&t);
+    qApp->installTranslator(&translator);
     ui->retranslateUi(this);
     Update();
 }

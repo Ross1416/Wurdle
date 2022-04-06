@@ -35,48 +35,78 @@
     <message>
         <location filename="../settingsmenu.ui" line="32"/>
         <source>Settings</source>
-        <translation type="unfinished">Réglages</translation>
+        <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="60"/>
-        <location filename="../settingsmenu.ui" line="73"/>
+        <location filename="../settingsmenu.ui" line="63"/>
+        <location filename="../settingsmenu.ui" line="76"/>
         <source>Browse</source>
-        <translation type="unfinished">Parcourir</translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="118"/>
+        <location filename="../settingsmenu.ui" line="121"/>
         <source>Guess List</source>
-        <translation type="unfinished">Liste de devinettes</translation>
+        <translation>Liste de devinettes</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="131"/>
+        <location filename="../settingsmenu.ui" line="134"/>
         <source>Answer list</source>
         <translation>Liste de réponses</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="170"/>
+        <location filename="../settingsmenu.ui" line="173"/>
         <source>Word Lists Selection</source>
         <translation>Sélection de listes de mots</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="210"/>
+        <location filename="../settingsmenu.ui" line="213"/>
         <source>Game Settings</source>
         <translation>Paramètres de jeu</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="223"/>
+        <location filename="../settingsmenu.ui" line="226"/>
         <source>Number of Guesses allowed:</source>
         <translation>Nombre de devinettes autorisées:</translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="236"/>
+        <location filename="../settingsmenu.ui" line="239"/>
         <source>Length of Words - get from list selection</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../settingsmenu.ui" line="285"/>
+        <location filename="../settingsmenu.ui" line="288"/>
         <source>Language:</source>
         <translation>Langue:</translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="20"/>
+        <source>Ok</source>
+        <translation>D&apos;accord</translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="21"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="51"/>
+        <source>English</source>
+        <translation>Anglais</translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="52"/>
+        <source>French</source>
+        <translation>français</translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="70"/>
+        <source>Choose answer list</source>
+        <translation>Choisissez la liste de réponses</translation>
+    </message>
+    <message>
+        <location filename="../settingsmenu.cpp" line="77"/>
+        <source>Choose guess list</source>
+        <translation>Choisissez la liste de devinettes</translation>
     </message>
 </context>
 </TS>

@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include<QGridLayout>
+#include<QKeyEvent>
+#include<iostream>
+#include<QTranslator>
 
 #include"letterwidget.h"
 #include "letterscontainer.h"
@@ -22,9 +26,8 @@ public:
     ~MainWindow();
 
 
-
-    void SetupValidWordsScrollArea();
-    void SetupUsefulWordsScrollArea();
+    void FillValidWordsScrollArea();
+    void FillUsefulWordsScrollArea();
     void SetupLetterContainer(int, int);
 
     void CheckWord();
@@ -32,12 +35,15 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void Update();
 
+
 private:
     Ui::MainWindow *ui;
     Game *game;
     LettersContainer *letterContainer;
     int letterContainerWidth;
     int letterContainerHeight;
+    QTranslator translator;
+
 
 public slots:
     void OpenSettingsMenu();

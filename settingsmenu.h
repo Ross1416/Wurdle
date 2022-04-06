@@ -18,6 +18,7 @@ public:
     void ok();
 
     void Setup();
+//    void changeEvent(QEvent *event);
 private:
     Ui::settingsMenu *ui;
     SettingsFileHandler settingsFile;
