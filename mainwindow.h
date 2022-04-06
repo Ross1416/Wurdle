@@ -41,7 +41,7 @@ private:
 
 public slots:
     void OpenSettingsMenu();
-    void GetSettings(std::string, std::string, int);
+    void GetSettings(std::string, std::string, int, std::string);
 
 
 };
