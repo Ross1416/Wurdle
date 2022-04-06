@@ -1,5 +1,3 @@
-GuessList:
-AnswerList:
-NoOfGuesses:
-WordLength:
-Language:
+AnswerList:answerList.txt
+GuessList:guessList.txt
+NoOfGuesses:6
