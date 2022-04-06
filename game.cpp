@@ -167,3 +167,15 @@ bool compareEntropy(const possGuessWord x1, const possGuessWord x2) {
     return (x1.getEntropy() > x2.getEntropy());
 }
 */
+
+bool Game::isValidGuess(const std::string s) {
+    for (unsigned int i = 0; i < possGuessVector.size(); i++) {
+        //std::cout << possGuessVector[i].getContent() << std::endl;
+        if (possGuessVector[i].getContent() == s) {
+            possGuessIndex = i;
+            return true;
+        }
+    }
+    return false;
+}
+

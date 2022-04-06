@@ -66,6 +66,8 @@ public:
 
     //bool compareEntropy(const possGuessWord x1, const possGuessWord x2);
     void calcEntropies();
+
+    bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess
 };
 
 #endif // GAME_H

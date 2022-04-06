@@ -88,9 +88,11 @@ void MainWindow::SetupLetterContainer(int w, int h)
 
 void MainWindow::CheckWord()
 {
-    //std::cout << currentGame.getNumCharacters() << std::endl;
-    if (letterContainer->getCurrentWord() != "")
-    {
+    if (game->isValidGuess(letterContainer->getCurrentWord())) {
+        std::cout << "Valid!" << std::endl;
+    }
+    else {
+        std::cout << "Invalid!" << std::endl;
 //        letterContainer->incrementSelectedRow();
 //        letterContainer->invalidGuess();
     }
@@ -127,7 +129,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         if (event->key() >= 0x41 && event->key() <= 0x5a)
         {
             std::string keyStr = event->text().toStdString();
-            char key = toupper(keyStr.c_str()[0]);
+            char key = tolower(keyStr.c_str()[0]); //Changed to lowercase, as that is the format that the words are stored in the txt files
 
             letterContainer->setCurrentLetterText(key);
             letterContainer->unhighlightCurrentLetter();
