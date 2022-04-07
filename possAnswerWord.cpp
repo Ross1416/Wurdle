@@ -53,7 +53,9 @@
 	}
 	//List Version
 	bool possAnswerWord::answerCheckValid(guessWord* iter) { //Returns if possAnswer is valid or not (ONLY based on the current guess, passed it)
-
+        if (!isValid) {
+            return false;
+        }
 		int numChars = iter->getNumCharacters();
 		int guessColour;
 		std::vector<bool> countedVector;
@@ -112,7 +114,9 @@
 	}
 	//Vector version
 	bool possAnswerWord::answerCheckValid(guessWord vector) { //Returns if possAnswer is valid or not (ONLY based on the current guess, passed it)
-
+        if (!isValid) {
+            return false;
+        }
 		int numChars = vector.getNumCharacters();
 		int guessColour;
 		std::vector<bool> countedVector;
@@ -166,9 +170,6 @@
 		return true;
 	}
 
-	////////////////////////////////////////////////////////
-	// OPTIMISE ME!
-	////////////////////////////////////////////////////////
 	bool possAnswerWord::answerCheckValid(possGuessWord* iter) { //Returns if possAnswer is valid or not (ONLY based on the current guess, passed it)
 		int numChars = iter->getNumCharacters();
 		int guessColour;

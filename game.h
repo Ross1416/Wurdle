@@ -62,6 +62,8 @@ public:
     unsigned int getAnswerIndex() const;
     unsigned int getTotalGuesses() const;
     void setTotalGuesses(const unsigned int i);
+    answerWord getCurrentAnswer() const;
+    void setCurrentAnswer(const std::string s, const unsigned int n);
 
     std::vector<possGuessWord> getPossGuessVector() const;
     std::vector<possAnswerWord> getPossAnswerVector() const;
