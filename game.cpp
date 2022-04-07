@@ -8,7 +8,7 @@ Game::Game(){
     numCharacters = 5;
     maxGuesses = 6;
     possGuessIndex = 0;
-    possAnswerIndex = 0;
+    answerIndex = 0;
     totalPossGuesses = 0;
     totalPossAnswers = 0;
     totalGuesses = 0;
@@ -19,7 +19,7 @@ Game::Game(const unsigned int n, const unsigned int mG) {
     numCharacters = n;
     maxGuesses = mG;
     possGuessIndex = 0;
-    possAnswerIndex = 0;
+    answerIndex = 0;
     totalPossGuesses = 0;
     totalPossAnswers = 0;
     totalGuesses = 0;
@@ -83,7 +83,7 @@ void Game::readUnprocAnswers() {
         }
     }
     answerInFile.close();
-    totalPossGuesses = i;
+    totalPossAnswers = i;
 }
 
 void Game::readUnprocGuesses() {
@@ -178,9 +178,50 @@ bool Game::isValidGuess(const std::string s) {
         //std::cout << possGuessVector[i].getContent() << std::endl;
         if (possGuessVector[i].getContent() == s) {
             possGuessIndex = i;
+            //Push new guessed word into guessedList
+            std::unique_ptr<guessWord> x(new guessWord(s, 0, numCharacters, preprocColours[possGuessIndex][answerIndex]));
+            guessedVector.push_back(*x);
+            totalGuesses++;
             return true;
         }
     }
     return false;
 }
 
+void Game::setPossGuessIndex(const unsigned int i) {
+    possGuessIndex = i;
+}
+
+unsigned int Game::getPossGuessIndex() const {
+    return possGuessIndex;
+}
+
+void Game::setAnswerIndex(const unsigned int i) {
+    answerIndex = i;
+}
+
+unsigned int Game::getAnswerIndex() const {
+    return answerIndex;
+}
+
+void Game::randomAnswer() {
+    //Program will crash if totalPossAnswers is < 1; therefore error handling is used
+    try {
+        if (totalPossAnswers < 1) {
+            throw(totalPossAnswers);
+        } else {
+            srand((unsigned) time(0));
+            unsigned int randomIndex = rand() % totalPossAnswers; //Generates random number for answer
+            //std::cout << randomIndex << std::endl;
+            currentAnswer.setContent(possAnswerVector[randomIndex].getContent());
+            currentAnswer.setNumCharacters(numCharacters);
+            std::cout << "Current Answer is: " << currentAnswer.getContent() << std::endl;
+        }
+    }
+    catch (unsigned int tPA){
+        std::cout << "Error: There are no possible answers!" << std::endl;
+    }
+    catch (...) {
+        std::cout << "Standard Error!" << std::endl;
+    }
+}

@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <math.h>
 #include <memory>
+#include <cstdlib>
+#include <ctime>
 #include "functions.h"
 #include "entropy.h"
 #include "possGuessWord.h"
@@ -24,7 +26,7 @@ private:
     unsigned int maxGuesses;
 
     unsigned int possGuessIndex;
-    unsigned int possAnswerIndex;
+    unsigned int answerIndex;
 
     std::vector<possGuessWord> possGuessVector;
     unsigned int totalPossGuesses;
@@ -37,7 +39,7 @@ private:
     std::vector<guessWord>guessedVector; //Vector of words that have been guessed
     unsigned int totalGuesses;
 
-    answerWord currentAnswer(); //Stores the answer
+    answerWord currentAnswer; //Stores the answer
 
     std::vector<std::vector<std::vector<uint8_t>>> preprocColours; //Stores the preprocessed Colour vectors for lookup table of possGuessWords and possAnswerWords
 public:
@@ -54,6 +56,10 @@ public:
     std::string getGuessList() const;
     void setAnswerList(std::string aL);
     std::string getAnswerList() const;
+    void setPossGuessIndex(const unsigned int i);
+    unsigned int getPossGuessIndex() const;
+    void setAnswerIndex(const unsigned int i);
+    unsigned int getAnswerIndex() const;
 
     std::vector<possGuessWord> getPossGuessVector() const;
     std::vector<possAnswerWord> getPossAnswerVector() const;
@@ -68,6 +74,8 @@ public:
     void calcEntropies();
 
     bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess
+
+    void randomAnswer();
 };
 
 #endif // GAME_H
