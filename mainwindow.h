@@ -32,7 +32,7 @@ public:
     ~MainWindow();
 
 
-    void FillValidWordsScrollArea();
+    void FillValidAnswersScrollArea();
     void FillUsefulWordsScrollArea();
     void SetupLetterContainer(int, int);
 
@@ -44,6 +44,7 @@ public:
 
     void GameWon();
     void Retry();
+    void GameLost();
 private:
     Ui::MainWindow *ui;
     Game *game;

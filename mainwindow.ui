@@ -116,7 +116,7 @@
      </widget>
     </item>
     <item row="2" column="3">
-     <widget class="QScrollArea" name="validWordsScrollArea">
+     <widget class="QScrollArea" name="validAnswersScrollArea">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -179,7 +179,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Valid Words</string>
+       <string>Valid Answers</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
