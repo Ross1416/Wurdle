@@ -81,6 +81,15 @@ void Game::setTotalGuesses(const unsigned int i) {
     totalGuesses = i;
 }
 
+answerWord Game::getCurrentAnswer() const {
+    return currentAnswer;
+}
+
+void Game::setCurrentAnswer(const std::string s, const unsigned int n) {
+    currentAnswer.setContent(s);
+    currentAnswer.setNumCharacters(n);
+}
+
 void Game::readUnprocAnswers() {
     int i = 0;
     possAnswerVector.clear();
