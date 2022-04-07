@@ -201,6 +201,14 @@ bool Game::isValidGuess(const std::string s) {
     return false;
 }
 
+bool Game::isCorrectGuess(const std::string s)
+{
+    if (currentAnswer.getContent() == s)
+        return true;
+    else
+        return false;
+}
+
 void Game::setPossGuessIndex(const unsigned int i) {
     possGuessIndex = i;
 }

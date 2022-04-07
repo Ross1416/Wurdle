@@ -26,6 +26,8 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     game->setGuessList(settings["GuessList"]);
     game->readUnprocAnswers();
     game->readUnprocGuesses();
+    game->precomputeColours(); //These are slow, be careful when testing, use release mode
+    game->calcEntropies();
     game->randomAnswer();
 
 
@@ -54,6 +56,27 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::GameWon()
+{
+    QMessageBox msgBox;
+    msgBox.setText(tr("You guessed correctly!"));
+    msgBox.setStandardButtons(QMessageBox::Retry | QMessageBox::Close);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    int btn = msgBox.exec();
+
+    switch(btn){
+    case QMessageBox::Retry:
+
+        break;
+    case QMessageBox::Close:
+        qApp->quit();
+        break;
+    default:
+        break;
+    }
+
 }
 
 // FILL SCROLL AREA WITH VALID WORDS
@@ -127,9 +150,17 @@ void MainWindow::CheckWord()
         }
         */
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
-
         letterContainer->UpdateCurrentColours(colourVector);
-        letterContainer->incrementSelectedRow();
+
+        if (game->isCorrectGuess(letterContainer->getCurrentWord()))
+        {
+            GameWon();
+        }
+        else{
+            letterContainer->incrementSelectedRow();
+        }
+
+
     }
     else {
         std::cout << "Invalid!" << std::endl;
@@ -188,7 +219,7 @@ void MainWindow::Update()
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
-//    delete ui->validWordsScrollArea->widget();
+//    delete ui->validWordsScrollArea->widget();`
     //    SetupValidWordsScrollArea();
 }
 

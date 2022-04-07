@@ -76,6 +76,7 @@ public:
     void calcEntropies();
 
     bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess, if it is, then it is pushed to the back of the guessedVector
+    bool isCorrectGuess(const std::string s);
 
     void randomAnswer(); //Determines a random answer
 

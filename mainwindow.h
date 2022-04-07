@@ -6,6 +6,7 @@
 #include<QKeyEvent>
 #include<iostream>
 #include<QTranslator>
+#include<QMessagebox>
 
 #include"letterwidget.h"
 #include "letterscontainer.h"
@@ -41,6 +42,7 @@ public:
     void Update();
 
 
+    void GameWon();
 private:
     Ui::MainWindow *ui;
     Game *game;
