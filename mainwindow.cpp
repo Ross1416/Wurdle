@@ -219,6 +219,7 @@ void MainWindow::CheckWord()
             std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
 
             game->setValidAnswers();
+            game->calcEntropies();
             /*
             for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
                 if (game->getPossAnswerVector()[i].getValid()) {
