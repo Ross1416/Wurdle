@@ -45,8 +45,8 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
 //    connect(&thread, SIGNAL(started()), this, SLOT(FillValidWordsScrollArea()));
 //    thread.start();
 
-    FillValidWordsScrollArea();
-    FillUsefulWordsScrollArea();
+//    FillValidWordsScrollArea();
+//    FillUsefulWordsScrollArea();
 
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
@@ -109,19 +109,22 @@ void MainWindow::FillValidWordsScrollArea()
     int row = 0;
     int col = 0;
 //    std::cout << game->getPossGuessVector().size() << std::endl;
-    for (unsigned int i=0; i <game->getPossGuessVector().size() ; i++)
+    for (unsigned int i=0; i <game->getPossAnswerVector().size() ; i++)
     {
-//        std::cout<<game->getPossGuessVector()[index].getContent()<<std::endl;
-        auto *text = new QLabel();
-        text->setText(QString::fromStdString(game->getPossGuessVector()[i].getContent()));
-//        text->setText("Wurdle");
-        text->setContentsMargins(5,5,5,5);
-        scrollLayout->addWidget(text,row,col);
-        col++;
-        if (col > 3)
+        if (game->getPossAnswerVector()[i].getValid())
         {
-            col = 0;
-            row++;
+    //      std::cout<<game->getPossAnswerVector()[index].getContent()<<std::endl;
+            auto *text = new QLabel();
+            text->setText(QString::fromStdString(game->getPossAnswerVector()[i].getContent()));
+            //text->setText("Wurdle");
+            text->setContentsMargins(5,5,5,5);
+            scrollLayout->addWidget(text,row,col);
+            col++;
+            if (col > 3)
+            {
+                col = 0;
+                row++;
+            }
         }
 
     }
@@ -147,19 +150,22 @@ void MainWindow::FillUsefulWordsScrollArea()
     int row = 0;
     int col = 0;
 //    std::cout << game->getPossGuessVector().size() << std::endl;
-    for (unsigned int i=0; i <game->getPossGuessVector().size() ; i++)
+    for (unsigned int i=0; i <game->getPossGuessVectorSorted().size() ; i++)
     {
-//        std::cout<<game->getPossGuessVector()[index].getContent()<<std::endl;
-        auto *text = new QLabel();
-        text->setText(QString::fromStdString(game->getPossGuessVector()[i].getContent()));
-//        text->setText("Wurdle");
-        text->setContentsMargins(5,5,5,5);
-        scrollLayout->addWidget(text,row,col);
-        col++;
-        if (col > 3)
+        if (!game->getPossGuessVectorSorted()[i].getGuessed())
         {
-            col = 0;
-            row++;
+    //      std::cout<<game->getPossAnswerVector()[index].getContent()<<std::endl;
+            auto *text = new QLabel();
+            text->setText(QString::fromStdString(game->getPossGuessVectorSorted()[i].getContent()));
+            //text->setText("Wurdle");
+            text->setContentsMargins(5,5,5,5);
+            scrollLayout->addWidget(text,row,col);
+            col++;
+            if (col > 3)
+            {
+                col = 0;
+                row++;
+            }
         }
     }
 }
@@ -187,6 +193,7 @@ void MainWindow::CheckWord()
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+
         game->setValidAnswers();
         for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
             if (game->getPossAnswerVector()[i].getValid()) {
