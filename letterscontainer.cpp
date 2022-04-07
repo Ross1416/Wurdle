@@ -194,7 +194,7 @@ void LettersContainer::UpdateCurrentColours(const std::vector<uint8_t> colours)
     for (int i=0; i<width;i++)
     {
         std::string colour = "white";
-        switch(colours[i])
+        switch((int)colours[i])
         {
         // Blank
         case 0:
