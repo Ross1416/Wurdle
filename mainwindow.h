@@ -14,8 +14,8 @@
 #include "game.h"
 #include "settingsfilehandler.h"
 
-#include <QtConcurrent>
-#include <QFuture>
+//#include <QtConcurrent>
+//#include <QFuture>
 
 
 QT_BEGIN_NAMESPACE

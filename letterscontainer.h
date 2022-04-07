@@ -53,6 +53,7 @@ public:
 
 
     void invalidGuess();
+    void UpdateCurrentColours();
 signals:
 
 public slots:

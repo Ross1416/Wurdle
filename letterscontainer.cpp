@@ -189,6 +189,35 @@ void LettersContainer::invalidGuess()
     timer->start(300);
 }
 
+void LettersContainer::UpdateCurrentColours(std::vector<uint8_t> colours)
+{
+    for (int i=0; i<width;i++)
+    {
+        std::string colour = "white";
+        switch(colours[i])
+        {
+        // Blank
+        case 0:
+            break;
+        // Grey
+        case 1:
+           colour = "grey";
+           break;
+        // Yellow
+        case 2:
+            colour = "yellow";
+            break;
+        // Green
+        case 3:
+            colour = "green";
+            break;
+        }
+
+        letters[this->selectedRow][i]->setColour(colour);
+        letters[this->selectedRow][i]->updateStyle();
+    }
+}
+
 // RESET CURRENT ROW AFTER INVALID GUESS (DRIVEN BY TIMER)
 void LettersContainer::invalidGuessReset()
 {
