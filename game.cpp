@@ -60,6 +60,11 @@ std::vector<possGuessWord> Game::getPossGuessVector() const {
     return possGuessVector;
 }
 
+std::vector<possGuessWord> Game::getPossGuessVectorSorted() const {
+    return possGuessVectorSorted;
+}
+
+
 std::vector<possAnswerWord> Game::getPossAnswerVector() const {
     return possAnswerVector;
 }
@@ -195,6 +200,7 @@ bool Game::isValidGuess(const std::string s) {
             std::unique_ptr<guessWord> x(new guessWord(s, 0, numCharacters, preprocColours[possGuessIndex][answerIndex]));
             guessedVector.push_back(*x);
             totalGuesses++;
+            totalPossGuesses--;
             return true;
         }
     }
@@ -264,4 +270,10 @@ void Game::reset() {
 
     totalPossGuesses = possGuessVector.size() + 1;
     totalPossAnswers = possAnswerVector.size() + 1;
+}
+
+void Game::setValidAnswers() {
+    for (unsigned int i = 0; i < possAnswerVector.size(); i++) {
+        possAnswerVector[i].answerSetValid(guessedVector[totalGuesses - 1]);
+    }
 }

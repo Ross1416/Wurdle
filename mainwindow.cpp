@@ -54,6 +54,7 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
 
 void MainWindow::Retry()
 {
+    game->reset();
     game->randomAnswer();
     delete ui->containerWidget->layout();
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
@@ -156,12 +157,13 @@ void MainWindow::CheckWord()
 //    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
-        /*
-        for (unsigned int i = 0; i < game->getNumCharacters(); i++){
-            std::cout << game->getGuessedVector()[game->getTotalGuesses() - 1].getColourVector(i) << std::endl;
-        }
-        */
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+        game->setValidAnswers();
+        for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
+            if (game->getPossAnswerVector()[i].getValid()) {
+                std::cout << game->getPossAnswerVector()[i].getContent() << std::endl;
+            }
+        }
         letterContainer->UpdateCurrentColours(colourVector);
 
         if (game->isCorrectGuess(letterContainer->getCurrentWord()))
@@ -275,9 +277,3 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     ui->retranslateUi(this);
     Update();
 }
-
-
-
-
-
-
