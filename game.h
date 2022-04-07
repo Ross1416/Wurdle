@@ -79,6 +79,8 @@ public:
     bool isCorrectGuess(const std::string s);
 
     void randomAnswer(); //Determines a random answer
+
+    void reset(); //Resets all relevant aspects of the game when called, doesn't reset the lists, colourVectors or entropies
 };
 
 #endif // GAME_H
