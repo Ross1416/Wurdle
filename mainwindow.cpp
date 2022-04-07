@@ -46,7 +46,7 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
 //    thread.start();
 
 //    FillValidAnswersScrollArea();
-//    FillUsefulWordsScrollArea();
+    FillUsefulWordsScrollArea();
 
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
@@ -59,7 +59,8 @@ void MainWindow::Retry()
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
     delete ui->validAnswersScrollArea->widget();
-    delete ui->usefulWordsScrollArea->widget();
+    game->calcEntropies();
+    FillUsefulWordsScrollArea();
 }
 
 // MAINWINDOW DESTRUCTOR
@@ -188,6 +189,8 @@ void MainWindow::FillUsefulWordsScrollArea()
                 row++;
             }
         }
+        if (i > maxUsefulWords)
+            break;
     }
 }
 
@@ -216,7 +219,7 @@ void MainWindow::CheckWord()
 
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
 
-        game->setValidAnswers();
+
         /*
         for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
             if (game->getPossAnswerVector()[i].getValid()) {
@@ -236,6 +239,8 @@ void MainWindow::CheckWord()
                 GameLost();
             }
             else{
+                game->setValidAnswers();
+                game->calcEntropies();
                 FillValidAnswersScrollArea();
                 FillUsefulWordsScrollArea();
                 letterContainer->incrementSelectedRow();

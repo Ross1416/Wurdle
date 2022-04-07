@@ -51,6 +51,7 @@ private:
     LettersContainer *letterContainer;
     int letterContainerWidth;
     int letterContainerHeight;
+    unsigned int maxUsefulWords = 100;
     QTranslator translator;
 
     SettingsFileHandler settingsFile;
