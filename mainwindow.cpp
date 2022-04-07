@@ -123,6 +123,9 @@ void MainWindow::CheckWord()
         std::cout << "Valid!" << std::endl;
 //        game->getGuessedVector()[];
 //        letterContainer->UpdateCurrentColours();
+        for (unsigned int i = 0; i < game->getNumCharacters(); i++){
+            std::cout << game->getGuessedVector()[game->getTotalGuesses() - 1].getColourVector(i) << std::endl;
+        }
         letterContainer->incrementSelectedRow();
     }
     else {
