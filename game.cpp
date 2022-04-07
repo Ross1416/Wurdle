@@ -89,14 +89,17 @@ void Game::readUnprocAnswers() {
 void Game::readUnprocGuesses() {
     int i = 0;
     possGuessVector.clear();
+//    std::cout << guessList <<std::endl;
     std::ifstream guessInFile(guessList);
     if (guessInFile.is_open()) {
+//        std::cout<<"open"<<std::endl;
         for (std::string line; getline(guessInFile, line);) {
             if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
                 continue;
             }
             possGuessWord* x = new possGuessWord(line, 0, false, numCharacters);
             possGuessVector.push_back(*x);
+            std::cout<<x<<std::endl;
             i++;
         }
     }
@@ -174,8 +177,9 @@ bool compareEntropy(const possGuessWord x1, const possGuessWord x2) {
 */
 
 bool Game::isValidGuess(const std::string s) {
+//    std::cout<<possGuessVector.size()<<std::endl;
     for (unsigned int i = 0; i < possGuessVector.size(); i++) {
-        //std::cout << possGuessVector[i].getContent() << std::endl;
+//        std::cout << possGuessVector[i].getContent() << std::endl;
         if (possGuessVector[i].getContent() == s) {
             possGuessIndex = i;
             return true;

@@ -12,6 +12,11 @@
 
 #include "guessWord.h"
 #include "game.h"
+#include "settingsfilehandler.h"
+
+#include <QtConcurrent>
+#include <QFuture>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,11 +49,16 @@ private:
     int letterContainerHeight;
     QTranslator translator;
 
+    SettingsFileHandler settingsFile;
+    std::map<std::string,std::string> settings;
+
 
 public slots:
+
     void OpenSettingsMenu();
     void GetSettings(std::string, std::string, int, std::string);
 
 
 };
+
 #endif // MAINWINDOW_H

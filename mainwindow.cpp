@@ -6,6 +6,7 @@
 #include "letterscontainer.h"
 
 
+
 // MAINWINDOW CONSTRUCTOR
 MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
@@ -18,9 +19,28 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     letterContainerWidth = 5;
     letterContainerHeight = 6;
 
+    settingsFile = SettingsFileHandler("settings.txt");
+    settings = settingsFile.read();
+
+    game->setAnswerList(settings["AnswerList"]);
+    game->setGuessList(settings["GuessList"]);
+    game->readUnprocAnswers();
+    game->readUnprocGuesses();
+
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
+
+//    QTimer *timer = new QTimer(this);
+//    timer->setSingleShot(true);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(FillValidWordsScrollArea()));
+//    timer->start(0);
+
+//    QFuture<void> future = QtConcurrent::run(&MainWindow::FillValidWordsScrollArea);
+
+//    connect(&thread, SIGNAL(started()), this, SLOT(FillValidWordsScrollArea()));
+//    thread.start();
+
     FillValidWordsScrollArea();
     FillUsefulWordsScrollArea();
 
@@ -49,20 +69,28 @@ void MainWindow::FillValidWordsScrollArea()
     innerWidget->setLayout(scrollLayout);
     ui->validWordsScrollArea->setWidget(innerWidget);
 
-    int index = 0;
-    for (int i=0; i<30; i++)
+    int row = 0;
+    int col = 0;
+//    std::cout << game->getPossGuessVector().size() << std::endl;
+    for (unsigned int i=0; i <200 ; i++)
     {
-        for (int j=0; j<4; j++)
+//        std::cout<<game->getPossGuessVector()[index].getContent()<<std::endl;
+        auto *text = new QLabel();
+        text->setText(QString::fromStdString(game->getPossGuessVector()[i].getContent()));
+//        text->setText("Wurdle");
+        text->setContentsMargins(5,5,5,5);
+        scrollLayout->addWidget(text,row,col);
+        col++;
+        if (col > 3)
         {
-            auto *text = new QLabel();
-            text->setText("Wurlde");
-            text->setContentsMargins(5,5,5,5);
-            scrollLayout->addWidget(text,i,j);
-            index++;
+            col = 0;
+            row++;
         }
 
     }
+    std::cout<<"end"<<std::endl;
 }
+
 
 // INITIAL SETUP OF USEFUL WORDS SCROLL AREA
 void MainWindow::FillUsefulWordsScrollArea()
@@ -88,13 +116,14 @@ void MainWindow::SetupLetterContainer(int w, int h)
 
 void MainWindow::CheckWord()
 {
+//    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
+        //        letterContainer->incrementSelectedRow();
     }
     else {
         std::cout << "Invalid!" << std::endl;
-//        letterContainer->incrementSelectedRow();
-//        letterContainer->invalidGuess();
+        letterContainer->invalidGuess();
     }
 }
 
@@ -129,7 +158,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         if (event->key() >= 0x41 && event->key() <= 0x5a)
         {
             std::string keyStr = event->text().toStdString();
-            char key = tolower(keyStr.c_str()[0]); //Changed to lowercase, as that is the format that the words are stored in the txt files
+            char key = toupper(keyStr.c_str()[0]); //  (Changed to lowercase, as that is the format that the words are stored in the txt files) - did this in get current word instead since looks better with capitals
+
 
             letterContainer->setCurrentLetterText(key);
             letterContainer->unhighlightCurrentLetter();
@@ -150,8 +180,9 @@ void MainWindow::Update()
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
 //    delete ui->validWordsScrollArea->widget();
-//    SetupValidWordsScrollArea();
+    //    SetupValidWordsScrollArea();
 }
+
 
 // OPEN SETTINGS MENU DIALOG
 void MainWindow::OpenSettingsMenu()
@@ -169,8 +200,8 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->setGuessList(guessListPath);
     game->readUnprocAnswers();
     game->readUnprocGuesses();
-    game->precomputeColours(); //These are slow, be careful when testing, use release mode
-    game->calcEntropies();
+//    game->precomputeColours(); //These are slow, be careful when testing, use release mode
+//    game->calcEntropies();
 
 
     letterContainerHeight = noOfGuesses;

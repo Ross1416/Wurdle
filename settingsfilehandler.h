@@ -7,6 +7,7 @@
 #include<string>
 #include<QDir>
 
+
 class SettingsFileHandler
 {
 

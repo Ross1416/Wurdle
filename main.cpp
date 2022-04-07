@@ -5,6 +5,7 @@
 #include <iostream>
 //#include<QTranslator>
 
+
 int main(int argc, char *argv[])
 {
     Game currentGame(5, 6); //A game object is initialised with the default number of characters 5 and the default max guesses 6
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
 
     // I'm messing with your files, I'm a file goblin.
     //nice
+
 
     MainWindow w(&currentGame);
     w.show();

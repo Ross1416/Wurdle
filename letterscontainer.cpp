@@ -3,6 +3,9 @@
 #include<QGridLayout>
 #include<vector>
 #include<QTimer>
+#include<algorithm>
+
+#include<iostream>
 
 //LETTER CONTAINER CONSTRUCTOR
 LettersContainer::LettersContainer(int w, int h, QWidget *parent)
@@ -148,6 +151,9 @@ std::string LettersContainer::getCurrentWord()
             break;
         }
     }
+
+
+    transform(currentWord.begin(), currentWord.end(), currentWord.begin(), tolower);  // Transforms the current word into lower case
     return currentWord;
 }
 
