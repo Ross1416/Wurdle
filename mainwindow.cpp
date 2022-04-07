@@ -130,7 +130,7 @@ void MainWindow::FillValidAnswersScrollArea()
     int row = 0;
     int col = 0;
 //    std::cout << game->getPossGuessVector().size() << std::endl;
-    for (unsigned int i=0; i <game->getPossAnswerVector().size() ; i++)
+    for (unsigned int i=0; i < game->getPossAnswerVector().size() ; i++)
     {
         if (game->getPossAnswerVector()[i].getValid())
         {
@@ -214,31 +214,33 @@ void MainWindow::CheckWord()
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
 
-        if (letterContainer->getSelectedRow() < letterContainerHeight-1)
-        {
-            std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
 
-            game->setValidAnswers();
-            /*
-            for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
-                if (game->getPossAnswerVector()[i].getValid()) {
-                    std::cout << game->getPossAnswerVector()[i].getContent() << std::endl;
-                }
+        game->setValidAnswers();
+        /*
+        for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
+            if (game->getPossAnswerVector()[i].getValid()) {
+                std::cout << game->getPossAnswerVector()[i].getContent() << std::endl;
             }
-            */
-            letterContainer->UpdateCurrentColours(colourVector);
+        }
+        */
+        letterContainer->UpdateCurrentColours(colourVector);
 
-            if (game->isCorrectGuess(letterContainer->getCurrentWord()))
+        if (game->isCorrectGuess(letterContainer->getCurrentWord()))
+        {
+            GameWon();
+        }
+        else{
+            if (letterContainer->getSelectedRow() >= letterContainerHeight-1)
             {
-                GameWon();
+                GameLost();
             }
             else{
                 FillValidAnswersScrollArea();
+                FillUsefulWordsScrollArea();
                 letterContainer->incrementSelectedRow();
             }
-        }
-        else{
-            GameLost();
+
         }
     }
     else {
