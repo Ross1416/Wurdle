@@ -121,9 +121,12 @@ void MainWindow::CheckWord()
 //    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
-//        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
-//        letterContainer->UpdateCurrentColours(colourVector);
-//        letterContainer->incrementSelectedRow();
+//        game->getGuessedVector()[];
+//        letterContainer->UpdateCurrentColours();
+        for (unsigned int i = 0; i < game->getNumCharacters(); i++){
+            std::cout << game->getGuessedVector()[game->getTotalGuesses() - 1].getColourVector(i) << std::endl;
+        }
+        letterContainer->incrementSelectedRow();
     }
     else {
         std::cout << "Invalid!" << std::endl;

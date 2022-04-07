@@ -189,7 +189,7 @@ void LettersContainer::invalidGuess()
     timer->start(300);
 }
 
-void LettersContainer::UpdateCurrentColours(std::vector<uint8_t> colours)
+void LettersContainer::UpdateCurrentColours(const std::vector<uint8_t> colours)
 {
     for (int i=0; i<width;i++)
     {

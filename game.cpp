@@ -188,8 +188,9 @@ bool Game::isValidGuess(const std::string s) {
 //    std::cout<<possGuessVector.size()<<std::endl;
     for (unsigned int i = 0; i < possGuessVector.size(); i++) {
 //        std::cout << possGuessVector[i].getContent() << std::endl;
-        if (possGuessVector[i].getContent() == s) {
+        if ((possGuessVector[i].getContent() == s) && !(possGuessVector[i].getGuessed())) {
             possGuessIndex = i;
+            possGuessVector[i].setGuessed(true);
             //Push new guessed word into guessedList
             std::unique_ptr<guessWord> x(new guessWord(s, 0, numCharacters, preprocColours[possGuessIndex][answerIndex]));
             guessedVector.push_back(*x);

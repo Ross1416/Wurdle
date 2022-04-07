@@ -53,7 +53,7 @@ public:
 
 
     void invalidGuess();
-    void UpdateCurrentColours(std::vector<uint8_t>);
+    void UpdateCurrentColours(const std::vector<uint8_t> colours);
 signals:
 
 public slots:
