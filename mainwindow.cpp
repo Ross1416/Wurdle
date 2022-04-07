@@ -54,7 +54,6 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
 
 void MainWindow::Retry()
 {
-    game->randomAnswer();
     delete ui->containerWidget->layout();
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
@@ -79,6 +78,8 @@ void MainWindow::GameWon()
 
     switch(btn){
     case QMessageBox::Retry:
+        game->reset();
+        game->randomAnswer();
         Retry();
         break;
     case QMessageBox::Close:
@@ -108,7 +109,7 @@ void MainWindow::FillValidWordsScrollArea()
     int row = 0;
     int col = 0;
 //    std::cout << game->getPossGuessVector().size() << std::endl;
-    for (unsigned int i=0; i <200 ; i++)
+    for (unsigned int i=0; i <game->getPossGuessVector().size() ; i++)
     {
 //        std::cout<<game->getPossGuessVector()[index].getContent()<<std::endl;
         auto *text = new QLabel();
@@ -131,7 +132,36 @@ void MainWindow::FillValidWordsScrollArea()
 // INITIAL SETUP OF USEFUL WORDS SCROLL AREA
 void MainWindow::FillUsefulWordsScrollArea()
 {
-// testing change 4
+    delete ui->usefulWordsScrollArea->widget();
+
+    auto *innerWidget = new QWidget(ui->usefulWordsScrollArea);
+    auto *scrollLayout = new QGridLayout(innerWidget);
+
+    scrollLayout->setAlignment(Qt::AlignCenter);
+//    scrollLayout->setContentsMargins(10,10,10,10);
+    scrollLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+
+    innerWidget->setLayout(scrollLayout);
+    ui->usefulWordsScrollArea->setWidget(innerWidget);
+
+    int row = 0;
+    int col = 0;
+//    std::cout << game->getPossGuessVector().size() << std::endl;
+    for (unsigned int i=0; i <game->getPossGuessVector().size() ; i++)
+    {
+//        std::cout<<game->getPossGuessVector()[index].getContent()<<std::endl;
+        auto *text = new QLabel();
+        text->setText(QString::fromStdString(game->getPossGuessVector()[i].getContent()));
+//        text->setText("Wurdle");
+        text->setContentsMargins(5,5,5,5);
+        scrollLayout->addWidget(text,row,col);
+        col++;
+        if (col > 3)
+        {
+            col = 0;
+            row++;
+        }
+    }
 }
 
 // INITIAL SETUP OF LETTERCONTAINER
@@ -169,6 +199,7 @@ void MainWindow::CheckWord()
             GameWon();
         }
         else{
+            FillValidWordsScrollArea();
             letterContainer->incrementSelectedRow();
         }
 
