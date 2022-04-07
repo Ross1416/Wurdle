@@ -239,3 +239,21 @@ void Game::randomAnswer() {
         std::cout << "Standard Error!" << std::endl;
     }
 }
+
+void Game::reset() {
+    guessedVector.clear();
+    for (unsigned int i = 0; i < possGuessVector.size(); i++) {
+        possGuessVector[i].setGuessed(false); //No guesses have been made
+    }
+
+    for (unsigned int i = 0; i < possAnswerVector.size(); i++) {
+        possAnswerVector[i].setValid(true); //All answers are valid due to no information
+    }
+
+    answerIndex = 0;
+    possGuessIndex = 0;
+    totalGuesses = 0;
+
+    totalPossGuesses = possGuessVector.size() + 1;
+    totalPossAnswers = possAnswerVector.size() + 1;
+}

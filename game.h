@@ -78,6 +78,8 @@ public:
     bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess, if it is, then it is pushed to the back of the guessedVector
 
     void randomAnswer(); //Determines a random answer
+
+    void reset(); //Resets all relevant aspects of the game when called, doesn't reset the lists, colourVectors or entropies
 };
 
 #endif // GAME_H

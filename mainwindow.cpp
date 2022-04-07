@@ -121,10 +121,11 @@ void MainWindow::CheckWord()
 //    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
-//        for (unsigned int i = 0; i < game->getNumCharacters(); i++){
-//            std::cout << game->getGuessedVector()[game->getTotalGuesses() - 1].getColourVector(i) << std::endl;
-//        }
-
+        /*
+        for (unsigned int i = 0; i < game->getNumCharacters(); i++){
+            std::cout << game->getGuessedVector()[game->getTotalGuesses() - 1].getColourVector(i) << std::endl;
+        }
+        */
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
 
         letterContainer->UpdateCurrentColours(colourVector);
@@ -211,7 +212,7 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->precomputeColours(); //These are slow, be careful when testing, use release mode
     game->calcEntropies();
     //Reset the game
-    game->getGuessedVector().clear();
+    game->reset();
     game->randomAnswer();
 
 
