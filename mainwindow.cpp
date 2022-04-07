@@ -58,6 +58,8 @@ void MainWindow::Retry()
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
+    delete ui->validAnswersScrollArea->widget();
+    delete ui->usefulWordsScrollArea->widget();
 }
 
 // MAINWINDOW DESTRUCTOR
