@@ -190,7 +190,7 @@ bool Game::isValidGuess(const std::string s) {
 //        std::cout << possGuessVector[i].getContent() << std::endl;
         if ((possGuessVector[i].getContent() == s) && !(possGuessVector[i].getGuessed())) {
             possGuessIndex = i;
-            possGuessVector[i].setGuessed(true);
+            possGuessVector[i].setGuessed(true); //Make sure the same word can't be guessed twice
             //Push new guessed word into guessedList
             std::unique_ptr<guessWord> x(new guessWord(s, 0, numCharacters, preprocColours[possGuessIndex][answerIndex]));
             guessedVector.push_back(*x);
@@ -228,6 +228,7 @@ void Game::randomAnswer() {
             //std::cout << randomIndex << std::endl;
             currentAnswer.setContent(possAnswerVector[randomIndex].getContent());
             currentAnswer.setNumCharacters(numCharacters);
+            answerIndex = randomIndex;
             std::cout << "Current Answer is: " << currentAnswer.getContent() << std::endl;
         }
     }
