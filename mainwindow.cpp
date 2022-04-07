@@ -52,6 +52,17 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
 }
 
+void MainWindow::Retry()
+{
+    game->randomAnswer();
+    delete ui->containerWidget->layout();
+    SetupLetterContainer(letterContainerWidth,letterContainerHeight);
+    letterContainer->highlightCurrentLetter();
+    letterContainer->updateLetterStyles();
+    FillValidWordsScrollArea();
+    FillUsefulWordsScrollArea();
+}
+
 // MAINWINDOW DESTRUCTOR
 MainWindow::~MainWindow()
 {
@@ -68,7 +79,7 @@ void MainWindow::GameWon()
 
     switch(btn){
     case QMessageBox::Retry:
-
+        Retry();
         break;
     case QMessageBox::Close:
         qApp->quit();
@@ -132,6 +143,7 @@ void MainWindow::SetupLetterContainer(int w, int h)
     letterContainer = new LettersContainer(w, h, ui->containerWidget);
 
     QHBoxLayout *boxlayout = new QHBoxLayout(ui->containerWidget);
+
 
     ui->containerWidget->setLayout(boxlayout);
 

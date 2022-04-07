@@ -43,6 +43,7 @@ public:
 
 
     void GameWon();
+    void Retry();
 private:
     Ui::MainWindow *ui;
     Game *game;
