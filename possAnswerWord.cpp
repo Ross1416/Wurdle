@@ -76,7 +76,7 @@
 		for (int i = 0; i < numChars; i++) {
 			guessColour = iter->getColourVector(i);
 			//If the colour of the guess character is YELLOW, then loop through to see if the possAnswerWord matches
-			if ((guessColour == 2)) {
+            if (guessColour == 2) {
 				bool found = false;
 				for (int j = 0; j < numChars; j++) {
 					//If a match is no found at any position APART from the position of the yellow in the guess AND the character hasn't already been counted, then false is returned
@@ -91,7 +91,7 @@
 				}
 			}
 			//If the colour of the guess character is GREY, then loop through to make sure that the answer doesn't contain that letter
-			else if ((guessColour == 1)) {
+            else if (guessColour == 1) {
 				for (int j = 0; j < numChars; j++) {
 					if ((iter->getContent()[i] == getContent()[j]) && !(countedVector[j])) {
 						/*
@@ -136,7 +136,7 @@
 		for (int i = 0; i < numChars; i++) {
 			guessColour = vector.getColourVector(i);
 			//If the colour of the guess character is YELLOW, then loop through to see if the possAnswerWord matches
-			if ((guessColour == 2)) {
+            if (guessColour == 2) {
 				bool found = false;
 				for (int j = 0; j < numChars; j++) {
 					//If a match is no found at any position APART from the position of the yellow in the guess AND the character hasn't already been counted, then false is returned
@@ -151,7 +151,7 @@
 				}
 			}
 			//If the colour of the guess character is GREY, then loop through to make sure that the answer doesn't contain that letter
-			else if ((guessColour == 1)) {
+            else if (guessColour == 1) {
 				for (int j = 0; j < numChars; j++) {
 					if ((vector.getContent()[i] == getContent()[j]) && !(countedVector[j])) {
 						/*
@@ -192,7 +192,7 @@
 		for (int i = 0; i < numChars; i++) {
 			guessColour = iter->getColourVector(i);
 			//If the colour of the guess character is YELLOW, then loop through to see if the possAnswerWord matches
-			if ((guessColour == 2)) {
+            if (guessColour == 2) {
 				bool found = false;
 				for (int j = 0; j < numChars; j++) {
 					//If a match is no found at any position APART from the position of the yellow in the guess AND the character hasn't already been counted, then false is returned
@@ -206,7 +206,7 @@
 					return false;
 				}				}
 			//If the colour of the guess character is GREY, then loop through to make sure that the answer doesn't contain that letter
-			else if ((guessColour == 1)) {
+            else if (guessColour == 1) {
 				for (int j = 0; j < numChars; j++) {
 					if ((iter->getContent()[i] == getContent()[j]) && !(countedVector[j])) {
 						return false;
