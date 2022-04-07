@@ -65,6 +65,7 @@ public:
 
     std::vector<possGuessWord> getPossGuessVector() const;
     std::vector<possAnswerWord> getPossAnswerVector() const;
+    std::vector<possGuessWord> getPossGuessVectorSorted() const;
     std::vector<guessWord> getGuessedVector() const;
 
     void readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
@@ -81,6 +82,8 @@ public:
     void randomAnswer(); //Determines a random answer
 
     void reset(); //Resets all relevant aspects of the game when called, doesn't reset the lists, colourVectors or entropies
+
+    void setValidAnswers(); //Iterates through the possAnswerVector and determines which answers are still valid based on the current game conditions
 };
 
 #endif // GAME_H
