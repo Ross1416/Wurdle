@@ -200,8 +200,11 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->setGuessList(guessListPath);
     game->readUnprocAnswers();
     game->readUnprocGuesses();
-//    game->precomputeColours(); //These are slow, be careful when testing, use release mode
-//    game->calcEntropies();
+    game->precomputeColours(); //These are slow, be careful when testing, use release mode
+    game->calcEntropies();
+    //Reset the game
+    game->getGuessedVector().clear();
+    game->randomAnswer();
 
 
     letterContainerHeight = noOfGuesses;
