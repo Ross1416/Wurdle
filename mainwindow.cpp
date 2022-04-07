@@ -121,13 +121,13 @@ void MainWindow::CheckWord()
 //    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
-//        game->getGuessedVector()[];
-//        letterContainer->UpdateCurrentColours();
-        letterContainer->incrementSelectedRow();
+//        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+//        letterContainer->UpdateCurrentColours(colourVector);
+//        letterContainer->incrementSelectedRow();
     }
     else {
         std::cout << "Invalid!" << std::endl;
-        letterContainer->invalidGuess();
+//        letterContainer->invalidGuess();
     }
 }
 
@@ -163,7 +163,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         {
             std::string keyStr = event->text().toStdString();
             char key = toupper(keyStr.c_str()[0]); //  (Changed to lowercase, as that is the format that the words are stored in the txt files) - did this in get current word instead since looks better with capitals
-
 
             letterContainer->setCurrentLetterText(key);
             letterContainer->unhighlightCurrentLetter();
@@ -204,8 +203,8 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->setGuessList(guessListPath);
     game->readUnprocAnswers();
     game->readUnprocGuesses();
-    game->precomputeColours(); //These are slow, be careful when testing, use release mode
-    game->calcEntropies();
+//    game->precomputeColours(); //These are slow, be careful when testing, use release mode
+//    game->calcEntropies();
     //Reset the game
     game->getGuessedVector().clear();
     game->randomAnswer();
