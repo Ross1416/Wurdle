@@ -68,6 +68,14 @@ std::vector<guessWord> Game::getGuessedVector() const {
     return guessedVector;
 }
 
+unsigned int Game::getTotalGuesses() const {
+    return totalGuesses;
+}
+
+void Game::setTotalGuesses(const unsigned int i) {
+    totalGuesses = i;
+}
+
 void Game::readUnprocAnswers() {
     int i = 0;
     possAnswerVector.clear();

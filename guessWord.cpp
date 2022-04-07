@@ -28,7 +28,11 @@ guessWord::~guessWord() {}
 	//Getters and Setters
 	float guessWord::getEntropy() const { return entropy; }
 
-	int guessWord::getColourVector(const int i) const{ return colourVector[i]; }
+    int guessWord::getColourVector(const int i) const { return colourVector[i]; }
+
+    std::vector<uint8_t> guessWord::getColourVector() const {
+        return colourVector;
+    }
 
 	void guessWord::createColourVector() { //Create vector of colours for each character
 		colourVector.clear();

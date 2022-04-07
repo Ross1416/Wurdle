@@ -119,7 +119,7 @@ void MainWindow::CheckWord()
 //    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
-        //        letterContainer->incrementSelectedRow();
+        //letterContainer->incrementSelectedRow();
     }
     else {
         std::cout << "Invalid!" << std::endl;

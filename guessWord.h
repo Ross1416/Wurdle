@@ -20,6 +20,7 @@ public:
 	//Getters and Setters
 	float getEntropy() const;
 	int getColourVector(const int i) const;
+    std::vector<uint8_t> getColourVector() const;
 	void createColourVector(); //Create vector of colours for each character
 	void createColourVector(const int n);
 	void setColourVector(const std::vector<uint8_t> cV);

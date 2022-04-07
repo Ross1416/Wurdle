@@ -60,6 +60,8 @@ public:
     unsigned int getPossGuessIndex() const;
     void setAnswerIndex(const unsigned int i);
     unsigned int getAnswerIndex() const;
+    unsigned int getTotalGuesses() const;
+    void setTotalGuesses(const unsigned int i);
 
     std::vector<possGuessWord> getPossGuessVector() const;
     std::vector<possAnswerWord> getPossAnswerVector() const;
@@ -73,9 +75,9 @@ public:
     //bool compareEntropy(const possGuessWord x1, const possGuessWord x2);
     void calcEntropies();
 
-    bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess
+    bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess, if it is, then it is pushed to the back of the guessedVector
 
-    void randomAnswer();
+    void randomAnswer(); //Determines a random answer
 };
 
 #endif // GAME_H
