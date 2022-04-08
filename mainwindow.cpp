@@ -28,6 +28,8 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     game->readUnprocGuesses();
     game->precomputeColours(); //These are slow, be careful when testing, use release mode
     game->calcEntropies();
+    game->setInitialEntropies(); //Initial "first turn" entropies are recorded and set
+    game->reset();
     game->randomAnswer();
 
 
@@ -59,7 +61,8 @@ void MainWindow::Retry()
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
     delete ui->validAnswersScrollArea->widget();
-    game->calcEntropies();
+    game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
+    //game->calcEntropies();
     FillUsefulWordsScrollArea();
 }
 
@@ -328,9 +331,12 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->readUnprocGuesses();
     game->precomputeColours(); //These are slow, be careful when testing, use release mode
     game->calcEntropies();
+    game->setInitialEntropies(); //Sets the initial entropies, so they only have to be calculated once
     //Reset the game
     game->reset();
     game->randomAnswer();
+
+    FillUsefulWordsScrollArea();
 
 
     letterContainerHeight = noOfGuesses;
