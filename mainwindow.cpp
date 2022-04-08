@@ -4,13 +4,16 @@
 
 //#include "letterwidget.h"
 #include "letterscontainer.h"
+#include <thread>
+
 
 
 
 // MAINWINDOW CONSTRUCTOR
-MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
+MainWindow::MainWindow(Game* currentGamePtr, std::map<std::string,std::string> settingsMap, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
     game = currentGamePtr;
+    this->settings = settingsMap;
 
     ui->setupUi(this);
     ui->centralwidget->setContentsMargins(0,0,0,0);
@@ -19,16 +22,20 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
     letterContainerWidth = 5;
     letterContainerHeight = 6;
 
-    settingsFile = SettingsFileHandler("settings.txt");
-    settings = settingsFile.read();
+//    settingsFile = SettingsFileHandler("settings.txt");
+//    settings = settingsFile.read();
+//    std::cout<<settings["AnswerList"]<<std::endl;
+//    std::cout<<settings["GuessList"]<<std::endl;
 
     game->setAnswerList(settings["AnswerList"]);
     game->setGuessList(settings["GuessList"]);
     game->readUnprocAnswers();
     game->readUnprocGuesses();
-    game->precomputeColours(); //These are slow, be careful when testing, use release mode
-    game->calcEntropies();
-    game->setInitialEntropies(); //Initial "first turn" entropies are recorded and set
+//    game->precomputeColours(); //These are slow, be careful when testing, use release mode
+//    game->calcEntropies();
+
+
+//    game->setInitialEntropies(); //Initial "first turn" entropies are recorded and set
     game->reset();
     game->randomAnswer();
 
@@ -50,6 +57,8 @@ MainWindow::MainWindow(Game* currentGamePtr, QWidget *parent) : QMainWindow(pare
 //    FillValidAnswersScrollArea();
     FillUsefulWordsScrollArea();
 
+    GenerateUsefulWords();
+
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
 }
@@ -70,6 +79,29 @@ void MainWindow::Retry()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::GenerateUsefulWords()
+{
+    progressDialog = new QProgressDialog("Generating useful words...", "Abort", 0, 100);
+
+    connect(progressDialog, &QProgressDialog::canceled, this, &MainWindow::CancelGenerateUsefulWords);
+    progressTimer = new QTimer(this);
+    connect(progressTimer, &QTimer::timeout, this, &MainWindow::performGeneration);
+
+    QFuture<void> future = QtConcurrent::run(&Game::Combined, game);
+
+    progressTimer->start(0);
+}
+
+void MainWindow::performGeneration()
+{
+
+}
+
+void MainWindow::CancelGenerateUsefulWords()
+{
+
 }
 
 void MainWindow::GameWon()
@@ -316,7 +348,7 @@ void MainWindow::Update()
 // OPEN SETTINGS MENU DIALOG
 void MainWindow::OpenSettingsMenu()
 {
-    settingsMenu *settings = new settingsMenu(this);
+    settingsMenu *settings = new settingsMenu(this->settings, this);
 //    connect(settings, &QDialog::accepted, this, &MainWindow::Update);
     connect(settings, SIGNAL(ok_signal(std::string, std::string, int, std::string)), this, SLOT(GetSettings(std::string, std::string, int, std::string)));
     settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open

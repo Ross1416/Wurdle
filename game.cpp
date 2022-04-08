@@ -192,6 +192,12 @@ void Game::calcEntropies() {
     std::cout << "Finished entropy calc" << std::endl;
 }
 
+void Game::Combined()
+{
+    this->precomputeColours();
+    this->calcEntropies();
+}
+
 /*
 bool compareEntropy(const possGuessWord x1, const possGuessWord x2) {
     return (x1.getEntropy() > x2.getEntropy());

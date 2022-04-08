@@ -42,6 +42,8 @@ private:
     answerWord currentAnswer; //Stores the answer
 
     std::vector<std::vector<std::vector<uint8_t>>> preprocColours; //Stores the preprocessed Colour vectors for lookup table of possGuessWords and possAnswerWords
+
+
 public:
     //Destructor and Constructors
     ~Game();
@@ -76,7 +78,7 @@ public:
     void precomputeColours(); //Clears, resizes and calculates the precomputed colour vectors for the current possGuessVector and possAnswerVectors, stores result in the preprocColours vector
 
     //bool compareEntropy(const possGuessWord x1, const possGuessWord x2);
-    void calcEntropies();
+
 
     bool isValidGuess(const std::string s); //Determines if the string entered as a guess is a valid guess, if it is, then it is pushed to the back of the guessedVector
     bool isCorrectGuess(const std::string s);
@@ -90,6 +92,9 @@ public:
     void setInitialEntropies(); //Sets the values for the initial entropies based on the calculated entropies
 
     void resetToInitialEntropies(); //Resets the current entropy values based on the initial entropy values
+    void calcEntropies();
+
+    void Combined();
 };
 
 #endif // GAME_H

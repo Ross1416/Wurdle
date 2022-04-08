@@ -2,6 +2,7 @@
 #include <QApplication>
 
 #include "game.h"
+#include "settingsmenu.h"
 #include <iostream>
 //#include<QTranslator>
 
@@ -21,7 +22,10 @@ int main(int argc, char *argv[])
     //nice
 
 
-    MainWindow w(&currentGame);
+    SettingsFileHandler settingsFile = SettingsFileHandler("settings.txt");
+    std::map<std::string,std::string> settings = settingsFile.read();
+
+    MainWindow w(&currentGame, settings);
     w.show();
     return a.exec();
 

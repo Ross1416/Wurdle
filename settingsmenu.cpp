@@ -3,17 +3,17 @@
 #include<QFileDialog>
 #include<iostream>
 
-settingsMenu::settingsMenu(QWidget *parent) :
+settingsMenu::settingsMenu(std::map<std::string,std::string> settingsMap, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settingsMenu)
 {
 
     ui->setupUi(this);
 
-
+    settings = settingsMap;
 //    settingsFile = SettingsFileHandler("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/settings.txt");
-    settingsFile = SettingsFileHandler("settings.txt");
-    settings = settingsFile.read();
+//    settingsFile = SettingsFileHandler("settings.txt");
+//    settings = settingsFile.read();
     Setup();
 
     // SET DIALOG BUTTONS SO THEY'RE TRANSLATABLE
@@ -67,14 +67,14 @@ void settingsMenu::ok()
 
 void settingsMenu::browseForAnswerList()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose answer list"), "/","Text files (*.txt)");
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose answer list"), QDir().absolutePath(),"Text files (*.txt)");
     if (fileName != "")
         ui->answerListLineEdit->setText(fileName);
 }
 
 void settingsMenu::browseForGuessList()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose guess list"), "/","Text files (*.txt)");
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose guess list"), QDir().absolutePath(),"Text files (*.txt)");
     if (fileName != "")
         ui->guessListLineEdit->setText(fileName);
 }

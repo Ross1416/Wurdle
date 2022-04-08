@@ -13,7 +13,7 @@ class settingsMenu : public QDialog
     Q_OBJECT
 
 public:
-    settingsMenu(QWidget *parent = nullptr);
+    settingsMenu(std::map<std::string,std::string> settings, QWidget *parent = nullptr);
     ~settingsMenu();
     void ok();
 

@@ -7,6 +7,8 @@
 #include<iostream>
 #include<QTranslator>
 #include<QMessagebox>
+#include <QProgressDialog>
+#include<QTimer>
 
 #include"letterwidget.h"
 #include "letterscontainer.h"
@@ -15,8 +17,8 @@
 #include "game.h"
 #include "settingsfilehandler.h"
 
-//#include <QtConcurrent>
-//#include <QFuture>
+#include <QtConcurrent>
+#include <QFuture>
 
 
 QT_BEGIN_NAMESPACE
@@ -28,7 +30,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Game* currentGame, QWidget *parent = nullptr);
+    MainWindow(Game* currentGame, std::map<std::string,std::string> settings, QWidget *parent = nullptr);
     ~MainWindow();
 
 
@@ -45,6 +47,8 @@ public:
     void GameWon();
     void Retry();
     void GameLost();
+    void GenerateUsefulWords();
+
 private:
     Ui::MainWindow *ui;
     Game *game;
@@ -54,10 +58,14 @@ private:
     unsigned int maxUsefulWords = 100;
     QTranslator translator;
 
-    SettingsFileHandler settingsFile;
+    QProgressDialog* progressDialog;
+    QTimer* progressTimer;
+
+//    SettingsFileHandler settingsFile;
     std::map<std::string,std::string> settings;
 
-
+    void CancelGenerateUsefulWords();
+    void performGeneration();
 public slots:
 
     void OpenSettingsMenu();
