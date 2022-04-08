@@ -286,3 +286,20 @@ void Game::setValidAnswers() {
         possAnswerVector[i].answerSetValid(guessedVector[totalGuesses - 1]);
     }
 }
+
+void Game::setInitialEntropies() {
+    for (unsigned int i = 0; i < possGuessVector.size(); i++) {
+        possGuessVector[i].setInitialEntropy(possGuessVector[i].getEntropy());
+    }
+    std::cout << "Initial entropies set" << std::endl;
+}
+
+void Game::resetToInitialEntropies() {
+    for (unsigned int i = 0; i < possGuessVector.size(); i++) {
+        possGuessVector[i].setEntropy(possGuessVector[i].getInitialEntropy());
+    }
+    possGuessVectorSorted.clear();
+    possGuessVectorSorted = possGuessVector;
+    std::sort(possGuessVectorSorted.begin(), possGuessVectorSorted.end(), compareEntropy);
+    std::cout << "Finished resetting to initial entropy" << std::endl;
+}

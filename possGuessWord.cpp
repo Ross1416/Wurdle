@@ -7,6 +7,7 @@ possGuessWord::~possGuessWord() {}
 possGuessWord::possGuessWord() {
 	content = "";
 	entropy = 0;
+    initialEntropy = 0;
 	guessed = false;
 	numCharacters = 5;
 	createColourVector();
@@ -15,6 +16,7 @@ possGuessWord::possGuessWord() {
 possGuessWord::possGuessWord(const std::string c, const float e, const bool g, const int n) {
 	content = c;
 	entropy = e;
+    initialEntropy = e;
 	guessed = g;
 	numCharacters = n;
 	createColourVector(numCharacters);
@@ -22,6 +24,8 @@ possGuessWord::possGuessWord(const std::string c, const float e, const bool g, c
 
 //Getters and Setters
 float possGuessWord::getEntropy() const { return entropy; }
+
+float possGuessWord::getInitialEntropy() const { return initialEntropy; }
 
 bool possGuessWord::getGuessed() const { return guessed; }
 
@@ -47,6 +51,8 @@ void possGuessWord::createColourVector(const int n) {
 }
 
 void possGuessWord::setEntropy(const float e) { entropy = e; }
+
+void possGuessWord::setInitialEntropy (const float e) { initialEntropy = e; }
 
 void possGuessWord::addEntropy(const float a) { entropy += a; }
 

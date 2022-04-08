@@ -86,6 +86,10 @@ public:
     void reset(); //Resets all relevant aspects of the game when called, doesn't reset the lists, colourVectors or entropies
 
     void setValidAnswers(); //Iterates through the possAnswerVector and determines which answers are still valid based on the current game conditions
+
+    void setInitialEntropies(); //Sets the values for the initial entropies based on the calculated entropies
+
+    void resetToInitialEntropies(); //Resets the current entropy values based on the initial entropy values
 };
 
 #endif // GAME_H

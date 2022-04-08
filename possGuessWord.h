@@ -13,6 +13,7 @@
 class possGuessWord : public word {
 protected:
 	float entropy;
+    float initialEntropy; //Stores the entropy for the first guess
 	bool guessed;
 	std::vector<uint8_t> colourVector;
 public:
@@ -22,6 +23,7 @@ public:
 	possGuessWord(const std::string c, const float e, const bool g, const int n);
 	//Getters and Setters
 	float getEntropy() const;
+    float getInitialEntropy() const;
 	bool getGuessed() const;
 	int getColourVector(const int i) const;
 	std::vector<uint8_t> getColourVector() const;
@@ -34,6 +36,7 @@ public:
 	void determineColourVector(class possAnswerWord vector);
 	std::string displayColourVector(const int i) const;
 	void setEntropy(const float e);
+    void setInitialEntropy( const float e);
 	void addEntropy(const float a);
 	float calcEntropy(const int possAnswers, const int arg2, const int validAnswers) const;
 	void setGuessed(const bool g);
