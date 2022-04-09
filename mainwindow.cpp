@@ -55,7 +55,7 @@ MainWindow::MainWindow(Game* currentGamePtr, std::map<std::string,std::string> s
 //    thread.start();
 
 //    FillValidAnswersScrollArea();
-    FillUsefulWordsScrollArea();
+//    FillUsefulWordsScrollArea();
 
     GenerateUsefulWords();
 
@@ -83,26 +83,52 @@ MainWindow::~MainWindow()
 
 void MainWindow::GenerateUsefulWords()
 {
+    std::cout<<"Generate"<<std::endl;
+    delete ui->usefulWordsScrollArea->widget();
+    this->setEnabled(false);
     progressDialog = new QProgressDialog("Generating useful words...", "Abort", 0, 100);
+    progressDialog->setFixedSize(QSize(200,100));
+    progressDialog->setFocus();
 
     connect(progressDialog, &QProgressDialog::canceled, this, &MainWindow::CancelGenerateUsefulWords);
-    progressTimer = new QTimer(this);
-    connect(progressTimer, &QTimer::timeout, this, &MainWindow::performGeneration);
+
+    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
+    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
+
+    connect(&watcher, SIGNAL(finished()), this, SLOT(finishedUsefulWordsGeneration()));
 
     QFuture<void> future = QtConcurrent::run(&Game::Combined, game);
-
-    progressTimer->start(0);
+    watcher.setFuture(future);
 }
 
-void MainWindow::performGeneration()
+void MainWindow::updateGenerateUsefulWordsColoursProgress(int percent)
 {
+//    std::cout<<percent<<std::endl;
+    progressDialog->setLabelText("Precomputing colours...");
+    progressDialog->setValue(percent);
+}
 
+void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
+{
+//    std::cout<<percent<<std::endl;
+    progressDialog->setLabelText("Calculating entropy...");
+    progressDialog->setValue(percent);
 }
 
 void MainWindow::CancelGenerateUsefulWords()
 {
-
+    game->cancelCombined();
+    this->setEnabled(true);
 }
+
+void MainWindow::finishedUsefulWordsGeneration()
+{
+    std::cout<<"finished"<<std::endl;
+    progressDialog->close();
+    this->setEnabled(true);
+    FillUsefulWordsScrollArea();
+}
+
 
 void MainWindow::GameWon()
 {
@@ -277,7 +303,7 @@ void MainWindow::CheckWord()
                 game->setValidAnswers();
                 game->calcEntropies();
                 FillValidAnswersScrollArea();
-                FillUsefulWordsScrollArea();
+//                FillUsefulWordsScrollArea();
                 letterContainer->incrementSelectedRow();
             }
 
@@ -362,13 +388,12 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->readUnprocAnswers();
     game->readUnprocGuesses();
     game->precomputeColours(); //These are slow, be careful when testing, use release mode
-    game->calcEntropies();
-    game->setInitialEntropies(); //Sets the initial entropies, so they only have to be calculated once
+    GenerateUsefulWords();
+//    game->calcEntropies();
+//    game->setInitialEntropies(); //Sets the initial entropies, so they only have to be calculated once
     //Reset the game
     game->reset();
     game->randomAnswer();
-
-    FillUsefulWordsScrollArea();
 
 
     letterContainerHeight = noOfGuesses;

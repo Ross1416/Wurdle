@@ -288,22 +288,6 @@
     <string>Language:</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="generateUsefulCheckBox">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>180</y>
-     <width>151</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Generate Useful Words</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>

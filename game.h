@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <QObject>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -16,7 +17,8 @@
 #include "answerWord.h"
 #include "guessWord.h"
 
-class Game {
+class Game : public QObject{
+    Q_OBJECT
 private:
 
     std::string guessList; //Name of the guessList
@@ -43,6 +45,8 @@ private:
 
     std::vector<std::vector<std::vector<uint8_t>>> preprocColours; //Stores the preprocessed Colour vectors for lookup table of possGuessWords and possAnswerWords
 
+    bool cancelPrecomputeColours;
+    bool cancelCalcEntropy;
 
 public:
     //Destructor and Constructors
@@ -95,6 +99,11 @@ public:
     void calcEntropies();
 
     void Combined();
+
+    void cancelCombined();
+signals:
+    void precomputeColorsSignal(int percent);
+    void calcEntropySignal(int percent);
 };
 
 #endif // GAME_H

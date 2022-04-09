@@ -60,16 +60,20 @@ private:
 
     QProgressDialog* progressDialog;
     QTimer* progressTimer;
+    QFutureWatcher<void> watcher;
 
 //    SettingsFileHandler settingsFile;
     std::map<std::string,std::string> settings;
 
-    void CancelGenerateUsefulWords();
-    void performGeneration();
+
 public slots:
 
     void OpenSettingsMenu();
     void GetSettings(std::string, std::string, int, std::string);
+    void updateGenerateUsefulWordsColoursProgress(int colourPercent);
+    void updateGenerateUsefulWordsEntropyProgress(int colourPercent);
+    void CancelGenerateUsefulWords();
+    void finishedUsefulWordsGeneration();
 
 
 };
