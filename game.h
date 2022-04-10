@@ -46,7 +46,9 @@ private:
     std::vector<std::vector<std::vector<uint8_t>>> preprocColours; //Stores the preprocessed Colour vectors for lookup table of possGuessWords and possAnswerWords
 
     bool cancel;
-
+    bool hasPrecomputedColours;
+    bool hasInitialEntropy;
+    bool initial;
 public:
 
     //Destructor and Constructors
@@ -63,18 +65,18 @@ public:
     void setAnswerList(std::string aL);
     std::string getAnswerList() const;
     void setPossGuessIndex(const unsigned int i);
-    unsigned int getPossGuessIndex() const;
+    unsigned int getPossGuessIndex();
     void setAnswerIndex(const unsigned int i);
-    unsigned int getAnswerIndex() const;
+    unsigned int getAnswerIndex();
     unsigned int getTotalGuesses() const;
     void setTotalGuesses(const unsigned int i);
     answerWord getCurrentAnswer() const;
     void setCurrentAnswer(const std::string s, const unsigned int n);
 
-    std::vector<possGuessWord> getPossGuessVector() const;
+    std::vector<possGuessWord> getPossGuessVector();
     std::vector<possAnswerWord> getPossAnswerVector() const;
     std::vector<possGuessWord> getPossGuessVectorSorted() const;
-    std::vector<guessWord> getGuessedVector();
+    std::vector<guessWord> getGuessedVector() const;
 
     void readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
     void readUnprocGuesses(); //Function for reading in the txt for the possGuessVector
@@ -103,6 +105,11 @@ public:
     void cancelCalculations();
     void uncancelCalculations();
     bool getCancel();
+    void test();
+
+    bool getHasPrecomputerColours();
+    bool getHasInitialEntropy();
+    bool getInitial();
 signals:
     void precomputeColorsSignal(int percent);
     void calcEntropySignal(int percent);

@@ -12,7 +12,7 @@ word::word(const std::string c) {
 }
 
 //Getters and Setters
-std::string word::getContent() const { return content; }
+std::string word::getContent() { return content; }
 
 int word::getNumCharacters() const { return numCharacters; }
 

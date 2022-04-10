@@ -137,7 +137,7 @@ bool compareEntropy(const possGuessWord x1, const possGuessWord x2) {
 }
 
 /*
-void precomputeColours(std::vector<possGuessWord>& possGuessVector, const std::vector<possAnswerWord>& possAnswerVector, std::vector<std::vector<std::vector<uint8_t>>>& preprocColours){
+void precomputeColours(std::vector<possGuessWord>& possGuessVector,  std::vector<possAnswerWord>& possAnswerVector, std::vector<std::vector<std::vector<uint8_t>>>& preprocColours){
 	for (unsigned int i = 0; i < possGuessVector.size(); i++) {
 		for (unsigned int j = 0; j < possAnswerVector.size(); j++) {
 			possGuessVector[i].determineColourVector(possAnswerVector[j]);

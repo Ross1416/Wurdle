@@ -8,15 +8,15 @@ protected:
 	std::string content;
 	int numCharacters;
 public:
-	//Destructor and Constructors
+    //Destructor and Constructors
 	~word();
 	word();
-	word(const std::string c);
+    word(const std::string c);
 	//Getters and Setters
-	int getNumCharacters() const;
-	std::string getContent() const;
-	void setContent(const std::string c);
-	void setNumCharacters(const int n);
+    int getNumCharacters() const;
+    std::string getContent();
+    void setContent(const std::string c);
+    void setNumCharacters(const int n);
 };
 
 #endif

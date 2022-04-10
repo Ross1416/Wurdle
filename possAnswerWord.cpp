@@ -2,7 +2,7 @@
 #include "possGuessWord.h"
 #include <iostream>
 
-	//Constructors and destructor
+    //Constructors and destructor
 	possAnswerWord::~possAnswerWord() {}
 
 	possAnswerWord::possAnswerWord() {
@@ -12,7 +12,7 @@
 		createCheckedVector(5);
 	}
 
-	possAnswerWord::possAnswerWord(const std::string c, const bool v, const int n) {
+    possAnswerWord::possAnswerWord(const std::string c, const bool v, const int n) {
 		content = c;
 		isValid = v;
 		numCharacters = n;
@@ -21,9 +21,9 @@
 
 	//Getters and setters
 
-	std::vector<bool> possAnswerWord::getCheckedVector() const { return checkedVector; }
+    std::vector<bool> possAnswerWord::getCheckedVector() const { return checkedVector; }
 
-	bool possAnswerWord::getCheckedVector(const int i) const { return checkedVector[i]; }
+    bool possAnswerWord::getCheckedVector( int i)  { return checkedVector[i]; }
 
 	void possAnswerWord::createCheckedVector() {
 		checkedVector.clear();
@@ -32,20 +32,20 @@
 		}
 	}
 
-	void possAnswerWord::createCheckedVector(const int n) {
+    void possAnswerWord::createCheckedVector(const int n) {
 		checkedVector.clear();
 		for (int i = 0; i < n; i++) {
 			checkedVector.push_back(false);
 		}
 	}
 
-	void possAnswerWord::setCheckedVector(const int i, const bool b) {
+    void possAnswerWord::setCheckedVector( int i,  bool b) {
 		checkedVector[i] = b;
 	}
 
-	bool possAnswerWord::getValid() const { return isValid; }
+    bool possAnswerWord::getValid() const { return isValid; }
 
-	void possAnswerWord::setValid(const bool v) { isValid = v; }
+    void possAnswerWord::setValid(const bool v) { isValid = v; }
 
 	//List version
 	void possAnswerWord::answerSetValid(guessWord* iter) { //Calls setValid and sets it to value returned by answerCheckValid

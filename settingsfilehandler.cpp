@@ -84,6 +84,6 @@ void SettingsFileHandler::set(std::string property, std::string value)
 
 std::string SettingsFileHandler::get(std::string property)
 {
-    std::cout<<"in handler"<<settings[property]<<std::endl;
+//    std::cout<<"in handler"<<settings[property]<<std::endl;
     return settings[property];
 }

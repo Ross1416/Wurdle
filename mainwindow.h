@@ -64,7 +64,7 @@ private:
     QProgressDialog* progressDialog;
     QTimer* progressTimer;
     QFutureWatcher<void> watcher;
-    bool initial;
+//    bool initial;
 
     SettingsFileHandler* settingsFile;
 //    std::map<std::string,std::string> settings;

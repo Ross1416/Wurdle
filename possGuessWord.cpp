@@ -31,7 +31,7 @@ bool possGuessWord::getGuessed() const { return guessed; }
 
 int possGuessWord::getColourVector(const int i) const { return colourVector[i]; }
 
-std::vector<uint8_t> possGuessWord::getColourVector() const { return colourVector; }
+std::vector<uint8_t> possGuessWord::getColourVector() { return colourVector; }
 
 
 int possGuessWord::getNumCharacters() const { return numCharacters; }

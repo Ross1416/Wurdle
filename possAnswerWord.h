@@ -13,18 +13,18 @@ protected:
 	bool isValid;
 	std::vector<bool> checkedVector;
 public:
-	//Constructors and destructor
+    //Constructors and destructor
 	~possAnswerWord();
 	possAnswerWord();
-	possAnswerWord(const std::string c, const bool v, const int n);
+    possAnswerWord(const std::string c, const bool v, const int n);
 	//Getters and setters
-	std::vector<bool> getCheckedVector() const;
-	bool getCheckedVector(const int i) const;
-	bool getValid() const;
-	void setValid(const bool v);
+    std::vector<bool> getCheckedVector() const;
+    bool getCheckedVector( int i) ;
+    bool getValid() const;
+    void setValid(const bool v);
 	void createCheckedVector();
-	void createCheckedVector(const int n);
-	void setCheckedVector(const int i, const bool b);
+    void createCheckedVector(const int n);
+    void setCheckedVector( int i,  bool b);
 	//List version
 	void answerSetValid(guessWord* iter);
 	bool answerCheckValid(guessWord* iter);

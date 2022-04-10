@@ -7,6 +7,7 @@
 #include <thread>
 
 
+#include "guessWord.h"
 
 
 
@@ -69,7 +70,6 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
     connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
 
-    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
     connect(&watcher, SIGNAL(finished()), this, SLOT(finishedUsefulWordsGeneration()));
 }
 
@@ -79,12 +79,26 @@ void MainWindow::Retry()
     game->randomAnswer();
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
+    delete ui->usefulWordsScrollArea->widget();
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
-    game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
+
+    if (game->getHasPrecomputerColours())
+    {
+        if (game->getHasInitialEntropy())
+        {
+            game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
+        }
+        else{
+            CalcEntropies();
+        }
+    }
+    else{
+        Precompute();
+    }
     //game->calcEntropies();
-    FillUsefulWordsScrollArea();
+
 }
 
 // MAINWINDOW DESTRUCTOR
@@ -117,7 +131,7 @@ MainWindow::~MainWindow()
 void MainWindow::Precompute()
 {
     std::cout<<"Precompute"<<std::endl;
-    initial = true;
+//    initial = true;
     delete ui->usefulWordsScrollArea->widget();
     this->setEnabled(false);
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
@@ -125,22 +139,29 @@ void MainWindow::Precompute()
 
     progressDialog->show();
 
+    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
+
     QFuture<void> future = QtConcurrent::run(&Game::precomputeColours, game);
     watcher.setFuture(future);
 }
 
 void MainWindow::CalcEntropies()
 {
-    std::cout<<"Calc Entropies"<<std::endl;
-    delete ui->usefulWordsScrollArea->widget();
-    this->setEnabled(false);
-    progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
-    progressDialog->setFixedSize(QSize(200,100));
-    progressDialog->show();
+    if (game->getHasPrecomputerColours())
+    {
+        std::cout<<"Calc Entropies"<<std::endl;
+        delete ui->usefulWordsScrollArea->widget();
+        this->setEnabled(false);
+        progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
+        progressDialog->setFixedSize(QSize(200,100));
+        progressDialog->show();
 
+        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
 
-    QFuture<void> future = QtConcurrent::run(&Game::calcEntropies, game);
-    watcher.setFuture(future);
+        QFuture<void> future = QtConcurrent::run(&Game::calcEntropies, game);
+        watcher.setFuture(future);
+    }
+
 }
 
 void MainWindow::updateGenerateUsefulWordsColoursProgress(int percent)
@@ -160,6 +181,12 @@ void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
 void MainWindow::CancelGenerateUsefulWords()
 {
     std::cout<<"cancel"<<std::endl;
+    if (!game->getHasPrecomputerColours())
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Must precompute colours.");
+        msgBox.exec();
+    }
     game->cancelCalculations();
 }
 
@@ -171,12 +198,12 @@ void MainWindow::finishedUsefulWordsGeneration()
 
     if (!game->getCancel())
     {
-        if (initial)
+        if (game->getInitial())
         {
+//            std::cout<<"initial"<<std::endl;
             game->setInitialEntropies();
-            initial = false;
+//            initial = false;
         }
-
         FillUsefulWordsScrollArea();
     }
 
@@ -328,23 +355,37 @@ void MainWindow::SetupLetterContainer(int w, int h)
 
 void MainWindow::CheckWord()
 {
+//    guessWord test;
+//    test.setContent(std::to_string(letterContainer->getCurrentLetterText()));
+//    test.determineColourVector(game->getCurrentAnswer());
+////    std::cout<<test.displayColourVector(0)<<std::endl;
+//    std::vector<uint8_t> colourVector = test.getColourVector();
+
 //    std::cout<<letterContainer->getCurrentWord()<<std::endl;
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
 
           // old method - works when precomputed colours
-//        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+
+
 
     // new method - isnt working rn
-        game->getGuessedVector()[game->getTotalGuesses()-1].determineColourVector(game->getCurrentAnswer());
-        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
-//        game->getPossGuessVector()[game->getTotalGuesses()-1].determineColourVector(game->getPossAnswerVector()[game->getAnswerIndex()]);
-//        std::vector<uint8_t> colourVector = game->getPossGuessVector()[game->getTotalGuesses()-1].getColourVector();
+//        game->getGuessedVector()[game->getTotalGuesses()-1].determineColourVector(game->getCurrentAnswer());
+//        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+//        std::cout<<game->getPossGuessVector()[game->getPossGuessIndex()].getContent()<<std::endl;
+//        std::cout<<game->getPossAnswerVector()[game->getAnswerIndex()].getContent()<<std::endl;
+//        std::cout<<game->getPossGuessVector()[game->getPossGuessIndex()].getColourVector(0)<<std::endl;
 
-        for (int i = 0; i<(int)colourVector.size();i++)
-        {
-            std::cout<<(int)colourVector[i]<<std::endl;
-        }
+//        game->getPossGuessVector()[game->getPossGuessIndex()].determineColourVector(game->getPossAnswerVector()[game->getAnswerIndex()]);
+//        std::vector<uint8_t> colourVector = game->getPossGuessVector()[game->getPossGuessIndex()].getColourVector();
+//        game->set
+//        game->test();
+
+//        for (int i = 0; i<(int)colourVector.size();i++)
+//        {
+//            std::cout<<(int)colourVector[i]<<std::endl;
+//        }
         /*
         for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
             if (game->getPossAnswerVector()[i].getValid()) {
@@ -366,6 +407,7 @@ void MainWindow::CheckWord()
             else{
                 game->setValidAnswers();
                 FillValidAnswersScrollArea();
+
                 CalcEntropies();
 //                game->calcEntropies();
 
