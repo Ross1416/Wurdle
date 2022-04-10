@@ -26,7 +26,7 @@ public:
     float getInitialEntropy() const;
 	bool getGuessed() const;
 	int getColourVector(const int i) const;
-	std::vector<uint8_t> getColourVector() const;
+    std::vector<uint8_t> getColourVector() const;
 
 	int getNumCharacters() const;
 	void createColourVector();

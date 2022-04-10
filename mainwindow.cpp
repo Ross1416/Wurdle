@@ -9,11 +9,12 @@
 
 
 
+
 // MAINWINDOW CONSTRUCTOR
-MainWindow::MainWindow(Game* currentGamePtr, std::map<std::string,std::string> settingsMap, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
+MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file, QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow)
 {
     game = currentGamePtr;
-    this->settings = settingsMap;
+    this->settingsFile = settings_file;
 
     ui->setupUi(this);
     ui->centralwidget->setContentsMargins(0,0,0,0);
@@ -26,9 +27,9 @@ MainWindow::MainWindow(Game* currentGamePtr, std::map<std::string,std::string> s
 //    settings = settingsFile.read();
 //    std::cout<<settings["AnswerList"]<<std::endl;
 //    std::cout<<settings["GuessList"]<<std::endl;
-
-    game->setAnswerList(settings["AnswerList"]);
-    game->setGuessList(settings["GuessList"]);
+//    std::cout<<settingsFile->get("AnswerList")<<std::endl;
+    game->setAnswerList(settingsFile->get("AnswerList"));
+    game->setGuessList(settingsFile->get("GuessList"));
     game->readUnprocAnswers();
     game->readUnprocGuesses();
 //    game->precomputeColours(); //These are slow, be careful when testing, use release mode
@@ -57,19 +58,30 @@ MainWindow::MainWindow(Game* currentGamePtr, std::map<std::string,std::string> s
 //    FillValidAnswersScrollArea();
 //    FillUsefulWordsScrollArea();
 
-    GenerateUsefulWords();
+//    GenerateUsefulWords();
+    Precompute();
+
 
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
+    connect(ui->actionReset, &QAction::triggered,this, &MainWindow::Retry);
+
+    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
+    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
+
+    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
+    connect(&watcher, SIGNAL(finished()), this, SLOT(finishedUsefulWordsGeneration()));
 }
 
 void MainWindow::Retry()
 {
+    game->reset();
+    game->randomAnswer();
     delete ui->containerWidget->layout();
+    delete ui->validAnswersScrollArea->widget();
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
-    delete ui->validAnswersScrollArea->widget();
     game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
     //game->calcEntropies();
     FillUsefulWordsScrollArea();
@@ -81,23 +93,53 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::GenerateUsefulWords()
+
+//void MainWindow::GenerateUsefulWords()
+//{
+//    std::cout<<"Generate"<<std::endl;
+//    delete ui->usefulWordsScrollArea->widget();
+//    this->setEnabled(false);
+//    progressDialog = new QProgressDialog("Generating useful words...", "Abort", 0, 100);
+//    progressDialog->setFixedSize(QSize(200,100));
+//    progressDialog->setFocus();
+
+//    connect(progressDialog, &QProgressDialog::canceled, this, &MainWindow::CancelGenerateUsefulWords);
+
+//    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
+//    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
+
+//    connect(&watcher, SIGNAL(finished()), this, SLOT(finishedUsefulWordsGeneration()));
+
+//    QFuture<void> future = QtConcurrent::run(&Game::Combined, game);
+//    watcher.setFuture(future);
+//}
+
+void MainWindow::Precompute()
 {
-    std::cout<<"Generate"<<std::endl;
+    std::cout<<"Precompute"<<std::endl;
+    initial = true;
     delete ui->usefulWordsScrollArea->widget();
     this->setEnabled(false);
-    progressDialog = new QProgressDialog("Generating useful words...", "Abort", 0, 100);
+    progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
     progressDialog->setFixedSize(QSize(200,100));
-    progressDialog->setFocus();
 
-    connect(progressDialog, &QProgressDialog::canceled, this, &MainWindow::CancelGenerateUsefulWords);
+    progressDialog->show();
 
-    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
-    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
+    QFuture<void> future = QtConcurrent::run(&Game::precomputeColours, game);
+    watcher.setFuture(future);
+}
 
-    connect(&watcher, SIGNAL(finished()), this, SLOT(finishedUsefulWordsGeneration()));
+void MainWindow::CalcEntropies()
+{
+    std::cout<<"Calc Entropies"<<std::endl;
+    delete ui->usefulWordsScrollArea->widget();
+    this->setEnabled(false);
+    progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
+    progressDialog->setFixedSize(QSize(200,100));
+    progressDialog->show();
 
-    QFuture<void> future = QtConcurrent::run(&Game::Combined, game);
+
+    QFuture<void> future = QtConcurrent::run(&Game::calcEntropies, game);
     watcher.setFuture(future);
 }
 
@@ -117,18 +159,29 @@ void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
 
 void MainWindow::CancelGenerateUsefulWords()
 {
-//    std::cout<<"cancel"<<std::endl;
-    game->cancelCombined();
-    this->setEnabled(true);
+    std::cout<<"cancel"<<std::endl;
+    game->cancelCalculations();
 }
 
 void MainWindow::finishedUsefulWordsGeneration()
 {
 //    std::cout<<"finished"<<std::endl;
-    progressDialog->close();
+
     this->setEnabled(true);
-    game->setInitialEntropies();
-    FillUsefulWordsScrollArea();
+
+    if (!game->getCancel())
+    {
+        if (initial)
+        {
+            game->setInitialEntropies();
+            initial = false;
+        }
+
+        FillUsefulWordsScrollArea();
+    }
+
+    progressDialog->close();
+    game->uncancelCalculations();
 }
 
 
@@ -141,12 +194,11 @@ void MainWindow::GameWon()
 
     switch(btn){
     case QMessageBox::Retry:
-        game->reset();
-        game->randomAnswer();
         Retry();
         break;
     case QMessageBox::Close:
-        qApp->quit();
+        msgBox.close();
+//        qApp->quit();
         break;
     default:
         break;
@@ -158,18 +210,18 @@ void MainWindow::GameLost()
 {
     QMessageBox msgBox;
     msgBox.setText(tr("You lost!"));
-    msgBox.setInformativeText("The correct word was ");
+    std::string text = "The correct word was " + game->getCurrentAnswer().getContent();
+    msgBox.setInformativeText(QString::fromStdString(text));
     msgBox.setStandardButtons(QMessageBox::Retry | QMessageBox::Close);
     int btn = msgBox.exec();
 
     switch(btn){
     case QMessageBox::Retry:
-        game->reset();
-        game->randomAnswer();
         Retry();
         break;
     case QMessageBox::Close:
-        qApp->quit();
+        msgBox.close();
+//        qApp->quit();
         break;
     default:
         break;
@@ -280,9 +332,19 @@ void MainWindow::CheckWord()
     if (game->isValidGuess(letterContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
 
+          // old method - works when precomputed colours
+//        std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+
+    // new method - isnt working rn
+        game->getGuessedVector()[game->getTotalGuesses()-1].determineColourVector(game->getCurrentAnswer());
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
+//        game->getPossGuessVector()[game->getTotalGuesses()-1].determineColourVector(game->getPossAnswerVector()[game->getAnswerIndex()]);
+//        std::vector<uint8_t> colourVector = game->getPossGuessVector()[game->getTotalGuesses()-1].getColourVector();
 
-
+        for (int i = 0; i<(int)colourVector.size();i++)
+        {
+            std::cout<<(int)colourVector[i]<<std::endl;
+        }
         /*
         for (unsigned int i = 0; i < game->getPossAnswerVector().size(); i++) {
             if (game->getPossAnswerVector()[i].getValid()) {
@@ -303,8 +365,10 @@ void MainWindow::CheckWord()
             }
             else{
                 game->setValidAnswers();
-                game->calcEntropies();
                 FillValidAnswersScrollArea();
+                CalcEntropies();
+//                game->calcEntropies();
+
 //                FillUsefulWordsScrollArea();
                 letterContainer->incrementSelectedRow();
             }
@@ -365,40 +429,45 @@ void MainWindow::Update()
 {
     delete letterContainer;
     delete ui->containerWidget->layout();
+    delete ui->validAnswersScrollArea->widget();
     SetupLetterContainer(letterContainerWidth,letterContainerHeight);
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
-//    delete ui->validAnswersScrollArea->widget();`
-    //    SetupvalidAnswersScrollArea();
+
+//    SetupvalidAnswersScrollArea();
 }
 
 
 // OPEN SETTINGS MENU DIALOG
 void MainWindow::OpenSettingsMenu()
 {
-    settingsMenu *settings = new settingsMenu(this->settings, this);
+    settingsMenu *settings = new settingsMenu(settingsFile, this);
 //    connect(settings, &QDialog::accepted, this, &MainWindow::Update);
-    connect(settings, SIGNAL(ok_signal(std::string, std::string, int, std::string)), this, SLOT(GetSettings(std::string, std::string, int, std::string)));
+    connect(settings, SIGNAL(ok_signal()), this, SLOT(GetSettings()));
     settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open
 }
 
-void MainWindow::GetSettings(std::string answerListPath, std::string guessListPath,int noOfGuesses, std::string language)
+void MainWindow::GetSettings()
 {
 //    std::cout<<"update "<<numberOfGuesses<<std::endl;
-    game->setAnswerList(answerListPath);
-    game->setGuessList(guessListPath);
+//    game->setAnswerList(answerListPath);
+//    game->setGuessList(guessListPath);
+    game->setAnswerList(settingsFile->get("AnswerList"));
+    game->setGuessList(settingsFile->get("GuessList"));
     game->readUnprocAnswers();
     game->readUnprocGuesses();
 //    game->precomputeColours(); //These are slow, be careful when testing, use release mode
-    GenerateUsefulWords();
-//    game->calcEntropies();
-//    game->setInitialEntropies(); //Sets the initial entropies, so they only have to be calculated once
     //Reset the game
     game->reset();
     game->randomAnswer();
 
+//    GenerateUsefulWords();
+    Precompute();
+//    game->calcEntropies();
+//    game->setInitialEntropies(); //Sets the initial entropies, so they only have to be calculated once
 
-    letterContainerHeight = noOfGuesses;
+    letterContainerHeight = std::stoi(settingsFile->get("NoOfGuesses"));
+    std::string language = settingsFile->get("Language");
 
     if (language == "English")
     {

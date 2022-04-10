@@ -30,7 +30,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Game* currentGame, std::map<std::string,std::string> settings, QWidget *parent = nullptr);
+    MainWindow(Game* currentGame, SettingsFileHandler*, QWidget *parent = nullptr);
     ~MainWindow();
 
 
@@ -47,7 +47,10 @@ public:
     void GameWon();
     void Retry();
     void GameLost();
-    void GenerateUsefulWords();
+//    void GenerateUsefulWords();
+
+    void Precompute();
+    void CalcEntropies();
 
 private:
     Ui::MainWindow *ui;
@@ -61,15 +64,16 @@ private:
     QProgressDialog* progressDialog;
     QTimer* progressTimer;
     QFutureWatcher<void> watcher;
+    bool initial;
 
-//    SettingsFileHandler settingsFile;
-    std::map<std::string,std::string> settings;
+    SettingsFileHandler* settingsFile;
+//    std::map<std::string,std::string> settings;
 
 
 public slots:
 
     void OpenSettingsMenu();
-    void GetSettings(std::string, std::string, int, std::string);
+    void GetSettings();
     void updateGenerateUsefulWordsColoursProgress(int colourPercent);
     void updateGenerateUsefulWordsEntropyProgress(int colourPercent);
     void CancelGenerateUsefulWords();

@@ -3,14 +3,14 @@
 #include<QFileDialog>
 #include<iostream>
 
-settingsMenu::settingsMenu(std::map<std::string,std::string> settingsMap, QWidget *parent) :
+settingsMenu::settingsMenu(SettingsFileHandler* settings, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settingsMenu)
 {
 
     ui->setupUi(this);
 
-    settings = settingsMap;
+    this->settingsFile = settings;
 //    settingsFile = SettingsFileHandler("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/settings.txt");
 //    settingsFile = SettingsFileHandler("settings.txt");
 //    settings = settingsFile.read();
@@ -43,26 +43,28 @@ settingsMenu::~settingsMenu()
 
 void settingsMenu::Setup()
 {
-    ui->answerListLineEdit->setText(QString::fromStdString(settings["AnswerList"]));
-    ui->guessListLineEdit->setText(QString::fromStdString(settings["GuessList"]));
-    ui->noGuessesSpinBox->setValue(stoi(settings["NoOfGuesses"]));
+    ui->answerListLineEdit->setText(QString::fromStdString(settingsFile->get("AnswerList")));
+    ui->guessListLineEdit->setText(QString::fromStdString(settingsFile->get("GuessList")));
+    ui->noGuessesSpinBox->setValue(stoi(settingsFile->get("NoOfGuesses")));
 
     // LANGUAGES
     ui->languageComboBox->addItem(tr("English"));
     ui->languageComboBox->addItem(tr("French"));
-    ui->languageComboBox->setCurrentText(QString::fromStdString(settings["Language"]));
+    ui->languageComboBox->setCurrentText(QString::fromStdString(settingsFile->get("Language")));
 }
 
 // SIGNAL THAT EMITS SETTINGS WHEN OK BTN PRESSED
 void settingsMenu::ok()
 {
-    settings["AnswerList"] = ui->answerListLineEdit->text().toStdString();
-    settings["GuessList"] = ui->guessListLineEdit->text().toStdString();
-    settings["NoOfGuesses"] = std::to_string(ui->noGuessesSpinBox->value());
-    settings["Language"] = ui->languageComboBox->currentText().toStdString();
-    settingsFile.write(settings);
+    settingsFile->set("AnswerList", ui->answerListLineEdit->text().toStdString());
+    settingsFile->set("GuessList", ui->guessListLineEdit->text().toStdString());
+    settingsFile->set("NoOfGuesses", std::to_string(ui->noGuessesSpinBox->value()));
+    settingsFile->set("Language", ui->languageComboBox->currentText().toStdString());
 
-    emit ok_signal(ui->answerListLineEdit->text().toStdString(), ui->guessListLineEdit->text().toStdString(), ui->noGuessesSpinBox->value(), ui->languageComboBox->currentText().toStdString());
+    settingsFile->write();
+
+//    emit ok_signal(ui->answerListLineEdit->text().toStdString(), ui->guessListLineEdit->text().toStdString(), ui->noGuessesSpinBox->value(), ui->languageComboBox->currentText().toStdString());
+    emit ok_signal();
 }
 
 void settingsMenu::browseForAnswerList()

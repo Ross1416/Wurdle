@@ -13,7 +13,7 @@ class settingsMenu : public QDialog
     Q_OBJECT
 
 public:
-    settingsMenu(std::map<std::string,std::string> settings, QWidget *parent = nullptr);
+    settingsMenu(SettingsFileHandler* settingsFile, QWidget *parent = nullptr);
     ~settingsMenu();
     void ok();
 
@@ -21,15 +21,15 @@ public:
 //    void changeEvent(QEvent *event);
 private:
     Ui::settingsMenu *ui;
-    SettingsFileHandler settingsFile;
-    std::map<std::string,std::string> settings;
+    SettingsFileHandler* settingsFile;
+//    std::map<std::string,std::string> settings;
 
 public slots:
     void browseForAnswerList();
     void browseForGuessList();
 
 signals:
-    void ok_signal(std::string, std::string, int, std::string);
+    void ok_signal();
 };
 
 #endif // SETTINGSMENU_H

@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
 
 
     SettingsFileHandler settingsFile = SettingsFileHandler("settings.txt");
-    std::map<std::string,std::string> settings = settingsFile.read();
+    settingsFile.read();
 
-    MainWindow w(&currentGame, settings);
+    MainWindow w(&currentGame, &settingsFile);
     w.show();
     return a.exec();
 

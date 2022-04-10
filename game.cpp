@@ -12,8 +12,7 @@ Game::Game(){
     totalPossGuesses = 0;
     totalPossAnswers = 0;
     totalGuesses = 0;
-    cancelCalcEntropy = false;
-    cancelPrecomputeColours = false;
+    cancel = false;
 }
 
 
@@ -25,8 +24,7 @@ Game::Game(const unsigned int n, const unsigned int mG) {
     totalPossGuesses = 0;
     totalPossAnswers = 0;
     totalGuesses = 0;
-    cancelCalcEntropy = false;
-    cancelPrecomputeColours = false;
+    cancel = false;
 }
 
 
@@ -73,7 +71,7 @@ std::vector<possAnswerWord> Game::getPossAnswerVector() const {
     return possAnswerVector;
 }
 
-std::vector<guessWord> Game::getGuessedVector() const {
+std::vector<guessWord> Game::getGuessedVector() {
     return guessedVector;
 }
 
@@ -143,15 +141,15 @@ void Game::precomputeColours() {
     int emissionRate = 0.01*divisor;
 
 
-    for (unsigned int i = 0; i < possGuessVector.size() && !cancelPrecomputeColours; i++) { //Assigns the precomputed colour vectors for each cell in the lookup table
-        for (unsigned int j = 0; j < possAnswerVector.size()  && !cancelPrecomputeColours; j++) {
+    for (unsigned int i = 0; i < possGuessVector.size() && !cancel; i++) { //Assigns the precomputed colour vectors for each cell in the lookup table
+        for (unsigned int j = 0; j < possAnswerVector.size()  && !cancel; j++) {
             possGuessVector[i].determineColourVector(possAnswerVector[j]);
             preprocColours[i][j] = possGuessVector[i].getColourVector();
 
             // EMIT PERCENT SIGNAL EVERY 1%
             if (count > lastEmission + emissionRate)
             {
-                float percent = (int)(((float)count/divisor)*100);
+                float percent = (int)(((float)count/divisor)*100)+1; // plus one so that it goes to 100%
 //                std::cout<<percent<<std::endl;
                 emit precomputeColorsSignal(percent);
                 lastEmission = count;
@@ -161,7 +159,8 @@ void Game::precomputeColours() {
         //std::cout << i << std::endl;
     }
     std::cout << "precomp complete" << std::endl;
-    cancelPrecomputeColours = false;
+
+    this->calcEntropies();
 }
 
 void Game::calcEntropies() {
@@ -176,7 +175,7 @@ void Game::calcEntropies() {
     int emissionRate = 0.01*divisor;
 
 
-    for (unsigned int i = 0; i < possGuessVector.size() && !cancelCalcEntropy; i++) {
+    for (unsigned int i = 0; i < possGuessVector.size() && !cancel; i++) {
         possGuessVector[i].setEntropy(0);
         //Skip if it has already been guessed
         if (possGuessVector[i].getGuessed()) {
@@ -189,7 +188,7 @@ void Game::calcEntropies() {
         std::unique_ptr<entropy> x(new entropy(preprocColours[i][0], 1));
         entropyVector.push_back(*x);
 
-        for (unsigned int j = 1; j < possAnswerVector.size() && !cancelCalcEntropy; j++) {
+        for (unsigned int j = 1; j < possAnswerVector.size() && !cancel; j++) {
             if (!possAnswerVector[j].getValid()) {
                 continue;
             }
@@ -210,7 +209,7 @@ void Game::calcEntropies() {
             // EMIT PERCENT SIGNAL EVERY 1%
             if (count > lastEmission + emissionRate)
             {
-                float percent = (int)(((float)count/divisor)*100);
+                float percent = (int)(((float)count/divisor)*100)+1; // plus one so that it goes to 100%
 //                std::cout<<percent<<std::endl;
                 emit calcEntropySignal(percent);
                 lastEmission = count;
@@ -228,22 +227,29 @@ void Game::calcEntropies() {
     possGuessVectorSorted = possGuessVector;
     std::sort(possGuessVectorSorted.begin(), possGuessVectorSorted.end(), compareEntropy);
     std::cout << "Finished entropy calc" << std::endl;
-
-    cancelCalcEntropy = false;
 }
 
-void Game::Combined()
+
+
+//void Game::Combined()
+//{
+//    this->precomputeColours();
+//    this->calcEntropies();
+//}
+
+void Game::cancelCalculations()
 {
-    this->precomputeColours();
-    this->calcEntropies();
+    cancel = true;
 }
-
-void Game::cancelCombined()
+void Game::uncancelCalculations()
 {
-    cancelPrecomputeColours = true;
-    cancelCalcEntropy = true;
+    cancel = false;
 }
 
+bool Game::getCancel()
+{
+    return cancel;
+}
 
 /*
 bool compareEntropy(const possGuessWord x1, const possGuessWord x2) {

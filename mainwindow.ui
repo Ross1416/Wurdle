@@ -264,16 +264,17 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuSettings">
+   <widget class="QMenu" name="menuOptions">
     <property name="title">
-     <string>Settings</string>
+     <string>Options</string>
     </property>
+    <addaction name="actionReset"/>
     <addaction name="actionSettings"/>
    </widget>
-   <addaction name="menuSettings"/>
+   <addaction name="menuOptions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSettings">
@@ -282,6 +283,11 @@
    </property>
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
    </property>
   </action>
  </widget>

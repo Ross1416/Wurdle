@@ -13,12 +13,16 @@ class SettingsFileHandler
 
 private:
     std::string path;
+    std::map<std::string,std::string> settings;
 public:  
-    SettingsFileHandler();
+//    SettingsFileHandler();
     SettingsFileHandler(std::string);
 
-    std::map<std::string,std::string> read();
-    void write(std::map<std::string,std::string>);
+    void read();
+    void write();
+
+    void set(std::string, std::string);
+    std::string get(std::string);
 
     void CreateSettingsFile();
 };

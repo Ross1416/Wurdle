@@ -1,10 +1,10 @@
 #include "settingsfilehandler.h"
 #include<iostream>
 
-SettingsFileHandler::SettingsFileHandler()
-{
-    path = "";
-}
+//SettingsFileHandler::SettingsFileHandler()
+//{
+//    path = "";
+//}
 
 SettingsFileHandler::SettingsFileHandler(std::string filePath)
 {
@@ -29,11 +29,10 @@ void SettingsFileHandler::CreateSettingsFile()
     file.close();
 }
 
-std::map<std::string, std::string> SettingsFileHandler::read()
+void SettingsFileHandler::read()
 {
     std::ifstream file;
     file.open(path);
-    std::map<std::string, std::string> settings;
 
     if (file)
     {
@@ -50,18 +49,14 @@ std::map<std::string, std::string> SettingsFileHandler::read()
             settings[setting] = value;
 //            std::cout<<setting<<":"<<value<<std::endl;
         }
-
-
     }
 //    else{
 //        std::cout<<"error1\n";
 //    }
     file.close();
-    return settings;
-
 }
 
-void SettingsFileHandler::write(std::map<std::string, std::string> settings)
+void SettingsFileHandler::write()
 {
     std::ofstream file;
     file.open(path);//, std::ios::trunc);
@@ -80,4 +75,15 @@ void SettingsFileHandler::write(std::map<std::string, std::string> settings)
         std::cout<<"error2"<<std::endl;
 
     }*/
+}
+
+void SettingsFileHandler::set(std::string property, std::string value)
+{
+    settings[property] = value;
+}
+
+std::string SettingsFileHandler::get(std::string property)
+{
+    std::cout<<"in handler"<<settings[property]<<std::endl;
+    return settings[property];
 }

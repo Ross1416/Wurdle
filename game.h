@@ -45,10 +45,10 @@ private:
 
     std::vector<std::vector<std::vector<uint8_t>>> preprocColours; //Stores the preprocessed Colour vectors for lookup table of possGuessWords and possAnswerWords
 
-    bool cancelPrecomputeColours;
-    bool cancelCalcEntropy;
+    bool cancel;
 
 public:
+
     //Destructor and Constructors
     ~Game();
     Game();
@@ -74,7 +74,7 @@ public:
     std::vector<possGuessWord> getPossGuessVector() const;
     std::vector<possAnswerWord> getPossAnswerVector() const;
     std::vector<possGuessWord> getPossGuessVectorSorted() const;
-    std::vector<guessWord> getGuessedVector() const;
+    std::vector<guessWord> getGuessedVector();
 
     void readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
     void readUnprocGuesses(); //Function for reading in the txt for the possGuessVector
@@ -98,9 +98,11 @@ public:
     void resetToInitialEntropies(); //Resets the current entropy values based on the initial entropy values
     void calcEntropies();
 
-    void Combined();
+//    void Combined();
 
-    void cancelCombined();
+    void cancelCalculations();
+    void uncancelCalculations();
+    bool getCancel();
 signals:
     void precomputeColorsSignal(int percent);
     void calcEntropySignal(int percent);
