@@ -190,6 +190,7 @@ void Game::calcEntropies() {
 
         for (unsigned int j = 1; j < possAnswerVector.size() && !cancel; j++) {
             if (!possAnswerVector[j].getValid()) {
+                count++;
                 continue;
             }
             found = false;
