@@ -172,7 +172,7 @@ void Game::precomputeColours() {
     preprocColours.resize(possGuessVector.size(), std::vector<std::vector<uint8_t>>(possAnswerVector.size(), std::vector<uint8_t>(numCharacters))); //Resizes the preprocColours vector to the correct size
     unsigned long long count = 0;
     unsigned int lastEmission = 0;
-    unsigned int divisor = (possGuessVector.size()*possAnswerVector.size());
+    unsigned long long divisor = (possGuessVector.size()*possAnswerVector.size());
     unsigned int emissionRate = 0.01*divisor;
 
 
@@ -212,9 +212,8 @@ void Game::calcEntropies() {
 
     unsigned long long count = 0;
     unsigned int lastEmission = 0;
-    unsigned int divisor = (possGuessVector.size()*possAnswerVector.size());
+    unsigned long long divisor = (possGuessVector.size()*possAnswerVector.size());
     unsigned int emissionRate = 0.01*divisor;
-
 
     for (unsigned int i = 0; i < possGuessVector.size() && !cancel; i++) {
         possGuessVector[i].setEntropy(0);
@@ -230,6 +229,7 @@ void Game::calcEntropies() {
         entropyVector.push_back(*x);
 
         for (unsigned int j = 1; j < possAnswerVector.size() && !cancel; j++) {
+
             if (!possAnswerVector[j].getValid()) {
                 count++;
                 continue;
@@ -257,12 +257,6 @@ void Game::calcEntropies() {
                 lastEmission = count;
             }
             count++;
-            if (count == divisor)
-            {
-//                std::cout<<"has precomputed colours"<<std::endl;
-                hasInitialEntropy = true;
-                initial = true;
-            }
         }
 
         for (unsigned int k = 0; k < entropyVector.size(); k++) {
@@ -270,6 +264,14 @@ void Game::calcEntropies() {
         }
 
     }
+
+    if (!initial && !cancel)
+    {
+    //        std::cout<<"has initial entropy"<<std::endl;
+        hasInitialEntropy = true;
+        initial = true;
+    }
+
     entropyVector.clear();
     possGuessVectorSorted.clear();
     possGuessVectorSorted = possGuessVector;
@@ -399,10 +401,11 @@ void Game::setInitialEntropies() {
         possGuessVector[i].setInitialEntropy(possGuessVector[i].getEntropy());
     }
     std::cout << "Initial entropies set" << std::endl;
-    initial = false;
+
 }
 
 void Game::resetToInitialEntropies() {
+
     if (hasInitialEntropy)
     {
         for (unsigned int i = 0; i < possGuessVector.size(); i++) {
@@ -413,5 +416,7 @@ void Game::resetToInitialEntropies() {
         std::sort(possGuessVectorSorted.begin(), possGuessVectorSorted.end(), compareEntropy);
         std::cout << "Finished resetting to initial entropy" << std::endl;
     }
+
+
 
 }

@@ -89,6 +89,8 @@ void MainWindow::Retry()
         if (game->getHasInitialEntropy())
         {
             game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
+
+            FillUsefulWordsScrollArea();
         }
         else{
             CalcEntropies();
@@ -186,6 +188,7 @@ void MainWindow::CancelGenerateUsefulWords()
         QMessageBox msgBox;
         msgBox.setText("Must precompute colours.");
         msgBox.exec();
+        game->uncancelCalculations();
     }
     game->cancelCalculations();
 }
@@ -200,7 +203,6 @@ void MainWindow::finishedUsefulWordsGeneration()
     {
         if (game->getInitial())
         {
-//            std::cout<<"initial"<<std::endl;
             game->setInitialEntropies();
 //            initial = false;
         }
