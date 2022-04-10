@@ -117,15 +117,17 @@ void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
 
 void MainWindow::CancelGenerateUsefulWords()
 {
+//    std::cout<<"cancel"<<std::endl;
     game->cancelCombined();
     this->setEnabled(true);
 }
 
 void MainWindow::finishedUsefulWordsGeneration()
 {
-    std::cout<<"finished"<<std::endl;
+//    std::cout<<"finished"<<std::endl;
     progressDialog->close();
     this->setEnabled(true);
+    game->setInitialEntropies();
     FillUsefulWordsScrollArea();
 }
 
@@ -387,7 +389,7 @@ void MainWindow::GetSettings(std::string answerListPath, std::string guessListPa
     game->setGuessList(guessListPath);
     game->readUnprocAnswers();
     game->readUnprocGuesses();
-    game->precomputeColours(); //These are slow, be careful when testing, use release mode
+//    game->precomputeColours(); //These are slow, be careful when testing, use release mode
     GenerateUsefulWords();
 //    game->calcEntropies();
 //    game->setInitialEntropies(); //Sets the initial entropies, so they only have to be calculated once
