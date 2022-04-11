@@ -46,20 +46,6 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     letterContainer->highlightCurrentLetter();
     letterContainer->updateLetterStyles();
 
-//    QTimer *timer = new QTimer(this);
-//    timer->setSingleShot(true);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(FillvalidAnswersScrollArea()));
-//    timer->start(0);
-
-//    QFuture<void> future = QtConcurrent::run(&MainWindow::FillvalidAnswersScrollArea);
-
-//    connect(&thread, SIGNAL(started()), this, SLOT(FillvalidAnswersScrollArea()));
-//    thread.start();
-
-//    FillValidAnswersScrollArea();
-//    FillUsefulWordsScrollArea();
-
-//    GenerateUsefulWords();
     Precompute();
 
 
@@ -98,7 +84,6 @@ void MainWindow::Retry()
     else{
         Precompute();
     }
-    //game->calcEntropies();
 
 }
 
@@ -108,26 +93,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-//void MainWindow::GenerateUsefulWords()
-//{
-//    std::cout<<"Generate"<<std::endl;
-//    delete ui->usefulWordsScrollArea->widget();
-//    this->setEnabled(false);
-//    progressDialog = new QProgressDialog("Generating useful words...", "Abort", 0, 100);
-//    progressDialog->setFixedSize(QSize(200,100));
-//    progressDialog->setFocus();
-
-//    connect(progressDialog, &QProgressDialog::canceled, this, &MainWindow::CancelGenerateUsefulWords);
-
-//    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
-//    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
-
-//    connect(&watcher, SIGNAL(finished()), this, SLOT(finishedUsefulWordsGeneration()));
-
-//    QFuture<void> future = QtConcurrent::run(&Game::Combined, game);
-//    watcher.setFuture(future);
-//}
 
 void MainWindow::Precompute()
 {
@@ -223,25 +188,6 @@ void MainWindow::finishedCalcEntropy()
     {
         FillUsefulWordsScrollArea();
     }
-    progressDialog->close();
-    game->uncancelCalculations();
-}
-
-void MainWindow::finishedUsefulWordsGeneration()
-{
-//    std::cout<<"finished"<<std::endl;
-
-    this->setEnabled(true);
-
-    if (!game->getCancel())
-    {
-        if (game->getInitial())
-        {
-            game->setInitialEntropies();
-        }
-        FillUsefulWordsScrollArea();
-    }
-
     progressDialog->close();
     game->uncancelCalculations();
 }

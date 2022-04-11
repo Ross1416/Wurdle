@@ -77,7 +77,6 @@ public slots:
     void updateGenerateUsefulWordsColoursProgress(int colourPercent);
     void updateGenerateUsefulWordsEntropyProgress(int colourPercent);
     void CancelGenerateUsefulWords();
-    void finishedUsefulWordsGeneration();
 
 
     void finishedPrecompute();

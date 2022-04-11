@@ -14,9 +14,6 @@ Game::Game(){
     totalGuesses = 0;
     cancel = false;
     hasPrecomputedColours = false;
-    hasEntropy = false;
-    initial = true;
-
     hasInitialEntropy = false;
 }
 
@@ -31,9 +28,6 @@ Game::Game(const unsigned int n, const unsigned int mG) {
     totalGuesses = 0;
     cancel = false;
     hasPrecomputedColours = false;
-    hasEntropy = false;
-    initial = true;
-
     hasInitialEntropy = false;
 }
 
@@ -146,16 +140,6 @@ bool Game::getHasPrecomputerColours()
     return hasPrecomputedColours;
 }
 
-bool Game::getHasEntropy()
-{
-    return hasEntropy;
-}
-
-
-bool Game::getInitial()
-{
-    return initial;
-}
 
 bool Game::getHasInitialEntropy()
 {
@@ -410,7 +394,6 @@ void Game::setInitialEntropies() {
         possGuessVector[i].setInitialEntropy(possGuessVector[i].getEntropy());
     }
     std::cout << "Initial entropies set" << std::endl;
-    initial = false;
     hasInitialEntropy = true;
 }
 

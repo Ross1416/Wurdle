@@ -109,9 +109,6 @@ public:
     bool getCancel();
 
     bool getHasPrecomputerColours();
-    bool getHasEntropy();
-    bool getInitial();
-
     bool getHasInitialEntropy();
 signals:
     void precomputeColorsSignal(int percent);
