@@ -47,8 +47,10 @@ private:
 
     bool cancel;
     bool hasPrecomputedColours;
-    bool hasInitialEntropy;
+    bool hasEntropy;
     bool initial;
+
+    bool hasInitialEntropy;
 public:
 
     //Destructor and Constructors
@@ -105,11 +107,12 @@ public:
     void cancelCalculations();
     void uncancelCalculations();
     bool getCancel();
-    void test();
 
     bool getHasPrecomputerColours();
-    bool getHasInitialEntropy();
+    bool getHasEntropy();
     bool getInitial();
+
+    bool getHasInitialEntropy();
 signals:
     void precomputeColorsSignal(int percent);
     void calcEntropySignal(int percent);

@@ -14,8 +14,10 @@ Game::Game(){
     totalGuesses = 0;
     cancel = false;
     hasPrecomputedColours = false;
-    hasInitialEntropy = false;
+    hasEntropy = false;
     initial = true;
+
+    hasInitialEntropy = false;
 }
 
 
@@ -29,8 +31,10 @@ Game::Game(const unsigned int n, const unsigned int mG) {
     totalGuesses = 0;
     cancel = false;
     hasPrecomputedColours = false;
-    hasInitialEntropy = false;
+    hasEntropy = false;
     initial = true;
+
+    hasInitialEntropy = false;
 }
 
 
@@ -137,29 +141,14 @@ void Game::readUnprocGuesses() {
     totalPossGuesses = i;
 }
 
-void Game::test()
-{
-    std::cout<<"test"<<std::endl;
-
-    getGuessedVector()[0].determineColourVector(getCurrentAnswer());
-    std::vector<uint8_t> colourVector = getGuessedVector()[0].getColourVector();
-
-    std::cout<<std::to_string(colourVector[0])<<std::endl;
-
-    std::cout<<getGuessedVector()[0].displayColourVector(0)<<std::endl;
-//    getPossGuessVector()[0].determineColourVector(getPossAnswerVector()[0]);
-//    std::vector<uint8_t> colourVector = getPossGuessVector()[0].getColourVector();
-    //    std::cout<<(int)colourVector[0]<<std::endl;
-}
-
 bool Game::getHasPrecomputerColours()
 {
     return hasPrecomputedColours;
 }
 
-bool Game::getHasInitialEntropy()
+bool Game::getHasEntropy()
 {
-    return hasInitialEntropy;
+    return hasEntropy;
 }
 
 
@@ -168,8 +157,19 @@ bool Game::getInitial()
     return initial;
 }
 
+bool Game::getHasInitialEntropy()
+{
+    return hasInitialEntropy;
+}
+
 void Game::precomputeColours() {
+
     std::cout << "precomp started" << std::endl;
+
+    hasEntropy = false;
+    hasPrecomputedColours = false;
+    initial = true;
+
     preprocColours.clear(); //Clear the preprocColours vector
     preprocColours.resize(possGuessVector.size(), std::vector<std::vector<uint8_t>>(possAnswerVector.size(), std::vector<uint8_t>(numCharacters))); //Resizes the preprocColours vector to the correct size
     unsigned long long count = 0;
@@ -193,22 +193,25 @@ void Game::precomputeColours() {
             }
             count++;
 
-            if (count == divisor)
-            {
-                std::cout<<"has precomputed colours"<<std::endl;
-                hasPrecomputedColours = true;
-            }
+//            if (count == divisor)
+//            {
+//                std::cout<<"has precomputed colours"<<std::endl;
+
+//            }
         }
         //std::cout << i << std::endl;
     }
     std::cout << "precomp complete" << std::endl;
-
+    hasPrecomputedColours = true;
     this->calcEntropies();
 }
 
 void Game::calcEntropies() {
     //Stores the values needed for the entropy calculation
     std::cout << "Started entropy calc" << std::endl;
+
+    hasEntropy = false;
+
     std::vector<entropy> entropyVector;
     bool found = false;
 
@@ -258,9 +261,9 @@ void Game::calcEntropies() {
                 emit calcEntropySignal(percent);
                 lastEmission = count;
 
-                if (percent == 100)
+                if (percent >= 100)
                 {
-                    hasInitialEntropy = true;
+                    hasEntropy = true;
                 }
             }
             count++;
@@ -275,7 +278,7 @@ void Game::calcEntropies() {
 //    if (!cancel)
 //    {
 //    //        std::cout<<"has initial entropy"<<std::endl;
-//        hasInitialEntropy = true;
+//        hasEntropy = true;
 //    }
 
     entropyVector.clear();
@@ -408,11 +411,12 @@ void Game::setInitialEntropies() {
     }
     std::cout << "Initial entropies set" << std::endl;
     initial = false;
+    hasInitialEntropy = true;
 }
 
 void Game::resetToInitialEntropies() {
 
-    if (hasInitialEntropy)
+    if (hasEntropy)
     {
         for (unsigned int i = 0; i < possGuessVector.size(); i++) {
             possGuessVector[i].setEntropy(possGuessVector[i].getInitialEntropy());

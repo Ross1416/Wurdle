@@ -80,6 +80,8 @@ public slots:
     void finishedUsefulWordsGeneration();
 
 
+    void finishedPrecompute();
+    void finishedCalcEntropy();
 };
 
 #endif // MAINWINDOW_H
