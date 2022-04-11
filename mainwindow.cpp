@@ -89,7 +89,6 @@ void MainWindow::Retry()
         if (game->getHasInitialEntropy())
         {
             game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
-
             FillUsefulWordsScrollArea();
         }
         else{
@@ -204,7 +203,6 @@ void MainWindow::finishedUsefulWordsGeneration()
         if (game->getInitial())
         {
             game->setInitialEntropies();
-//            initial = false;
         }
         FillUsefulWordsScrollArea();
     }
