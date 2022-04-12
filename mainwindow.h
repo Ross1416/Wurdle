@@ -1,24 +1,24 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+// QT INCLUDES
+#include<QMainWindow>
 #include<QGridLayout>
 #include<QKeyEvent>
-#include<iostream>
 #include<QTranslator>
-#include<QMessagebox>
-#include <QProgressDialog>
+#include<QMessageBox>
+#include<QProgressDialog>
 #include<QTimer>
+
+// QT THREADING INCLUDES
+#include <QtConcurrent>
+#include <QFuture>
 
 #include"letterwidget.h"
 #include "letterscontainer.h"
-
 #include "guessWord.h"
 #include "game.h"
 #include "settingsfilehandler.h"
-
-#include <QtConcurrent>
-#include <QFuture>
 
 
 QT_BEGIN_NAMESPACE
@@ -29,56 +29,74 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(Game* currentGame, SettingsFileHandler*, QWidget *parent = nullptr);
-    ~MainWindow();
-
-
-    void FillValidAnswersScrollArea();
-    void FillUsefulWordsScrollArea();
-    void SetupLetterContainer(int, int);
-
-    void CheckWord();
-
-    void keyPressEvent(QKeyEvent *event);
-    void Update();
-
-
-    void GameWon();
-    void Retry();
-    void GameLost();
-//    void GenerateUsefulWords();
-
-    void Precompute();
-    void CalcEntropies();
-
 private:
     Ui::MainWindow *ui;
     Game *game;
+
+    // Lettercontainer variables
     LettersContainer *letterContainer;
     int letterContainerWidth;
     int letterContainerHeight;
+    // Max useful words to display
     unsigned int maxUsefulWords = 100;
+
+    // QT Translator
     QTranslator translator;
 
+    // Progress/threading variables
     QProgressDialog* progressDialog;
     QTimer* progressTimer;
     QFutureWatcher<void> watcher;
-//    bool initial;
 
+    // Settings
     SettingsFileHandler* settingsFile;
-//    std::map<std::string,std::string> settings;
 
+public:
 
+    // CONSTRUCTOR/DESTRUCTOR
+    MainWindow(Game* currentGame, SettingsFileHandler*, QWidget *parent = nullptr);
+    ~MainWindow();
+
+    // FILL SCROLL AREAS
+    void FillValidAnswersScrollArea();
+    void FillUsefulWordsScrollArea();
+
+    // SETUP LETTER CONTAINER
+    void SetupLetterContainer(int, int);
+
+    // ENTERED WORD
+    void CheckWord();
+
+    // OVERRIDE QT KEY PRESS EVENT FUNCTION
+    void keyPressEvent(QKeyEvent *event);
+
+    // UPDATE
+    void Update();
+
+    // GAME
+    void GameWon();
+    void GameLost();
+    void Retry();
+
+    // COMPUTATION FUNCTIONS
+    void Precompute();
+    void CalcEntropies();
+
+    // TRANSLATE UI
+    void Translate();
+
+// slots can recieve QT signals
 public slots:
-
+    // SETTINGS
     void OpenSettingsMenu();
     void GetSettings();
+
+    // UPDATE PROGRESS BAR
     void updateGenerateUsefulWordsColoursProgress(int colourPercent);
     void updateGenerateUsefulWordsEntropyProgress(int colourPercent);
+
+    // COMPUTATION FUNCTIONS ENDED
     void CancelGenerateUsefulWords();
-
-
     void finishedPrecompute();
     void finishedCalcEntropy();
 };

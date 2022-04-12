@@ -1,7 +1,10 @@
 #ifndef SETTINGSMENU_H
 #define SETTINGSMENU_H
+
+#include<QDialog>
+#include<QFileDialog>
+
 #include"mainwindow.h"
-#include <QDialog>
 #include"settingsfilehandler.h"
 
 namespace Ui {
@@ -16,9 +19,7 @@ public:
     settingsMenu(SettingsFileHandler* settingsFile, QWidget *parent = nullptr);
     ~settingsMenu();
     void ok();
-
     void Setup();
-//    void changeEvent(QEvent *event);
 private:
     Ui::settingsMenu *ui;
     SettingsFileHandler* settingsFile;

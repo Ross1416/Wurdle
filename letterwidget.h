@@ -2,12 +2,15 @@
 #define LETTERWIDGET_H
 
 #include<QLabel>
-#include <QWidget>
+#include<QWidget>
 #include<QHBoxLayout>
+#include<QFrame>
+#include<QStyle>
+
 #include<string>
 
 // LETTER WIDGET
-// Individual widget with a rounded square containing single character
+// Individual widget with a rounded square containing single characte
 
 class LetterWidget : public QWidget
 {
@@ -18,19 +21,23 @@ private:
     QLabel *letter;
     std::string colour;
     bool highlightState;
-//    std::string borderColour;
 
 public:
     explicit LetterWidget(QWidget *parent = nullptr);
     virtual ~LetterWidget();
 
+    // SET/GET CHARACTER
     void setLetter(char);
     std::string getLetter() {return letter->text().toStdString();};
 
+    // BACKGROUND COLOUR
     void setColour(std::string);
+
+    // HIGHLIGHT
     void highlight();
     void unhighlight();
 
+    // UPDATE STYLESHEET
     void updateStyle();
 
 };
