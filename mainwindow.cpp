@@ -170,15 +170,14 @@ void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
 // CANCEL ENTROPY CALCULATIONS
 void MainWindow::CancelGenerateUsefulWords()
 {
-
+    game->cancelCalculations();
     if (!game->getHasPrecomputerColours())
     {
         QMessageBox msgBox;
         msgBox.setText("Must precompute colours.");
         msgBox.exec();
+        OpenSettingsMenu();
     }
-    else
-        game->cancelCalculations();
 }
 
 // CALLED WHEN FINISHED PRECOMPUTING COLOURS AND CALCULATING ENTROPY

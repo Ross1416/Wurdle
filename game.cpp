@@ -162,8 +162,8 @@ void Game::precomputeColours() {
     unsigned int emissionRate = 0.01*divisor;
 
 
-    for (unsigned int i = 0; i < possGuessVector.size(); i++) { //Assigns the precomputed colour vectors for each cell in the lookup table
-        for (unsigned int j = 0; j < possAnswerVector.size(); j++) {
+    for (unsigned int i = 0; i < possGuessVector.size() && !cancel ; i++) { //Assigns the precomputed colour vectors for each cell in the lookup table
+        for (unsigned int j = 0; j < possAnswerVector.size() && !cancel; j++) {
             possGuessVector[i].determineColourVector(possAnswerVector[j]);
             preprocColours[i][j] = possGuessVector[i].getColourVector();
 
