@@ -1,9 +1,4 @@
 #include "letterscontainer.h"
-#include "letterscontainer.h"
-#include<QGridLayout>
-#include<vector>
-#include<QTimer>
-#include<algorithm>
 
 #include<iostream>
 
@@ -11,13 +6,16 @@
 LettersContainer::LettersContainer(int w, int h, QWidget *parent)
     : QWidget{parent}
 {
+    // Create grid layout
     layout = new QGridLayout(this);
 
+    // Set initial variables
     this->width = w;
     this->height = h;
     this->selectedRow = 0;
     this->selectedColumn = 0;
 
+    // Add letter widgets to layout
     for (int j=0; j<height;j++)
     {
         std::vector<LetterWidget*> row;
@@ -29,13 +27,6 @@ LettersContainer::LettersContainer(int w, int h, QWidget *parent)
             layout->addWidget(newLetter,j,i);
         }
         letters.push_back(row);
-
-        // do i need to delete row??
-//        for (int j=0; j<height;j++)
-//        {
-//            delete row[j];
-//        }
-
     }
 }
 
@@ -101,9 +92,17 @@ void LettersContainer::setSelectedRow(int row)
 {
     this->selectedRow = row;
 }
+
+// SET THE SELECTED COLUMN OF LETTER WIDGETS
+void LettersContainer::setSelectedColumn(int col)
+{
+    this->selectedColumn = col;
+}
+
 // INCREMENT SELECTED ROW BY 1
 void LettersContainer::incrementSelectedRow()
 {
+    // Check to ensure selected row will not be incremented out of bounds
     if (this->selectedRow < this->height-1)
     {
         this->unhighlightCurrentLetter();
@@ -117,7 +116,7 @@ void LettersContainer::incrementSelectedRow()
 // INCREMENTED SELECTED COLUMN BY 1
 void LettersContainer::incrementSelectedColumn()
 {
-    // Check to ensure selected row will not be incremented out of bounds
+    // Check to ensure selected column will not be incremented out of bounds
     if (this->selectedColumn < this->width-1)
     {
         this->selectedColumn = this->selectedColumn + 1;
@@ -127,7 +126,7 @@ void LettersContainer::incrementSelectedColumn()
 // DECREMENTED SELECTED COLUMN BY 1
 void LettersContainer::decrementSelectedColumn()
 {
-    // Check to ensure selected row will not be decremented out of bounds
+    // Check to ensure selected column will not be decremented out of bounds
     if (this->selectedColumn > 0)
     {
         this->selectedColumn = this->selectedColumn - 1;
@@ -153,14 +152,8 @@ std::string LettersContainer::getCurrentWord()
     }
 
 
-    transform(currentWord.begin(), currentWord.end(), currentWord.begin(), tolower);  // Transforms the current word into lower case
-    return currentWord;
-}
-
-// SET THE SELECTED COLUMN OF LETTER WIDGETS
-void LettersContainer::setSelectedColumn(int col)
-{
-    this->selectedColumn = col;
+    transform(currentWord.begin(), currentWord.end(), currentWord.begin(), tolower);  // Transforms the current word into all lower case
+    return currentWord;                                                               // as this is the format of the word lists
 }
 
 // UPDATE ALL LETTER WIDGET'S STYLESHEETS
@@ -178,17 +171,36 @@ void LettersContainer::updateLetterStyles()
 // CALLED WHEN INVALID GUESS IS INPUT
 void LettersContainer::invalidGuess()
 {
+    // Set all letterwidgets background colour to red in selected row
     for (int i=0; i<width;i++)
     {
         letters[this->selectedRow][i]->setColour("red");
         letters[this->selectedRow][i]->updateStyle();
     }
+
+    // Start timer to reset the letter widgets after 300 ms
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(invalidGuessReset()));
     timer->start(300);
 }
 
+// RESET CURRENT ROW AFTER INVALID GUESS (DRIVEN BY TIMER)
+void LettersContainer::invalidGuessReset()
+{
+    for (int i=0; i<width;i++)
+    {
+        letters[this->selectedRow][i]->setColour("white");
+        letters[this->selectedRow][i]->setLetter(' ');
+        letters[this->selectedRow][i]->updateStyle();
+    }
+    this->unhighlightCurrentLetter();
+    this->setSelectedColumn(0);
+    this->highlightCurrentLetter();
+    this->updateLetterStyles();
+}
+
+// UPDATE THE LETTERWIDGETS BACKGROUND COLOURS IN SELECTED ROW
 void LettersContainer::UpdateCurrentColours(const std::vector<uint8_t> colours)
 {
     for (int i=0; i<width;i++)
@@ -216,21 +228,6 @@ void LettersContainer::UpdateCurrentColours(const std::vector<uint8_t> colours)
         letters[this->selectedRow][i]->setColour(colour);
         letters[this->selectedRow][i]->updateStyle();
     }
-}
-
-// RESET CURRENT ROW AFTER INVALID GUESS (DRIVEN BY TIMER)
-void LettersContainer::invalidGuessReset()
-{
-    for (int i=0; i<width;i++)
-    {
-        letters[this->selectedRow][i]->setColour("white");
-        letters[this->selectedRow][i]->setLetter(' ');
-        letters[this->selectedRow][i]->updateStyle();
-    }
-    this->unhighlightCurrentLetter();
-    this->setSelectedColumn(0);
-    this->highlightCurrentLetter();
-    this->updateLetterStyles();
 }
 
 

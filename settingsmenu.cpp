@@ -1,22 +1,23 @@
 #include "settingsmenu.h"
 #include "ui_settingsmenu.h"
-#include<QFileDialog>
+
 #include<iostream>
 
+// CONSTRUCTOR
 settingsMenu::settingsMenu(SettingsFileHandler* settings, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settingsMenu)
 {
-
+    // Setup ui
     ui->setupUi(this);
 
+    // Assign settings file handler to member variable
     this->settingsFile = settings;
-//    settingsFile = SettingsFileHandler("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/settings.txt");
-//    settingsFile = SettingsFileHandler("settings.txt");
-//    settings = settingsFile.read();
+
+    // Set settings menu ui elements to the values in the settings file
     Setup();
 
-    // SET DIALOG BUTTONS SO THEY'RE TRANSLATABLE
+    // Set dialog buttons so they are translatable
     ui->dialogBtnBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
     ui->dialogBtnBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 
@@ -25,24 +26,17 @@ settingsMenu::settingsMenu(SettingsFileHandler* settings, QWidget *parent) :
     connect(ui->guessListBrowseBtn, &QPushButton::clicked, this, &settingsMenu::browseForGuessList);
     connect(ui->dialogBtnBox, &QDialogButtonBox::accepted, this, &settingsMenu::ok);
 }
+
+// DESTRUCTOR
 settingsMenu::~settingsMenu()
 {
     delete ui;
 }
 
-//void settingsMenu::changeEvent(QEvent *event) {
-//    if (event->type() == QEvent::LanguageChange) {
-//        setWindowTitle(tr("Settings"));
-//        ui->retranslateUi(this);
-
-//    }
-//    else {
-//        QWidget::changeEvent(event);
-//    }
-//}
-
+// INITIAL SETUP
 void settingsMenu::Setup()
 {
+    // WORD LISTS AND GAME SETTINGS
     ui->answerListLineEdit->setText(QString::fromStdString(settingsFile->get("AnswerList")));
     ui->guessListLineEdit->setText(QString::fromStdString(settingsFile->get("GuessList")));
     ui->noGuessesSpinBox->setValue(stoi(settingsFile->get("NoOfGuesses")));
@@ -53,7 +47,7 @@ void settingsMenu::Setup()
     ui->languageComboBox->setCurrentText(QString::fromStdString(settingsFile->get("Language")));
 }
 
-// SIGNAL THAT EMITS SETTINGS WHEN OK BTN PRESSED
+// WRITE NEW SETTINGS TO FILE AND EMIT SIGNAL (to mainwindow)
 void settingsMenu::ok()
 {
     settingsFile->set("AnswerList", ui->answerListLineEdit->text().toStdString());
@@ -63,10 +57,10 @@ void settingsMenu::ok()
 
     settingsFile->write();
 
-//    emit ok_signal(ui->answerListLineEdit->text().toStdString(), ui->guessListLineEdit->text().toStdString(), ui->noGuessesSpinBox->value(), ui->languageComboBox->currentText().toStdString());
     emit ok_signal();
 }
 
+// POP UP FILE BROWSER FOR ANSWER LIST
 void settingsMenu::browseForAnswerList()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Choose answer list"), QDir().absolutePath(),"Text files (*.txt)");
@@ -74,6 +68,7 @@ void settingsMenu::browseForAnswerList()
         ui->answerListLineEdit->setText(fileName);
 }
 
+// POP UP FILE BROWSER FOR GUESS LIST
 void settingsMenu::browseForGuessList()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Choose guess list"), QDir().absolutePath(),"Text files (*.txt)");

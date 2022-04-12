@@ -1,23 +1,24 @@
 #include "settingsfilehandler.h"
+
 #include<iostream>
 
-//SettingsFileHandler::SettingsFileHandler()
-//{
-//    path = "";
-//}
-
-SettingsFileHandler::SettingsFileHandler(std::string filePath)
+// CONSTRUCTOR
+SettingsFileHandler::SettingsFileHandler(std::string fileName)
 {
-    path = QDir().absolutePath().toStdString() + "/" + filePath;
-//    std::cout<<path<<"\n";
+    // Set path to current location + file name
+    path = QDir().absolutePath().toStdString() + "/" + fileName;
+    // Open file
     std::ifstream file;
     file.open(path);
+
+    // If can't open file, create a new one with default values else close.
     if (!file)
         CreateSettingsFile();
     else
         file.close();
 }
 
+// CREATE SETTINGS FILE WITH DEFAULT VALUES
 void SettingsFileHandler::CreateSettingsFile()
 {
     std::ofstream file;
@@ -29,61 +30,55 @@ void SettingsFileHandler::CreateSettingsFile()
     file.close();
 }
 
+// READ SETTINGS FROM FILE
 void SettingsFileHandler::read()
 {
+    // Open file
     std::ifstream file;
     file.open(path);
 
-    if (file)
+    if (!file)
+        CreateSettingsFile();
+
+    std::string line;
+    // Read properties and values in the settings file and save in settings map
+    while (getline(file, line))
     {
-
-        std::map<std::string, std::string>::iterator it;
-        std::string line;
-
-        while (getline(file, line))
-        {
-            std::string setting, value;
-            int split = line.find(':');
-            setting = line.substr(0,split);
-            value = line.substr(split+1,line.length());
-            settings[setting] = value;
-//            std::cout<<setting<<":"<<value<<std::endl;
-        }
+        std::string setting, value;
+        int split = line.find(':');
+        setting = line.substr(0,split);
+        value = line.substr(split+1,line.length());
+        settings[setting] = value;
     }
-//    else{
-//        std::cout<<"error1\n";
-//    }
     file.close();
 }
 
+// WRITE SETTINGS TO FILE
 void SettingsFileHandler::write()
 {
     std::ofstream file;
-    file.open(path);//, std::ios::trunc);
+    file.open(path);
 
-    if (file)
-    {
-        std::map<std::string, std::string>::iterator it;
-        for (it = settings.begin(); it != settings.end(); it++)
-        {
-//            std::cout<<it->first<<":"<<it->second<<std::endl;
-            file << it->first << ":" << it->second << std::endl;
-        }
-        file.close();
-    }/*else
-    {
-        std::cout<<"error2"<<std::endl;
+    if (!file)
+        CreateSettingsFile();
 
-    }*/
+    // Write settings map properties and values to the settings file
+    std::map<std::string, std::string>::iterator it;
+    for (it = settings.begin(); it != settings.end(); it++)
+    {
+        file << it->first << ":" << it->second << std::endl;
+    }
+    file.close();
 }
 
+// SET INDIVIDUAL PROPERTY VALUE
 void SettingsFileHandler::set(std::string property, std::string value)
 {
     settings[property] = value;
 }
 
+// GET INDIVIDUAL PROPERTY VALUE
 std::string SettingsFileHandler::get(std::string property)
 {
-//    std::cout<<"in handler"<<settings[property]<<std::endl;
     return settings[property];
 }

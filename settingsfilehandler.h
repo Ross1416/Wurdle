@@ -7,23 +7,25 @@
 #include<string>
 #include<QDir>
 
-
 class SettingsFileHandler
 {
 
 private:
-    std::string path;
-    std::map<std::string,std::string> settings;
+    std::string path;   // Path to settings file
+    std::map<std::string,std::string> settings; // map of settings (format: "Property","Value")
+
 public:  
-//    SettingsFileHandler();
     SettingsFileHandler(std::string);
 
+    // Read and write from/to file
     void read();
     void write();
 
+    // Get and set individual properties
     void set(std::string, std::string);
     std::string get(std::string);
 
+    // Create new settings file (called if one is not found)
     void CreateSettingsFile();
 };
 
