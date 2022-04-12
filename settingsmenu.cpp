@@ -40,6 +40,7 @@ void settingsMenu::Setup()
     ui->answerListLineEdit->setText(QString::fromStdString(settingsFile->get("AnswerList")));
     ui->guessListLineEdit->setText(QString::fromStdString(settingsFile->get("GuessList")));
     ui->noGuessesSpinBox->setValue(stoi(settingsFile->get("NoOfGuesses")));
+    ui->noCharactersSpinBox->setValue(stoi(settingsFile->get("NoOfCharacters")));
 
     // LANGUAGES
     ui->languageComboBox->addItem(tr("English"));
@@ -54,6 +55,7 @@ void settingsMenu::ok()
     settingsFile->set("GuessList", ui->guessListLineEdit->text().toStdString());
     settingsFile->set("NoOfGuesses", std::to_string(ui->noGuessesSpinBox->value()));
     settingsFile->set("Language", ui->languageComboBox->currentText().toStdString());
+    settingsFile->set("NoOfCharacters", std::to_string(ui->noCharactersSpinBox->value()));
 
     settingsFile->write();
 

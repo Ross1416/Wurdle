@@ -26,6 +26,7 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     // Setup game
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
+    game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
     game->readUnprocAnswers();
     game->readUnprocGuesses();
     game->reset();
@@ -487,6 +488,7 @@ void MainWindow::GetSettings()
     // Update game word lists
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
+    game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
     game->readUnprocAnswers();
     game->readUnprocGuesses();
     //Reset the game
