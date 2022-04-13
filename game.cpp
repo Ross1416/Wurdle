@@ -15,6 +15,7 @@ Game::Game(){
     cancel = false;
     hasPrecomputedColours = false;
     hasInitialEntropy = false;
+    hasEntropy = false;
 }
 
 
@@ -29,6 +30,7 @@ Game::Game(const unsigned int n, const unsigned int mG) {
     cancel = false;
     hasPrecomputedColours = false;
     hasInitialEntropy = false;
+    hasEntropy = false;
 }
 
 
@@ -393,7 +395,7 @@ void Game::setInitialEntropies() {
 
 void Game::resetToInitialEntropies() {
 
-    if (hasEntropy)
+    if (hasInitialEntropy)
     {
         for (unsigned int i = 0; i < possGuessVector.size(); i++) {
             possGuessVector[i].setEntropy(possGuessVector[i].getInitialEntropy());

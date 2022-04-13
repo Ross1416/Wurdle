@@ -19,7 +19,6 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     ui->centralwidget->setContentsMargins(0,0,0,0);
     ui->wurdleTitleLabel->setContentsMargins(0,0,0,0);
 
-
     // Setup game
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
@@ -70,8 +69,10 @@ void MainWindow::Retry()
 
     if (game->getHasPrecomputerColours())
     {
+        std::cout<<"has pre"<<std::endl;
         if (game->getHasInitialEntropy())
         {
+            std::cout<<"has en"<<std::endl;
             game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
             FillUsefulWordsScrollArea();
         }
@@ -494,8 +495,9 @@ void MainWindow::GetSettings()
     game->reset();
     game->randomAnswer();
 
-    // Precompute colours and entropies
+    // Precompute colours and entropy
     Precompute();
+
 
     // Update lettercontainer geometry
     // Letter container geometry
@@ -521,22 +523,25 @@ void MainWindow::CancelSettings()
 
 void MainWindow::QuitSettings()
 {
-    // Create message box
-    QMessageBox msgBox;
-    msgBox.setText(tr("You must precompute colours."));
-    msgBox.setInformativeText(tr("Do you want to compute colours or quit?"));
-    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
-    int btn = msgBox.exec();
+    if (!game->getHasPrecomputerColours())
+    {
+        // Create message box
+        QMessageBox msgBox;
+        msgBox.setText(tr("You must precompute colours."));
+        msgBox.setInformativeText(tr("Do you want to compute colours or quit?"));
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
+        int btn = msgBox.exec();
 
-    // Reset game or close msg box depending on which button is pressed
-    switch(btn){
-    case QMessageBox::Ok:
-        Precompute();
-        break;
-    case QMessageBox::Close:
-        msgBox.close();
-        qApp->quit();
-        break;
+        // Reset game or close msg box depending on which button is pressed
+        switch(btn){
+        case QMessageBox::Ok:
+            Precompute();
+            break;
+        case QMessageBox::Close:
+            msgBox.close();
+            qApp->quit();
+            break;
+        }
     }
 }
 
