@@ -87,6 +87,9 @@ public slots:
     // SETTINGS
     void OpenSettingsMenu();
     void GetSettings();
+    void CancelSettings();
+    void QuitSettings();
+
 
     // UPDATE PROGRESS BAR
     void updateGenerateUsefulWordsColoursProgress(int colourPercent);

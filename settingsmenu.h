@@ -19,6 +19,8 @@ public:
     settingsMenu(SettingsFileHandler* settingsFile, QWidget *parent = nullptr);
     ~settingsMenu();
     void ok();
+    void cancel();
+    void closeEvent(QCloseEvent *event);
     void Setup();
 private:
     Ui::settingsMenu *ui;
@@ -31,6 +33,8 @@ public slots:
 
 signals:
     void ok_signal();
+    void cancel_signal();
+    void quit_signal();
 };
 
 #endif // SETTINGSMENU_H

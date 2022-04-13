@@ -148,7 +148,7 @@ bool Game::getHasInitialEntropy()
 
 void Game::precomputeColours() {
 
-    std::cout << "precomp started" << std::endl;
+    std::cout << "### Precomputing Colours Started ###" << std::endl;
 
     hasEntropy = false;
     hasPrecomputedColours = false;
@@ -177,22 +177,21 @@ void Game::precomputeColours() {
             }
             count++;
 
-//            if (count == divisor)
-//            {
-//                std::cout<<"has precomputed colours"<<std::endl;
+            if (count == divisor)
+            {
+                std::cout<<"### Precomputing colours complete ###"<<std::endl;
+                hasPrecomputedColours = true;
 
-//            }
+            }
         }
         //std::cout << i << std::endl;
     }
-    std::cout << "precomp complete" << std::endl;
-    hasPrecomputedColours = true;
     this->calcEntropies();
 }
 
 void Game::calcEntropies() {
     //Stores the values needed for the entropy calculation
-    std::cout << "Started entropy calc" << std::endl;
+    std::cout << "### Started entropy calc ###" << std::endl;
 
     hasEntropy = false;
 
@@ -248,6 +247,7 @@ void Game::calcEntropies() {
                 if (percent >= 100)
                 {
                     hasEntropy = true;
+                    std::cout << "### Finished entropy calc ###" << std::endl;
                 }
             }
             count++;
@@ -259,17 +259,11 @@ void Game::calcEntropies() {
 
     }
 
-//    if (!cancel)
-//    {
-//    //        std::cout<<"has initial entropy"<<std::endl;
-//        hasEntropy = true;
-//    }
-
     entropyVector.clear();
     possGuessVectorSorted.clear();
     possGuessVectorSorted = possGuessVector;
     std::sort(possGuessVectorSorted.begin(), possGuessVectorSorted.end(), compareEntropy);
-    std::cout << "Finished entropy calc" << std::endl;
+
 }
 
 

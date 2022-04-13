@@ -62,6 +62,18 @@ void settingsMenu::ok()
     emit ok_signal();
 }
 
+void settingsMenu::cancel()
+{
+    emit cancel_signal();
+}
+
+void settingsMenu::closeEvent(QCloseEvent *event)
+{
+    this->close();
+    emit quit_signal();
+
+}
+
 // POP UP FILE BROWSER FOR ANSWER LIST
 void settingsMenu::browseForAnswerList()
 {

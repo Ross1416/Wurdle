@@ -44,8 +44,6 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
 
     connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
     connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
-
-    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
 }
 
 // MAINWINDOW DESTRUCTOR
@@ -90,8 +88,6 @@ void MainWindow::Retry()
 // PRECOMPUTE COLOURS AND ENTROPY ASYNCHRONOUSLY
 void MainWindow::Precompute()
 {
-    std::cout<<"Precompute"<<std::endl;
-
     // Delete useful words scroll area
     delete ui->usefulWordsScrollArea->widget();
 
@@ -100,6 +96,7 @@ void MainWindow::Precompute()
 
     // Setup progress dialog
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
+    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
     progressDialog->setFixedSize(QSize(200,100));
     progressDialog->show();
 
@@ -119,8 +116,6 @@ void MainWindow::CalcEntropies()
     // Only try calculate entropies if colours have already been precomputed
     if (game->getHasPrecomputerColours())
     {
-        std::cout<<"Calc Entropies"<<std::endl;
-
         // Delete useful words scroll area
         delete ui->usefulWordsScrollArea->widget();
 
@@ -129,6 +124,7 @@ void MainWindow::CalcEntropies()
 
         // Setup progress dialog
         progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
+        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
         progressDialog->setFixedSize(QSize(200,100));
         progressDialog->show();
 
@@ -160,14 +156,9 @@ void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
 // CANCEL ENTROPY CALCULATIONS
 void MainWindow::CancelGenerateUsefulWords()
 {
+    std::cout << "### Cancelled ###" << std::endl;
     game->cancelCalculations();
-    if (!game->getHasPrecomputerColours())
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Must precompute colours.");
-        msgBox.exec();
-        OpenSettingsMenu();
-    }
+    CancelSettings();
 }
 
 // CALLED WHEN FINISHED PRECOMPUTING COLOURS AND CALCULATING ENTROPY
@@ -175,8 +166,6 @@ void MainWindow::finishedPrecompute()
 {
     // Disable mainwindow
     this->setEnabled(true);
-
-    std::cout<<"FINISHED PRECOMPUTE"<<std::endl;
 
     // If entropy wasn't cancelled set initial entropies and fill useful words scroll area
     if (!game->getCancel())
@@ -195,8 +184,6 @@ void MainWindow::finishedCalcEntropy()
 {
     // Disable mainwindow
     this->setEnabled(true);
-
-    std::cout<<"FINISHED ENTROPY"<<std::endl;
 
     // If entropy wasn't cancelled fill useful words scroll area
     if (!game->getCancel())
@@ -489,6 +476,8 @@ void MainWindow::OpenSettingsMenu()
     // Create settings menu and connect signal and slot
     settingsMenu *settings = new settingsMenu(settingsFile, this);
     connect(settings, SIGNAL(ok_signal()), this, SLOT(GetSettings()));
+    connect(settings, SIGNAL(cancel_signal()), this, SLOT(CancelSettings()));
+    connect(settings, SIGNAL(quit_signal()), this, SLOT(QuitSettings()));
     settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open (as desired)
 }
 
@@ -517,6 +506,38 @@ void MainWindow::GetSettings()
 
     // Translate UI
     Translate();
+}
+
+void MainWindow::CancelSettings()
+{
+    if (!game->getHasPrecomputerColours())
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("You must precompute colours."));
+        msgBox.exec();
+        OpenSettingsMenu();
+    }
+}
+
+void MainWindow::QuitSettings()
+{
+    // Create message box
+    QMessageBox msgBox;
+    msgBox.setText(tr("You must precompute colours."));
+    msgBox.setInformativeText(tr("Do you want to compute colours or quit?"));
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
+    int btn = msgBox.exec();
+
+    // Reset game or close msg box depending on which button is pressed
+    switch(btn){
+    case QMessageBox::Ok:
+        Precompute();
+        break;
+    case QMessageBox::Close:
+        msgBox.close();
+        qApp->quit();
+        break;
+    }
 }
 
 void MainWindow::Translate()
