@@ -49,8 +49,10 @@ private:
     bool hasPrecomputedColours;
     bool hasEntropy;
     bool initial;
-
     bool hasInitialEntropy;
+
+    bool guessListLoaded;
+    bool answerListLoaded;
 public:
 
     //Destructor and Constructors
@@ -80,8 +82,8 @@ public:
     std::vector<possGuessWord> getPossGuessVectorSorted() const;
     std::vector<guessWord> getGuessedVector() const;
 
-    void readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
-    void readUnprocGuesses(); //Function for reading in the txt for the possGuessVector
+    int readUnprocAnswers(); //Function for reading in the txt for the possAnswerVector
+    int readUnprocGuesses(); //Function for reading in the txt for the possGuessVector
 
     void precomputeColours(); //Clears, resizes and calculates the precomputed colour vectors for the current possGuessVector and possAnswerVectors, stores result in the preprocColours vector
 
@@ -110,6 +112,9 @@ public:
 
     bool getHasPrecomputerColours();
     bool getHasInitialEntropy();
+
+    bool getGuessListLoaded();
+    bool getAnswerListLoaded();
 signals:
     void precomputeColorsSignal(int percent);
     void calcEntropySignal(int percent);

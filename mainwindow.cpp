@@ -23,19 +23,14 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
     game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
-    game->readUnprocAnswers();
-    game->readUnprocGuesses();
+
+
+    // Try open word list text files, if error get user to browse for them
+    LoadWordLists();
+
     game->reset();
     game->randomAnswer();
 
-    // Translate
-    Translate();
-
-    // Setup letter container
-    SetupLetterContainer();
-
-    // Compute colours and entropy in another thread
-    Precompute();
 
     // SIGNALS AND SLOTS CONNECTIONS
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
@@ -49,6 +44,43 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+// LOAD WORD LISTS AND CHECK FOR ERRORS
+void MainWindow::LoadWordLists()
+{
+    try
+    {
+        int error = 0;
+        int ans = game->readUnprocAnswers();
+        int guess = game->readUnprocGuesses();
+
+        error = ans + guess;
+        throw (error);
+
+    }
+    catch (int error)
+    {
+        if (error > 0)
+        {
+            std::cout<<"Error opening word list(s)"<<std::endl;
+            QMessageBox msgBox;
+            msgBox.setText(tr("Error opening word list(s).\n Please browse for them."));
+            msgBox.exec();
+            OpenSettingsMenu();
+        }
+        else
+        {
+            // Translate
+            Translate();
+
+            // Setup letter container
+            SetupLetterContainer();
+
+            // Compute colours and entropy in another thread
+            Precompute();
+        }
+    }
 }
 
 // RETRY FUNCTION
@@ -485,62 +517,120 @@ void MainWindow::OpenSettingsMenu()
 // CALLED WHEN SETTINGS OK BTN IS PRESSED
 void MainWindow::GetSettings()
 {
+    delete ui->containerWidget->layout();
+    delete ui->validAnswersScrollArea->widget();
+
     // Update game word lists
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
     game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
-    game->readUnprocAnswers();
-    game->readUnprocGuesses();
+
+    LoadWordLists();
+//    game->readUnprocAnswers();
+//    game->readUnprocGuesses();
     //Reset the game
     game->reset();
     game->randomAnswer();
 
-    // Precompute colours and entropy
-    Precompute();
 
-
-    // Update lettercontainer geometry
-    // Letter container geometry
-//    delete letterContainer;
-    delete ui->containerWidget->layout();
-    delete ui->validAnswersScrollArea->widget();
-    SetupLetterContainer();
-
-    // Translate UI
-    Translate();
 }
 
 void MainWindow::CancelSettings()
 {
-    if (!game->getHasPrecomputerColours())
+    if (!game->getAnswerListLoaded())
     {
         QMessageBox msgBox;
-        msgBox.setText(tr("You must precompute colours."));
+        msgBox.setText(tr("Answer List could not be loaded.\nPlease browse for one."));
         msgBox.exec();
         OpenSettingsMenu();
     }
+    else{
+        if (!game->getGuessListLoaded())
+        {
+            QMessageBox msgBox;
+            msgBox.setText(tr("Guess List could not be loaded.\nPlease browse for one."));
+            msgBox.exec();
+            OpenSettingsMenu();
+        }
+        else
+        {
+            if (!game->getHasPrecomputerColours())
+            {
+                QMessageBox msgBox;
+                msgBox.setText(tr("You must precompute colours."));
+                msgBox.exec();
+                OpenSettingsMenu();
+            }
+        }
+    }
+
 }
 
 void MainWindow::QuitSettings()
 {
-    if (!game->getHasPrecomputerColours())
+    if (!game->getAnswerListLoaded())
     {
         // Create message box
         QMessageBox msgBox;
-        msgBox.setText(tr("You must precompute colours."));
-        msgBox.setInformativeText(tr("Do you want to compute colours or quit?"));
+        msgBox.setText(tr("Answer list could not be loaded."));
+        msgBox.setInformativeText(tr("Please browse for one."));
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
         int btn = msgBox.exec();
 
         // Reset game or close msg box depending on which button is pressed
         switch(btn){
         case QMessageBox::Ok:
-            Precompute();
+            OpenSettingsMenu();
             break;
         case QMessageBox::Close:
             msgBox.close();
             qApp->quit();
             break;
+        }
+    }
+    else{
+        if (!game->getGuessListLoaded())
+        {
+            // Create message box
+            QMessageBox msgBox;
+            msgBox.setText(tr("Guess list could not be loaded."));
+            msgBox.setInformativeText(tr("Please browse for one."));
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
+            int btn = msgBox.exec();
+
+            // Reset game or close msg box depending on which button is pressed
+            switch(btn){
+            case QMessageBox::Ok:
+                OpenSettingsMenu();
+                break;
+            case QMessageBox::Close:
+                msgBox.close();
+                qApp->quit();
+                break;
+            }
+        }
+        else
+        {
+            if (!game->getHasPrecomputerColours())
+            {
+                // Create message box
+                QMessageBox msgBox;
+                msgBox.setText(tr("You must precompute colours."));
+                msgBox.setInformativeText(tr("Do you want to compute colours or quit?"));
+                msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
+                int btn = msgBox.exec();
+
+                // Reset game or close msg box depending on which button is pressed
+                switch(btn){
+                case QMessageBox::Ok:
+                    Precompute();
+                    break;
+                case QMessageBox::Close:
+                    msgBox.close();
+                    qApp->quit();
+                    break;
+                }
+            }
         }
     }
 }

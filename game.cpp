@@ -16,6 +16,8 @@ Game::Game(){
     hasPrecomputedColours = false;
     hasInitialEntropy = false;
     hasEntropy = false;
+    guessListLoaded = false;
+    answerListLoaded = false;
 }
 
 
@@ -31,6 +33,8 @@ Game::Game(const unsigned int n, const unsigned int mG) {
     hasPrecomputedColours = false;
     hasInitialEntropy = false;
     hasEntropy = false;
+    guessListLoaded = false;
+    answerListLoaded = false;
 }
 
 
@@ -98,7 +102,9 @@ void Game::setCurrentAnswer(const std::string s, const unsigned int n) {
     currentAnswer.setNumCharacters(n);
 }
 
-void Game::readUnprocAnswers() {
+int Game::readUnprocAnswers() {
+    answerListLoaded = false;
+    bool error = 0;
     int i = 0;
     possAnswerVector.clear();
     std::ifstream answerInFile(answerList);
@@ -111,12 +117,18 @@ void Game::readUnprocAnswers() {
             possAnswerVector.push_back(*x);
             i++;
         }
+        answerListLoaded = true;
     }
+    else
+        error = 1;
     answerInFile.close();
     totalPossAnswers = i;
+    return error;
 }
 
-void Game::readUnprocGuesses() {
+int Game::readUnprocGuesses() {
+    guessListLoaded = false;
+    int error = 0;
     int i = 0;
     possGuessVector.clear();
 //    std::cout << guessList <<std::endl;
@@ -132,9 +144,13 @@ void Game::readUnprocGuesses() {
             std::cout<<x<<std::endl;
             i++;
         }
+        guessListLoaded = true;
     }
+    else
+        error = 1;
     guessInFile.close();
     totalPossGuesses = i;
+    return error;
 }
 
 bool Game::getHasPrecomputerColours()
@@ -146,6 +162,16 @@ bool Game::getHasPrecomputerColours()
 bool Game::getHasInitialEntropy()
 {
     return hasInitialEntropy;
+}
+
+bool Game::getGuessListLoaded()
+{
+    return guessListLoaded;
+}
+
+bool Game::getAnswerListLoaded()
+{
+    return answerListLoaded;
 }
 
 void Game::precomputeColours() {

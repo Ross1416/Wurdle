@@ -82,7 +82,10 @@ public:
     // TRANSLATE UI
     void Translate();
 
-// slots can recieve QT signals
+    // Load Word lists while checking for errors
+    void LoadWordLists();
+    // slots can recieve QT signals
+
 public slots:
     // SETTINGS
     void OpenSettingsMenu();
