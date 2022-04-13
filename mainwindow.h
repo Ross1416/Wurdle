@@ -38,7 +38,7 @@ private:
     int letterContainerWidth;
     int letterContainerHeight;
     // Max useful words to display
-    unsigned int maxUsefulWords = 100;
+    unsigned int maxUsefulGuesses = 100;
 
     // QT Translator
     QTranslator translator;
@@ -59,7 +59,7 @@ public:
 
     // FILL SCROLL AREAS
     void FillValidAnswersScrollArea();
-    void FillUsefulWordsScrollArea();
+    void FillUsefulGuessesScrollArea();
 
     // SETUP LETTER CONTAINER
     void SetupLetterContainer();
@@ -92,11 +92,11 @@ public slots:
 
 
     // UPDATE PROGRESS BAR
-    void updateGenerateUsefulWordsColoursProgress(int colourPercent);
-    void updateGenerateUsefulWordsEntropyProgress(int colourPercent);
+    void updateGenerateUsefulGuessesColoursProgress(int colourPercent);
+    void updateGenerateUsefulGuessesEntropyProgress(int colourPercent);
 
     // COMPUTATION FUNCTIONS ENDED
-    void CancelGenerateUsefulWords();
+    void CancelGenerateUsefulGuesses();
     void finishedPrecompute();
     void finishedCalcEntropy();
 };

@@ -41,8 +41,8 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     connect(ui->actionSettings, &QAction::triggered,this, &MainWindow::OpenSettingsMenu);
     connect(ui->actionReset, &QAction::triggered,this, &MainWindow::Retry);
 
-    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulWordsColoursProgress(int)));
-    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulWordsEntropyProgress(int)));
+    connect(game, SIGNAL(precomputeColorsSignal(int)), this, SLOT(updateGenerateUsefulGuessesColoursProgress(int)));
+    connect(game, SIGNAL(calcEntropySignal(int)), this, SLOT(updateGenerateUsefulGuessesEntropyProgress(int)));
 }
 
 // MAINWINDOW DESTRUCTOR
@@ -61,7 +61,7 @@ void MainWindow::Retry()
     // Delete ui elements to allow them to be replaced
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
-    delete ui->usefulWordsScrollArea->widget();
+    delete ui->usefulGuessesScrollArea->widget();
 
     // Setup letter container
     SetupLetterContainer();
@@ -74,7 +74,7 @@ void MainWindow::Retry()
         {
             std::cout<<"has en"<<std::endl;
             game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
-            FillUsefulWordsScrollArea();
+            FillUsefulGuessesScrollArea();
         }
         else{
             CalcEntropies();
@@ -90,14 +90,14 @@ void MainWindow::Retry()
 void MainWindow::Precompute()
 {
     // Delete useful words scroll area
-    delete ui->usefulWordsScrollArea->widget();
+    delete ui->usefulGuessesScrollArea->widget();
 
     // Disable mainwindow so nothing can be changed while loading
     this->setEnabled(false);
 
     // Setup progress dialog
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
-    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
+    connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
     progressDialog->setFixedSize(QSize(200,100));
     progressDialog->show();
 
@@ -118,14 +118,14 @@ void MainWindow::CalcEntropies()
     if (game->getHasPrecomputerColours())
     {
         // Delete useful words scroll area
-        delete ui->usefulWordsScrollArea->widget();
+        delete ui->usefulGuessesScrollArea->widget();
 
         // Disable mainwindow so nothing can be changed while loading
         this->setEnabled(false);
 
         // Setup progress dialog
         progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
-        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulWords()));
+        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
         progressDialog->setFixedSize(QSize(200,100));
         progressDialog->show();
 
@@ -141,21 +141,21 @@ void MainWindow::CalcEntropies()
 }
 
 // UPDATE PROGRESS BAR FOR PRECOMPUTE COLOURS
-void MainWindow::updateGenerateUsefulWordsColoursProgress(int percent)
+void MainWindow::updateGenerateUsefulGuessesColoursProgress(int percent)
 {
     progressDialog->setLabelText("Precomputing colours...");
     progressDialog->setValue(percent);
 }
 
 // UPDATE PROGRESS BAR FOR CALCULATING ENTROPY
-void MainWindow::updateGenerateUsefulWordsEntropyProgress(int percent)
+void MainWindow::updateGenerateUsefulGuessesEntropyProgress(int percent)
 {
     progressDialog->setLabelText("Calculating entropy...");
     progressDialog->setValue(percent);
 }
 
 // CANCEL ENTROPY CALCULATIONS
-void MainWindow::CancelGenerateUsefulWords()
+void MainWindow::CancelGenerateUsefulGuesses()
 {
     std::cout << "### Cancelled ###" << std::endl;
     game->cancelCalculations();
@@ -172,7 +172,7 @@ void MainWindow::finishedPrecompute()
     if (!game->getCancel())
     {
         game->setInitialEntropies();
-        FillUsefulWordsScrollArea();
+        FillUsefulGuessesScrollArea();
     }
     // Close progress dialog
     progressDialog->close();
@@ -189,7 +189,7 @@ void MainWindow::finishedCalcEntropy()
     // If entropy wasn't cancelled fill useful words scroll area
     if (!game->getCancel())
     {
-        FillUsefulWordsScrollArea();
+        FillUsefulGuessesScrollArea();
     }
     // Close progress dialog
     progressDialog->close();
@@ -291,14 +291,14 @@ void MainWindow::FillValidAnswersScrollArea()
 }
 
 
-// INITIAL SETUP OF USEFUL WORDS SCROLL AREA
-void MainWindow::FillUsefulWordsScrollArea()
+// INITIAL SETUP OF USEFUL Guesses SCROLL AREA
+void MainWindow::FillUsefulGuessesScrollArea()
 {
-    // Remove current useful words
-    delete ui->usefulWordsScrollArea->widget();
+    // Remove current useful guesses
+    delete ui->usefulGuessesScrollArea->widget();
 
     // Create layout and widget
-    auto *innerWidget = new QWidget(ui->usefulWordsScrollArea);
+    auto *innerWidget = new QWidget(ui->usefulGuessesScrollArea);
     auto *scrollLayout = new QGridLayout(innerWidget);
 
     // Align intems contained in layout in the centre (vertically & horizontally)
@@ -309,7 +309,7 @@ void MainWindow::FillUsefulWordsScrollArea()
     // Set layout of inner widget
     innerWidget->setLayout(scrollLayout);
     // Fill valid words scroll area with inner widget
-    ui->usefulWordsScrollArea->setWidget(innerWidget);
+    ui->usefulGuessesScrollArea->setWidget(innerWidget);
 
     int row = 0;
     int col = 0;
@@ -335,7 +335,7 @@ void MainWindow::FillUsefulWordsScrollArea()
         // Break from the loop when max words is reached
         // This is because the words are sorted by most useful and the ones towards the end are not useful
         // It will also save on loading times
-        if (i > maxUsefulWords)
+        if (i > maxUsefulGuesses)
             break;
     }
 }
