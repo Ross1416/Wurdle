@@ -19,9 +19,6 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     ui->centralwidget->setContentsMargins(0,0,0,0);
     ui->wurdleTitleLabel->setContentsMargins(0,0,0,0);
 
-    // Letter container geometry
-    letterContainerWidth = 5;
-    letterContainerHeight = stoi(settingsFile->get("NoOfGuesses"));
 
     // Setup game
     game->setAnswerList(settingsFile->get("AnswerList"));
@@ -36,7 +33,7 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     Translate();
 
     // Setup letter container
-    SetupLetterContainer(letterContainerWidth,letterContainerHeight);
+    SetupLetterContainer();
 
     // Compute colours and entropy in another thread
     Precompute();
@@ -70,7 +67,7 @@ void MainWindow::Retry()
     delete ui->usefulWordsScrollArea->widget();
 
     // Setup letter container
-    SetupLetterContainer(letterContainerWidth,letterContainerHeight);
+    SetupLetterContainer();
 
 
     if (game->getHasPrecomputerColours())
@@ -88,14 +85,6 @@ void MainWindow::Retry()
         Precompute();
     }
 
-}
-
-// UPDATE UI ELEMENTS
-void MainWindow::Update()
-{
-
-
-//    SetupvalidAnswersScrollArea();
 }
 
 // PRECOMPUTE COLOURS AND ENTROPY ASYNCHRONOUSLY
@@ -364,11 +353,32 @@ void MainWindow::FillUsefulWordsScrollArea()
 }
 
 // INITIAL SETUP OF LETTERCONTAINER
-void MainWindow::SetupLetterContainer(int w, int h)
+void MainWindow::SetupLetterContainer()
 {
+    // Letter container geometry
+    int width = std::stoi(settingsFile->get("NoOfCharacters"));
+    int height = stoi(settingsFile->get("NoOfGuesses"));
+
+    if (height >= 2 && height <= 10)
+        letterContainerHeight = height;
+    else
+    {
+        letterContainerHeight = 5;
+        settingsFile->CreateSettingsFile();
+    }
+
+    if (width >= 2 && width <= 10)
+        letterContainerWidth = width;
+    else
+    {
+        letterContainerWidth = 5;
+        settingsFile->CreateSettingsFile();
+    }
+
     // Create new letter container
-//    delete letterContainer;
-    letterContainer = new LettersContainer(w, h, ui->containerWidget);
+
+
+    letterContainer = new LettersContainer(letterContainerWidth, letterContainerHeight, ui->containerWidget);
 
     // Create box layout
     QHBoxLayout *boxlayout = new QHBoxLayout(ui->containerWidget);
@@ -498,13 +508,12 @@ void MainWindow::GetSettings()
     // Precompute colours and entropies
     Precompute();
 
-    // Update lettercontainerheight
-    letterContainerHeight = std::stoi(settingsFile->get("NoOfGuesses"));
-
-    delete letterContainer;
+    // Update lettercontainer geometry
+    // Letter container geometry
+//    delete letterContainer;
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
-    SetupLetterContainer(letterContainerWidth,letterContainerHeight);
+    SetupLetterContainer();
 
     // Translate UI
     Translate();

@@ -62,16 +62,13 @@ public:
     void FillUsefulWordsScrollArea();
 
     // SETUP LETTER CONTAINER
-    void SetupLetterContainer(int, int);
+    void SetupLetterContainer();
 
     // ENTERED WORD
     void CheckWord();
 
     // OVERRIDE QT KEY PRESS EVENT FUNCTION
     void keyPressEvent(QKeyEvent *event);
-
-    // UPDATE
-    void Update();
 
     // GAME
     void GameWon();
