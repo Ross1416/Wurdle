@@ -1,12 +1,12 @@
 #ifndef GuessWord_H
 #define GuessWord_H
 
-#include "word.h"
+#include "Word.h"
 #include "answerWord.h"
 #include <vector>
 #include <stdint.h>
 
-class guessWord : public word {
+class guessWord : public Word {
 protected:
 	float entropy;
 	std::vector<uint8_t> colourVector;

@@ -137,7 +137,7 @@
 			}
 		}
 
-		for (int i = 0; i < numChars; i++) {
+        for (int i = 0; i < numChars; i++) {
 			guessColour = vector.getColourVector(i);
 			//If the colour of the guess character is YELLOW, then loop through to see if the possAnswerWord matches
             if (guessColour == 2) {
@@ -150,14 +150,14 @@
 						break;
 					}
 				}
-				if (found == false) {
+                if (!found) {
 					return false;
 				}
 			}
 			//If the colour of the guess character is GREY, then loop through to make sure that the answer doesn't contain that letter
             else if (guessColour == 1) {
 				for (int j = 0; j < numChars; j++) {
-					if ((vector.getContent()[i] == getContent()[j]) && !(countedVector[j])) {
+                    if ((getContent()[j]) == vector.getContent()[i] && !(countedVector[j])) {
 						/*
 						std::cout << "----------------------------------------------------\n";
 						std::cout << getContent() << " Problem letter: " << iter->getContent()[i] << std::endl;

@@ -3,15 +3,15 @@
 
 #include <string>
 
-class word {
+class Word {
 protected:
 	std::string content;
 	int numCharacters;
 public:
     //Destructor and Constructors
-	~word();
-	word();
-    word(const std::string c);
+    ~Word();
+    Word();
+    Word(const std::string c);
 	//Getters and Setters
     int getNumCharacters() const;
     std::string getContent();

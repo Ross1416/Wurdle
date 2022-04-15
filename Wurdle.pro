@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Word.cpp \
     answerWord.cpp \
     entropy.cpp \
     functions.cpp \
@@ -21,10 +22,10 @@ SOURCES += \
     possAnswerWord.cpp \
     possGuessWord.cpp \
     settingsfilehandler.cpp \
-    settingsmenu.cpp \
-    word.cpp
+    settingsmenu.cpp
 
 HEADERS += \
+    Word.h \
     answerWord.h \
     entropy.h \
     functions.h \
@@ -36,8 +37,7 @@ HEADERS += \
     possAnswerWord.h \
     possGuessWord.h \
     settingsfilehandler.h \
-    settingsmenu.h \
-    word.h
+    settingsmenu.h
 
 FORMS += \
     mainwindow.ui \
