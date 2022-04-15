@@ -3,12 +3,12 @@
 
 
 
-#include "word.h"
+#include "Word.h"
 #include "guessWord.h"
 #include <vector>
 #include <string>
 
-class possAnswerWord : public word {
+class possAnswerWord : public Word {
 protected:
 	bool isValid;
 	std::vector<bool> checkedVector;

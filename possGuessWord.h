@@ -1,7 +1,7 @@
 #ifndef PossGuessWord_H
 #define PossGuessWord_H
 
-#include "word.h"
+#include "Word.h"
 #include <list>
 #include <vector>
 #include <fstream>
@@ -10,7 +10,7 @@
 //#include "functions.h"
 #include <math.h>
 
-class possGuessWord : public word {
+class possGuessWord : public Word {
 protected:
 	float entropy;
     float initialEntropy; //Stores the entropy for the first guess

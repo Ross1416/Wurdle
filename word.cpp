@@ -1,21 +1,21 @@
-#include "word.h"
+#include "Word.h"
 
 //Destructor and Constructor
-word::~word() {}
+Word::~Word() {}
 
-word::word() {
+Word::Word() {
 	content = "";
 }
 
-word::word(const std::string c) {
+Word::Word(const std::string c) {
 	content = c;
 }
 
 //Getters and Setters
-std::string word::getContent() { return content; }
+std::string Word::getContent() { return content; }
 
-int word::getNumCharacters() const { return numCharacters; }
+int Word::getNumCharacters() const { return numCharacters; }
 
-void word::setContent(const std::string c) { content = c; }
+void Word::setContent(const std::string c) { content = c; }
 
-void word::setNumCharacters(const int n) { numCharacters = n; }
+void Word::setNumCharacters(const int n) { numCharacters = n; }

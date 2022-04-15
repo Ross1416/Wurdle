@@ -1,10 +1,10 @@
 #ifndef AnswerWord_H
 #define AnswerWord_H
 
-#include "word.h"
+#include "Word.h"
 #include <vector>
 
-class answerWord : public word {
+class answerWord : public Word {
 protected:
 	std::vector<bool> checkedVector;
 public:
