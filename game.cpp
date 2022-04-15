@@ -113,7 +113,9 @@ int Game::readUnprocAnswers() {
             if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
                 continue;
             }
-            possAnswerWord* x = new possAnswerWord(line, true, numCharacters);
+            //possAnswerWord* x = new possAnswerWord(line, true, numCharacters);
+            std::unique_ptr<possAnswerWord> x(new possAnswerWord(line, true, numCharacters));
+
             possAnswerVector.push_back(*x);
             i++;
         }
@@ -139,9 +141,10 @@ int Game::readUnprocGuesses() {
             if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
                 continue;
             }
-            possGuessWord* x = new possGuessWord(line, 0, false, numCharacters);
+            //possGuessWord* x = new possGuessWord(line, 0, false, numCharacters);
+            std::unique_ptr<possGuessWord> x(new possGuessWord(line, 0, false, numCharacters));
             possGuessVector.push_back(*x);
-            std::cout<<x<<std::endl;
+            //std::cout<<x<<std::endl;
             i++;
         }
         guessListLoaded = true;
