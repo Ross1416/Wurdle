@@ -45,7 +45,6 @@ private:
 
     // Progress/threading variables
     QProgressDialog* progressDialog;
-    QTimer* progressTimer;
     QFutureWatcher<void> watcher;
 
     // Settings

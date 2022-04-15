@@ -128,6 +128,8 @@ void MainWindow::Precompute()
     this->setEnabled(false);
 
     // Setup progress dialog
+    if (progressDialog)
+        delete progressDialog;
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
     connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
     progressDialog->setFixedSize(QSize(200,100));
@@ -156,6 +158,10 @@ void MainWindow::CalcEntropies()
         this->setEnabled(false);
 
         // Setup progress dialog
+        if (progressDialog)
+            delete progressDialog;
+
+
         progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
         connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
         progressDialog->setFixedSize(QSize(200,100));

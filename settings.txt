@@ -1,3 +1,0 @@
-AnswerList:answerList.txt
-GuessList:guessList.txt
-NoOfGuesses:6
