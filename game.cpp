@@ -240,11 +240,7 @@ void Game::calcEntropies() {
 
         entropyVector.clear();
         //Find the total number of each distinct colour vector in the possGuessWord's column
-        //We can put the first value into the entropyVector because we know that it won't match any values in the entropyVector
-        std::unique_ptr<entropy> x(new entropy(preprocColours[i][0], 1));
-        entropyVector.push_back(*x);
-
-        for (unsigned int j = 1; j < possAnswerVector.size() && !cancel; j++) {
+        for (unsigned int j = 0; j < possAnswerVector.size() && !cancel; j++) {
 
             if (!possAnswerVector[j].getValid()) {
                 count++;
