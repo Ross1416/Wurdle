@@ -91,6 +91,8 @@ void MainWindow::Retry()
     game->randomAnswer();
 
     // Delete ui elements to allow them to be replaced
+    if (letterContainer)
+        delete letterContainer;
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
     delete ui->usefulGuessesScrollArea->widget();
@@ -101,10 +103,10 @@ void MainWindow::Retry()
 
     if (game->getHasPrecomputerColours())
     {
-        std::cout<<"has pre"<<std::endl;
+//        std::cout<<"has pre"<<std::endl;
         if (game->getHasInitialEntropy())
         {
-            std::cout<<"has en"<<std::endl;
+//            std::cout<<"has en"<<std::endl;
             game->resetToInitialEntropies(); //Entropies are reset, but not recalculated
             FillUsefulGuessesScrollArea();
         }
@@ -128,8 +130,8 @@ void MainWindow::Precompute()
     this->setEnabled(false);
 
     // Setup progress dialog
-    if (progressDialog)
-        delete progressDialog;
+//    if (progressDialog)
+//        delete progressDialog;
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
     connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
     progressDialog->setFixedSize(QSize(200,100));
@@ -158,14 +160,14 @@ void MainWindow::CalcEntropies()
         this->setEnabled(false);
 
         // Setup progress dialog
-        if (progressDialog)
-            delete progressDialog;
+//        if (progressDialog)
+//            delete progressDialog;
 
 
-        progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
-        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
-        progressDialog->setFixedSize(QSize(200,100));
-        progressDialog->show();
+//        progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
+//        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
+//        progressDialog->setFixedSize(QSize(200,100));
+//        progressDialog->show();
 
         // Disconnect from finished calc entropy slot
         disconnect(&watcher, SIGNAL(finished()), this, SLOT(finishedPrecompute()));
@@ -513,16 +515,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::OpenSettingsMenu()
 {
     // Create settings menu and connect signal and slot
-    settingsMenu *settings = new settingsMenu(settingsFile, this);
-    connect(settings, SIGNAL(ok_signal()), this, SLOT(GetSettings()));
-    connect(settings, SIGNAL(cancel_signal()), this, SLOT(CancelSettings()));
-    connect(settings, SIGNAL(quit_signal()), this, SLOT(QuitSettings()));
-    settings->exec(); // this function is blocking and so the mainwindow will not be accessible when this is open (as desired)
+    settingsMenu settings(settingsFile, this);
+    connect(&settings, SIGNAL(ok_signal()), this, SLOT(GetSettings()));
+    connect(&settings, SIGNAL(cancel_signal()), this, SLOT(CancelSettings()));
+    connect(&settings, SIGNAL(quit_signal()), this, SLOT(QuitSettings()));
+    settings.exec(); // this function is blocking and so the mainwindow will not be accessible when this is open (as desired)
 }
 
 // CALLED WHEN SETTINGS OK BTN IS PRESSED
 void MainWindow::GetSettings()
 {
+    if (letterContainer)
+        delete letterContainer;
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
 

@@ -69,7 +69,6 @@ void settingsMenu::cancel()
 
 void settingsMenu::closeEvent(QCloseEvent *event)
 {
-    this->close();
     emit quit_signal();
 
 }
