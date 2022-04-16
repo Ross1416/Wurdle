@@ -56,14 +56,14 @@ void possGuessWord::setInitialEntropy (const float e) { initialEntropy = e; }
 
 void possGuessWord::addEntropy(const float a) { entropy += a; }
 
-float possGuessWord::calcEntropy(const int possAnswers, const int arg2, const int validAnswers) const {
+float possGuessWord::calcEntropy(const int possAnswers, const int totalPossAnswers, const int validAnswers) const {
 	if (validAnswers == 0) {
 		return 0;
 	}
 	float pAnswers = float(possAnswers);
 	float vAnswers = float(validAnswers);
-	float a2 = float(arg2); 
-	return (1/pAnswers)*log2(a2/vAnswers);
+    float tPAnswers = float(totalPossAnswers);
+    return (1/pAnswers)*log2(tPAnswers/vAnswers);
 }
 
 void possGuessWord::setGuessed(bool g) { guessed = g; }

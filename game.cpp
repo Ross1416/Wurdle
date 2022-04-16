@@ -375,7 +375,7 @@ void Game::randomAnswer() {
             currentAnswer.setContent(possAnswerVector[randomIndex].getContent());
             currentAnswer.setNumCharacters(numCharacters);
             answerIndex = randomIndex;
-            std::cout << "Current Answer is: " << currentAnswer.getContent() << std::endl;
+            //std::cout << "Current Answer is: " << currentAnswer.getContent() << std::endl;
         }
     }
     catch (unsigned int tPA){
