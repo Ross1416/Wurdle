@@ -76,7 +76,7 @@ void MainWindow::LoadWordLists()
             Translate();
 
             // Setup letter container
-            SetupLetterContainer();
+            SetupLettersContainer();
 
             // Compute colours and entropy in another thread
             Precompute();
@@ -92,14 +92,14 @@ void MainWindow::Retry()
     game->randomAnswer();
 
     // Delete ui elements to allow them to be replaced
-    if (letterContainer)
-        delete letterContainer;
+    if (lettersContainer)
+        delete lettersContainer;
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
     delete ui->usefulGuessesScrollArea->widget();
 
     // Setup letter container
-    SetupLetterContainer();
+    SetupLettersContainer();
 
 
     if (game->getHasPrecomputerColours())
@@ -393,33 +393,33 @@ void MainWindow::FillUsefulGuessesScrollArea()
     }
 }
 
-// INITIAL SETUP OF LETTERCONTAINER
-void MainWindow::SetupLetterContainer()
+// INITIAL SETUP OF LETTERSCONTAINER
+void MainWindow::SetupLettersContainer()
 {
     // Letter container geometry
     int width = std::stoi(settingsFile->get("NoOfCharacters"));
     int height = stoi(settingsFile->get("NoOfGuesses"));
 
     if (height >= 2 && height <= 10)
-        letterContainerHeight = height;
+        lettersContainerHeight = height;
     else
     {
-        letterContainerHeight = 5;
+        lettersContainerHeight = 5;
         settingsFile->CreateSettingsFile();
     }
 
     if (width >= 2 && width <= 10)
-        letterContainerWidth = width;
+        lettersContainerWidth = width;
     else
     {
-        letterContainerWidth = 5;
+        lettersContainerWidth = 5;
         settingsFile->CreateSettingsFile();
     }
 
     // Create new letter container
 
 
-    letterContainer = new LettersContainer(letterContainerWidth, letterContainerHeight, ui->containerWidget);
+    lettersContainer = new LettersContainer(lettersContainerWidth, lettersContainerHeight, ui->containerWidget);
 
     // Create box layout
     QHBoxLayout *boxlayout = new QHBoxLayout(ui->containerWidget);
@@ -429,34 +429,34 @@ void MainWindow::SetupLetterContainer()
 
     // Align contents centrally and add letter container to layout
     boxlayout->setAlignment(Qt::AlignCenter);
-    boxlayout->addWidget(letterContainer);
+    boxlayout->addWidget(lettersContainer);
 
-    // Set initial style of lettercontainer
-    letterContainer->highlightCurrentLetter();
-    letterContainer->updateLetterStyles();
+    // Set initial style of lettersContainer
+    lettersContainer->highlightCurrentLetter();
+    lettersContainer->updateLetterStyles();
 }
 
 // CALLED WHEN WORD IS ENTERED
 void MainWindow::CheckWord()
 {
     // Check if the word entered is in the guess list
-    if (game->isValidGuess(letterContainer->getCurrentWord())) {
+    if (game->isValidGuess(lettersContainer->getCurrentWord())) {
         std::cout << "Valid!" << std::endl;
 
         // Get the colour vector of the current guess when compared to the current answer
         std::vector<uint8_t> colourVector = game->getGuessedVector()[game->getTotalGuesses()-1].getColourVector();
 
         // Update the current row with the colour vector
-        letterContainer->UpdateCurrentColours(colourVector);
+        lettersContainer->UpdateCurrentColours(colourVector);
 
         // If the guess is the answer => game won
-        if (game->isCorrectGuess(letterContainer->getCurrentWord()))
+        if (game->isCorrectGuess(lettersContainer->getCurrentWord()))
         {
             GameWon();
         }
         else{
             // If the user has not guessed the word in the no of guesses limit => game lost
-            if (letterContainer->getSelectedRow() >= letterContainerHeight-1)
+            if (lettersContainer->getSelectedRow() >= lettersContainerHeight-1)
             {
                 GameLost();
             }
@@ -466,7 +466,7 @@ void MainWindow::CheckWord()
                 game->setValidAnswers();
                 FillValidAnswersScrollArea();
                 CalcEntropies();
-                letterContainer->incrementSelectedRow();
+                lettersContainer->incrementSelectedRow();
             }
 
         }
@@ -474,7 +474,7 @@ void MainWindow::CheckWord()
     // If guess is invalid alert user by flashing the current row red
     else {
         std::cout << "Invalid!" << std::endl;
-        letterContainer->invalidGuess();
+        lettersContainer->invalidGuess();
     }
 }
 
@@ -484,16 +484,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     // If back space is pressed => remove letter and decrement selected letter
     if (event->key() == Qt::Key_Backspace)
     {
-        if (letterContainer->getCurrentLetterText() == ' ')
+        if (lettersContainer->getCurrentLetterText() == ' ')
         {
-            letterContainer->unhighlightCurrentLetter();
-            letterContainer->decrementSelectedColumn();
-            letterContainer->highlightCurrentLetter();
-            letterContainer->setCurrentLetterText(' ');
+            lettersContainer->unhighlightCurrentLetter();
+            lettersContainer->decrementSelectedColumn();
+            lettersContainer->highlightCurrentLetter();
+            lettersContainer->setCurrentLetterText(' ');
         }
         else
         {
-            letterContainer->setCurrentLetterText(' ');
+            lettersContainer->setCurrentLetterText(' ');
         }
 
     }
@@ -512,15 +512,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
             // Set current letter widget text to pressed letter key
             // increment selected column and highlighted widget
-            letterContainer->setCurrentLetterText(key);
-            letterContainer->unhighlightCurrentLetter();
-            letterContainer->incrementSelectedColumn();
-            letterContainer->highlightCurrentLetter();
+            lettersContainer->setCurrentLetterText(key);
+            lettersContainer->unhighlightCurrentLetter();
+            lettersContainer->incrementSelectedColumn();
+            lettersContainer->highlightCurrentLetter();
         }
 
     }
-    // Update stylesheets of all widgets in lettercontainer
-    letterContainer->updateLetterStyles();
+    // Update stylesheets of all widgets in lettersContainer
+    lettersContainer->updateLetterStyles();
 }
 
 
@@ -538,8 +538,8 @@ void MainWindow::OpenSettingsMenu()
 // CALLED WHEN SETTINGS OK BTN IS PRESSED
 void MainWindow::GetSettings()
 {
-    if (letterContainer)
-        delete letterContainer;
+    if (lettersContainer)
+        delete lettersContainer;
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
 

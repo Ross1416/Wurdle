@@ -33,10 +33,10 @@ private:
     Ui::MainWindow *ui;
     Game *game;
 
-    // Lettercontainer variables
-    LettersContainer *letterContainer;
-    int letterContainerWidth;
-    int letterContainerHeight;
+    // lettersContainer variables
+    LettersContainer *lettersContainer;
+    int lettersContainerWidth;
+    int lettersContainerHeight;
     // Max useful words to display
     unsigned int maxUsefulGuesses = 100;
 
@@ -61,7 +61,7 @@ public:
     void FillUsefulGuessesScrollArea();
 
     // SETUP LETTER CONTAINER
-    void SetupLetterContainer();
+    void SetupLettersContainer();
 
     // ENTERED WORD
     void CheckWord();
