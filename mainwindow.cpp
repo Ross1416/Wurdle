@@ -13,6 +13,7 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     // Assign game and settings file to member variables
     this->game = currentGamePtr;
     this->settingsFile = settings_file;
+    this->progressDialog = nullptr;
 
     // Setup UI
     ui->setupUi(this);
@@ -130,8 +131,14 @@ void MainWindow::Precompute()
     this->setEnabled(false);
 
     // Setup progress dialog
-//    if (progressDialog)
-//        delete progressDialog;
+    if (progressDialog)
+    {
+        std::cout<<"exists => deleting"<<std::endl;
+        delete progressDialog;
+    }
+    else
+        std::cout<<"not exists"<<std::endl;
+
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
     connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
     progressDialog->setFixedSize(QSize(200,100));
@@ -162,12 +169,18 @@ void MainWindow::CalcEntropies()
         // Setup progress dialog
 //        if (progressDialog)
 //            delete progressDialog;
+        if (progressDialog)
+        {
+            std::cout<<"exists => deleting"<<std::endl;
+            delete progressDialog;
+        }
+        else
+            std::cout<<"not exists"<<std::endl;
 
-
-//        progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
-//        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
-//        progressDialog->setFixedSize(QSize(200,100));
-//        progressDialog->show();
+        progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
+        connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
+        progressDialog->setFixedSize(QSize(200,100));
+        progressDialog->show();
 
         // Disconnect from finished calc entropy slot
         disconnect(&watcher, SIGNAL(finished()), this, SLOT(finishedPrecompute()));
@@ -545,7 +558,7 @@ void MainWindow::GetSettings()
 
 }
 
-void MainWindow::CancelSettings()
+void MainWindow::   CancelSettings()
 {
     if (!game->getAnswerListLoaded())
     {

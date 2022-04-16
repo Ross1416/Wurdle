@@ -191,13 +191,13 @@ void LettersContainer::invalidGuessReset()
     for (int i=0; i<width;i++)
     {
         letters[this->selectedRow][i]->setColour("white");
-        letters[this->selectedRow][i]->setLetter(' ');
+//        letters[this->selectedRow][i]->setLetter(' ');
         letters[this->selectedRow][i]->updateStyle();
     }
-    this->unhighlightCurrentLetter();
-    this->setSelectedColumn(0);
-    this->highlightCurrentLetter();
-    this->updateLetterStyles();
+//    this->unhighlightCurrentLetter();
+//    this->setSelectedColumn(0);
+//    this->highlightCurrentLetter();
+//    this->updateLetterStyles();
 }
 
 // UPDATE THE LETTERWIDGETS BACKGROUND COLOURS IN SELECTED ROW
