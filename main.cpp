@@ -14,14 +14,13 @@ int main(int argc, char *argv[])
     settingsFile.read();
 
     // Initialise QT application
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
     // Initialise MainWindow
-    MainWindow w(&currentGame, &settingsFile);
+    MainWindow window(&currentGame, &settingsFile);
 
-
-    w.show();
-    return a.exec();
+    window.show();
+    return app.exec();
 }
 
 
