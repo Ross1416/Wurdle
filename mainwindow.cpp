@@ -24,6 +24,7 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
     game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
+    game->setMaxGuesses(stoi(settingsFile->get("NoOfGuesses")));
 
 
     // Try open word list text files, if error get user to browse for them
@@ -133,11 +134,11 @@ void MainWindow::Precompute()
     // Setup progress dialog
     if (progressDialog)
     {
-        std::cout<<"exists => deleting"<<std::endl;
+//        std::cout<<"exists => deleting"<<std::endl;
         delete progressDialog;
     }
-    else
-        std::cout<<"not exists"<<std::endl;
+//    else
+//        std::cout<<"not exists"<<std::endl;
 
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
     connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
@@ -547,6 +548,7 @@ void MainWindow::GetSettings()
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
     game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
+    game->setMaxGuesses(stoi(settingsFile->get("NoOfGuesses")));
 
     LoadWordLists();
 //    game->readUnprocAnswers();
@@ -606,7 +608,7 @@ void MainWindow::QuitSettings()
             OpenSettingsMenu();
             break;
         case QMessageBox::Close:
-            msgBox.close();
+//            msgBox.close();
             qApp->quit();
             break;
         }

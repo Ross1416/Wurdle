@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
 
     // Initialise MainWindow
     MainWindow w(&currentGame, &settingsFile);
+
+
     w.show();
     return a.exec();
 }
