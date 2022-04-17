@@ -110,7 +110,8 @@ int Game::readUnprocAnswers() {
     std::ifstream answerInFile(answerList);
     if (answerInFile.is_open()) {
         for (std::string line; getline(answerInFile, line);) {
-            if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
+            //If the line is empty or the number of characters are invalid then the line is skipped
+            if ((line.size() == 0) || (line.length() != numCharacters)) {
                 continue;
             }
             //possAnswerWord* x = new possAnswerWord(line, true, numCharacters);
@@ -121,8 +122,9 @@ int Game::readUnprocAnswers() {
         }
         answerListLoaded = true;
     }
-    else
+    else {
         error = 1;
+    }
     answerInFile.close();
     totalPossAnswers = i;
     return error;
@@ -138,7 +140,8 @@ int Game::readUnprocGuesses() {
     if (guessInFile.is_open()) {
 //        std::cout<<"open"<<std::endl;
         for (std::string line; getline(guessInFile, line);) {
-            if ((line.size() == 0) || (line.length() != numCharacters)) { //If the line is empty or the number of characters are invalid then the line is skipped
+            //If the line is empty or the number of characters are invalid then the line is skipped
+            if ((line.size() == 0) || (line.length() != numCharacters)) {
                 continue;
             }
             //possGuessWord* x = new possGuessWord(line, 0, false, numCharacters);
@@ -149,8 +152,9 @@ int Game::readUnprocGuesses() {
         }
         guessListLoaded = true;
     }
-    else
+    else {
         error = 1;
+    }
     guessInFile.close();
     totalPossGuesses = i;
     return error;
@@ -186,14 +190,15 @@ void Game::precomputeColours() {
     initial = true;
 
     preprocColours.clear(); //Clear the preprocColours vector
-    preprocColours.resize(possGuessVector.size(), std::vector<std::vector<uint8_t>>(possAnswerVector.size(), std::vector<uint8_t>(numCharacters))); //Resizes the preprocColours vector to the correct size
+    //Resizes the preprocColours vector to the correct size
+    preprocColours.resize(possGuessVector.size(), std::vector<std::vector<uint8_t>>(possAnswerVector.size(), std::vector<uint8_t>(numCharacters)));
     unsigned long long count = 0;
     unsigned int lastEmission = 0;
     unsigned long long divisor = (possGuessVector.size()*possAnswerVector.size());
     unsigned int emissionRate = 0.01*divisor;
 
-
-    for (unsigned int i = 0; i < possGuessVector.size() && !cancel ; i++) { //Assigns the precomputed colour vectors for each cell in the lookup table
+    //Assigns the precomputed colour vectors for each cell in the lookup table
+    for (unsigned int i = 0; i < possGuessVector.size() && !cancel ; i++) {
         for (unsigned int j = 0; j < possAnswerVector.size() && !cancel; j++) {
             possGuessVector[i].determineColourVector(possAnswerVector[j]);
             preprocColours[i][j] = possGuessVector[i].getColourVector();
@@ -201,7 +206,8 @@ void Game::precomputeColours() {
             // EMIT PERCENT SIGNAL EVERY 1%
             if (count > lastEmission + emissionRate)
             {
-                float percent = (int)(((float)count/divisor)*100)+1; // plus one so that it goes to 100%
+                // plus one so that it goes to 100%
+                float percent = (int)(((float)count/divisor)*100)+1;
 //                std::cout<<percent<<std::endl;
                 emit precomputeColorsSignal(percent);
                 lastEmission = count;

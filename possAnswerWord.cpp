@@ -52,7 +52,8 @@
 		setValid(answerCheckValid(iter));
 	}
 	//List Version
-	bool possAnswerWord::answerCheckValid(guessWord* iter) { //Returns if possAnswer is valid or not (ONLY based on the current guess, passed it)
+    bool possAnswerWord::answerCheckValid(guessWord* iter) {
+        //Returns if possAnswer is valid or not (ONLY based on the current guess, passed it)
         if (!isValid) {
             return false;
         }
@@ -81,7 +82,8 @@
             if (guessColour == 2) {
 				bool found = false;
 				for (int j = 0; j < numChars; j++) {
-					//If a match is no found at any position APART from the position of the yellow in the guess AND the character hasn't already been counted, then false is returned
+                    //If a match is no found at any position APART
+                    //from the position of the yellow in the guess AND the character hasn't already been counted, then false is returned
 					if ((getContent()[j] == iter->getContent()[i]) && (i != j) && !(countedVector[j])) {
 						found = true;
 						countedVector[j] = true;
@@ -143,7 +145,8 @@
             if (guessColour == 2) {
 				bool found = false;
 				for (int j = 0; j < numChars; j++) {
-					//If a match is no found at any position APART from the position of the yellow in the guess AND the character hasn't already been counted, then false is returned
+                    //If a match is no found at any position APART from the position of the
+                    //yellow in the guess AND the character hasn't already been counted, then false is returned
 					if ((getContent()[j] == vector.getContent()[i]) && (i != j) && !(countedVector[j])) {
 						found = true;
 						countedVector[j] = true;
