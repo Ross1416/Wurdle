@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
                             // of characters 5 and the default max guesses 6
 
     // Initialise settings file
-    SettingsFileHandler settingsFile = SettingsFileHandler("settings.txt");
+    SettingsFileHandler settingsFile("settings.txt");
     settingsFile.read();
 
     // Initialise QT application
