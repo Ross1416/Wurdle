@@ -560,7 +560,7 @@ void MainWindow::GetSettings()
 
 }
 
-void MainWindow::   CancelSettings()
+void MainWindow::CancelSettings()
 {
     if (!game->getAnswerListLoaded())
     {
@@ -609,7 +609,7 @@ void MainWindow::QuitSettings()
             break;
         case QMessageBox::Close:
 //            msgBox.close();
-            qApp->quit();
+            qApp->exit();
             break;
         }
     }
@@ -629,8 +629,8 @@ void MainWindow::QuitSettings()
                 OpenSettingsMenu();
                 break;
             case QMessageBox::Close:
-                msgBox.close();
-                qApp->quit();
+//                msgBox.close();
+                qApp->exit();
                 break;
             }
         }
@@ -651,8 +651,7 @@ void MainWindow::QuitSettings()
                     Precompute();
                     break;
                 case QMessageBox::Close:
-                    msgBox.close();
-                    qApp->quit();
+                    qApp->exit();
                     break;
                 }
             }
