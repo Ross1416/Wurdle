@@ -1,3 +1,8 @@
+// mainwindow.h
+// Author: Ross Inglis
+// Last modified: 18/04/22
+
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

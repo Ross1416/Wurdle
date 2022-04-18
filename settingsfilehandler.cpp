@@ -1,3 +1,7 @@
+// settings.cpp
+// Author: Ross Inglis
+// Last modified: 18/04/22
+
 #include "settingsfilehandler.h"
 
 #include<iostream>
@@ -23,8 +27,8 @@ void SettingsFileHandler::CreateSettingsFile()
 {
     std::ofstream file;
     file.open(path);
-    file << "AnswerList:" << QDir().absolutePath().toStdString() + "/WordLists/" + "answerList.txt" << std::endl;
-    file << "GuessList:" << QDir().absolutePath().toStdString() + "/WordLists/" + "guessList.txt" << std::endl;
+    file << "AnswerList:" << QDir().absolutePath().toStdString() + "/WordLists/" + "answerList-5-eng.txt" << std::endl;
+    file << "GuessList:" << QDir().absolutePath().toStdString() + "/WordLists/" + "guessList-5-eng.txt" << std::endl;
     file << "Language:English" << std::endl;
     file << "NoOfGuesses:6" << std::endl;
     file << "NoOfCharacters:5" << std::endl;

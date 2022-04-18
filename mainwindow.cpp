@@ -99,8 +99,9 @@ void MainWindow::Retry()
     game->reset();
     game->randomAnswer();
 
-    // Used for testing
-    game->setAnswer(50);
+    // Used for testing ONLY
+//    game->setAnswer(200);
+//    std::cout<<"current answer is: "<<game->getCurrentAnswer().getContent()<<std::endl;
 
 
     // Delete ui elements to allow them to be replaced

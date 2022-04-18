@@ -1,3 +1,7 @@
+// game.cpp
+// Author: Angus Mulligan
+// Last modified: 18/04/22
+
 #include "game.h"
 
 Game::~Game() {}
@@ -392,7 +396,7 @@ void Game::randomAnswer() {
             currentAnswer.setContent(possAnswerVector[randomIndex].getContent());
             currentAnswer.setNumCharacters(numCharacters);
             answerIndex = randomIndex;
-            //std::cout << "Current Answer is: " << currentAnswer.getContent() << std::endl;
+            std::cout << "Current Answer is: " << currentAnswer.getContent() << std::endl;
         }
     }
     catch (unsigned int tPA){
