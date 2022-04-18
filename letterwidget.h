@@ -1,3 +1,7 @@
+// mainwindow.cpp
+// Author: Ross Inglis
+// Last modified: 12/04/22
+
 #ifndef LETTERWIDGET_H
 #define LETTERWIDGET_H
 

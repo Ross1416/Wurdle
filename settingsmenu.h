@@ -1,3 +1,7 @@
+// settingsmenu.h
+// Author: Ross Inglis
+// Last modified: 12/04/22
+
 #ifndef SETTINGSMENU_H
 #define SETTINGSMENU_H
 
