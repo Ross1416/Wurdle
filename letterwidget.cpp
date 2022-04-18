@@ -1,3 +1,7 @@
+// letterwidget.cpp
+// Author: Ross Inglis
+// Last modified: 12/04/22
+
 #include "letterwidget.h"
 
 #include<iostream>

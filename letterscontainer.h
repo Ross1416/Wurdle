@@ -1,3 +1,7 @@
+// letterscontainer.h
+// Author: Ross Inglis
+// Last modified: 12/04/22
+
 #ifndef LETTERSCONTAINER_H
 #define LETTERSCONTAINER_H
 
