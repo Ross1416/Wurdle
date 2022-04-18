@@ -152,15 +152,7 @@ void MainWindow::Precompute()
     // Disable mainwindow so nothing can be changed while loading
     this->setEnabled(false);
 
-//    // Setup progress dialog
-//    if (progressDialog)
-//    {
-////        std::cout<<"exists => deleting"<<std::endl;
-//        delete progressDialog;
-//    }
-//    else
-//        std::cout<<"not exists"<<std::endl;
-
+    // Setup progress dialog
     try{
         delete progressDialog;
     }
@@ -197,24 +189,14 @@ void MainWindow::CalcEntropies()
         this->setEnabled(false);
 
         // Setup progress dialog
-//        if (progressDialog)
-//            delete progressDialog;
-//        if (progressDialog)
-//        {
-////            std::cout<<"exists => deleting"<<std::endl;
-//            delete progressDialog;
-//        }
-//        else
-//            std::cout<<"not exists"<<std::endl;
 
-    try{
-        delete progressDialog;
-    }
-    catch(...)
-    {
-        std::cout<<"Couldn't delete progressDialog."<<std::endl;
-    }
-
+        try{
+            delete progressDialog;
+        }
+        catch(...)
+        {
+            std::cout<<"Couldn't delete progressDialog."<<std::endl;
+        }
 
         progressDialog = new QProgressDialog(tr("Calculating entropies..."), tr("Abort"), 0, 100, this);
         connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
