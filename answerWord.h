@@ -1,3 +1,6 @@
+// answerWord.h
+// Author: Angus Mulligan
+// Last modified: 05/04/22
 #ifndef AnswerWord_H
 #define AnswerWord_H
 

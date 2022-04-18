@@ -1,3 +1,6 @@
+// possAnswerWord.cpp
+// Author: Angus Mulligan
+// Last modified: 12/04/22
 #include "possAnswerWord.h"
 #include "possGuessWord.h"
 #include <iostream>

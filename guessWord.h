@@ -1,3 +1,6 @@
+// guessWord.h
+// Author: Angus Mulligan
+// Last modified: 10/04/22
 #ifndef GuessWord_H
 #define GuessWord_H
 

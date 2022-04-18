@@ -1,3 +1,6 @@
+// game.cpp
+// Author: Angus Mulligan
+// Last modified: 18/04/22
 #include "answerWord.h"
 
     //Constructors and destructor

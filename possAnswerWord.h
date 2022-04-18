@@ -1,3 +1,6 @@
+// possAnswerWord.h
+// Author: Angus Mulligan
+// Last modified: 12/04/22
 #ifndef PossAnswerWord_H
 #define PossAnswerWord_H
 

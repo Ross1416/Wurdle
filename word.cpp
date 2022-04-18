@@ -1,3 +1,6 @@
+// Word.cpp
+// Author: Angus Mulligan
+// Last modified: 28/03/22
 #include "Word.h"
 
 //Destructor and Constructor

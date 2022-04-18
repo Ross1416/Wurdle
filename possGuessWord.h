@@ -1,3 +1,6 @@
+// possGuessWord.h
+// Author: Angus Mulligan
+// Last modified: 12/04/22
 #ifndef PossGuessWord_H
 #define PossGuessWord_H
 

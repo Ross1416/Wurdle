@@ -1,3 +1,6 @@
+// game.h
+// Author: Angus Mulligan
+// Last modified: 18/04/22
 #ifndef GAME_H
 #define GAME_H
 

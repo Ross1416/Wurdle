@@ -1,3 +1,6 @@
+// Word.h
+// Author: Angus Mulligan
+// Last modified: 28/03/22
 #ifndef Word_H
 #define Word_H
 

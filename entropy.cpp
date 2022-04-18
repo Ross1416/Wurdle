@@ -1,3 +1,6 @@
+// entropy.cp
+// Author: Angus Mulligan
+// Last modified: 05/04/22
 #include "entropy.h"
 
 //Constructors and destructors

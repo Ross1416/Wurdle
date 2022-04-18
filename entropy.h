@@ -1,3 +1,6 @@
+// entropy.h
+// Author: Angus Mulligan
+// Last modified: 05/04/22
 #ifndef Entropy_H
 #define Entropy_H
 

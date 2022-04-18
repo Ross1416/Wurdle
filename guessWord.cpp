@@ -1,3 +1,6 @@
+// guessWord.cpp
+// Author: Angus Mulligan
+// Last modified: 10/04/22
 #include "guessWord.h"
 
     //Constructors and destructor
