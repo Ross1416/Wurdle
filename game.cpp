@@ -403,6 +403,27 @@ void Game::randomAnswer() {
     }
 }
 
+void Game::setAnswer(const unsigned int i) {
+    //Allows an answer to be set by inputting an integer of where it is in the vector
+    try {
+        if ((i > totalPossAnswers) || (i < 0)) {
+            //If the input index is not a valid value of the possAnswerVector then throw error
+            throw(i);
+        } else {
+            //Sets current answer
+            currentAnswer.setContent(possAnswerVector[i].getContent());
+            currentAnswer.setNumCharacters(numCharacters);
+            answerIndex = i;
+        }
+    }
+    catch (unsigned int i){
+        std::cout << "Error: Index of answer is too large!" << std::endl;
+    }
+    catch (...) {
+        std::cout << "Standard Error!" << std::endl;
+    }
+}
+
 void Game::reset() {
     guessedVector.clear();
     for (unsigned int i = 0; i < possGuessVector.size(); i++) {

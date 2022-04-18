@@ -97,6 +97,8 @@ public:
 
     void randomAnswer(); //Determines a random answer
 
+    void setAnswer(const unsigned int i); //Allows an answer to be set by inputting an integer of where it is in the vector
+
     void reset(); //Resets all relevant aspects of the game when called, doesn't reset the lists, colourVectors or entropies
 
     void setValidAnswers(); //Iterates through the possAnswerVector and determines which answers are still valid based on the current game conditions
