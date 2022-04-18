@@ -1,3 +1,7 @@
+// mainwindow.cpp
+// Author: Ross Inglis
+// Last modified: 18/04/22
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "settingsmenu.h"
@@ -424,27 +428,27 @@ void MainWindow::FillUsefulGuessesScrollArea()
 void MainWindow::SetupLettersContainer()
 {
     // Letter container geometry
-//    int width = std::stoi(settingsFile->get("NoOfCharacters"));
-//    int height = stoi(settingsFile->get("NoOfGuesses"));
+    int width = std::stoi(settingsFile->get("NoOfCharacters"));
+    int height = stoi(settingsFile->get("NoOfGuesses"));
 
-    lettersContainerWidth = std::stoi(settingsFile->get("NoOfCharacters"));
-    lettersContainerHeight = stoi(settingsFile->get("NoOfGuesses"));
+//    lettersContainerWidth = std::stoi(settingsFile->get("NoOfCharacters"));
+//    lettersContainerHeight = stoi(settingsFile->get("NoOfGuesses"));
 
-//    if (height >= 2 && height <= 10)
-//        lettersContainerHeight = height;
-//    else
-//    {
-//        lettersContainerHeight = 5;
-//        settingsFile->CreateSettingsFile();
-//    }
+    if (height >= 2 && height <= 10)
+        lettersContainerHeight = height;
+    else
+    {
+        lettersContainerHeight = 5;
+        settingsFile->CreateSettingsFile();
+    }
 
-//    if (width >= 2 && width <= 10)
-//        lettersContainerWidth = width;
-//    else
-//    {
-//        lettersContainerWidth = 5;
-//        settingsFile->CreateSettingsFile();
-//    }
+    if (width >= 2 && width <= 10)
+        lettersContainerWidth = width;
+    else
+    {
+        lettersContainerWidth = 5;
+        settingsFile->CreateSettingsFile();
+    }
 
     // Create new letter container
     lettersContainer = new LettersContainer(lettersContainerWidth, lettersContainerHeight, ui->containerWidget);
