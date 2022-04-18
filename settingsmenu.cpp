@@ -57,10 +57,10 @@ void settingsMenu::ok()
     settingsFile->set("NoOfGuesses", std::to_string(ui->noGuessesSpinBox->value()));
     settingsFile->set("Language", ui->languageComboBox->currentText().toStdString());
     settingsFile->set("NoOfCharacters", std::to_string(ui->noCharactersSpinBox->value()));
-
     settingsFile->write();
 
     emit ok_signal();
+
 }
 
 void settingsMenu::cancel()
@@ -70,6 +70,7 @@ void settingsMenu::cancel()
 
 void settingsMenu::closeEvent(QCloseEvent *event)
 {
+
     event->accept();
     this->close();
     emit quit_signal();
