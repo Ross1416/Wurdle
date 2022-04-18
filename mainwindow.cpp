@@ -434,6 +434,12 @@ void MainWindow::SetupLettersContainer()
 //    lettersContainerWidth = std::stoi(settingsFile->get("NoOfCharacters"));
 //    lettersContainerHeight = stoi(settingsFile->get("NoOfGuesses"));
 
+
+    // Ensure the letter contiainer widths and height from the settings file
+    // isn't less than 2 or larger than 10
+    // if they are, recreate the settings file with default values
+    // this saves a massive letter container from being created if the settings
+    // file is manually edited
     if (height >= 2 && height <= 10)
         lettersContainerHeight = height;
     else
