@@ -47,6 +47,8 @@ private:
     QProgressDialog* progressDialog;
     QFutureWatcher<void> watcher;
 
+    bool letterContainerLoaded;
+
     // Settings
     SettingsFileHandler* settingsFile;
 

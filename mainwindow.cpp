@@ -14,6 +14,7 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     this->game = currentGamePtr;
     this->settingsFile = settings_file;
     this->progressDialog = nullptr;
+    this->letterContainerLoaded = false;
 
     // Setup UI
     ui->setupUi(this);
@@ -93,8 +94,18 @@ void MainWindow::Retry()
     game->randomAnswer();
 
     // Delete ui elements to allow them to be replaced
-    if (lettersContainer)
-        delete lettersContainer;
+//    if (lettersContainer)
+//        delete lettersContainer;
+
+    try{
+        if (lettersContainer)
+            delete lettersContainer;
+    }
+    catch(...)
+    {
+        std::cout<<"Couldn't delete letterscontainer."<<std::endl;
+    }
+
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
     delete ui->usefulGuessesScrollArea->widget();
@@ -397,6 +408,18 @@ void MainWindow::FillUsefulGuessesScrollArea()
 // INITIAL SETUP OF LETTERSCONTAINER
 void MainWindow::SetupLettersContainer()
 {
+//    if (letterContainerLoaded)
+//        delete lettersContainer;
+
+//    try{
+//        if (lettersContainer)
+//            delete lettersContainer;
+//    }
+//    catch(...)
+//    {
+//        std::cout<<"Couldn't delete letterscontainer."<<std::endl;
+//    }
+
     // Letter container geometry
 //    int width = std::stoi(settingsFile->get("NoOfCharacters"));
 //    int height = stoi(settingsFile->get("NoOfGuesses"));
@@ -436,6 +459,8 @@ void MainWindow::SetupLettersContainer()
     // Set initial style of lettersContainer
     lettersContainer->highlightCurrentLetter();
     lettersContainer->updateLetterStyles();
+
+    letterContainerLoaded = true;
 }
 
 // CALLED WHEN WORD IS ENTERED
@@ -542,8 +567,20 @@ void MainWindow::GetSettings()
 {
 //    if (lettersContainer)
 //        delete lettersContainer;
+
+    try{
+        delete lettersContainer;
+    }
+    catch(...)
+    {
+        std::cout<<"Couldn't delete letterscontainer."<<std::endl;
+    }
+
+
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
+
+//    SetupLettersContainer();
 
     // Update game word lists
     game->setAnswerList(settingsFile->get("AnswerList"));
