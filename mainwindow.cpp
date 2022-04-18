@@ -19,6 +19,7 @@ MainWindow::MainWindow(Game* currentGamePtr, SettingsFileHandler* settings_file,
     this->settingsFile = settings_file;
     this->progressDialog = nullptr;
     this->letterContainerLoaded = false;
+    this->lettersContainer = nullptr;
 
     // Setup UI
     ui->setupUi(this);
@@ -75,6 +76,7 @@ void MainWindow::LoadWordLists()
             msgBox.setText(tr("Error opening word list(s).\n Please browse for them."));
             msgBox.exec();
             OpenSettingsMenu();
+
         }
         else
         {
@@ -578,17 +580,18 @@ void MainWindow::OpenSettingsMenu()
 // CALLED WHEN SETTINGS OK BTN IS PRESSED
 void MainWindow::GetSettings()
 {
+//    std::cout<<settingsFile->get("AnswerList")<<std::endl;
 //    if (lettersContainer)
 //        delete lettersContainer;
 
     try{
         delete lettersContainer;
+
     }
     catch(...)
     {
         std::cout<<"Couldn't delete letterscontainer."<<std::endl;
     }
-
 
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
@@ -596,6 +599,7 @@ void MainWindow::GetSettings()
 //    SetupLettersContainer();
 
     // Update game word lists
+
     game->setAnswerList(settingsFile->get("AnswerList"));
     game->setGuessList(settingsFile->get("GuessList"));
     game->setNumCharacters(stoi(settingsFile->get("NoOfCharacters")));
