@@ -401,6 +401,9 @@ void MainWindow::SetupLettersContainer()
 //    int width = std::stoi(settingsFile->get("NoOfCharacters"));
 //    int height = stoi(settingsFile->get("NoOfGuesses"));
 
+    lettersContainerWidth = std::stoi(settingsFile->get("NoOfCharacters"));
+    lettersContainerHeight = stoi(settingsFile->get("NoOfGuesses"));
+
 //    if (height >= 2 && height <= 10)
 //        lettersContainerHeight = height;
 //    else
