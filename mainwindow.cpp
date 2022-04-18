@@ -98,8 +98,7 @@ void MainWindow::Retry()
 //        delete lettersContainer;
 
     try{
-        if (lettersContainer)
-            delete lettersContainer;
+        delete lettersContainer;
     }
     catch(...)
     {
@@ -151,6 +150,14 @@ void MainWindow::Precompute()
 //    else
 //        std::cout<<"not exists"<<std::endl;
 
+    try{
+        delete progressDialog;
+    }
+    catch(...)
+    {
+        std::cout<<"Couldn't delete progressDialog."<<std::endl;
+    }
+
     progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
     connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
     progressDialog->setFixedSize(QSize(200,100));
@@ -188,6 +195,15 @@ void MainWindow::CalcEntropies()
 //        }
 //        else
 //            std::cout<<"not exists"<<std::endl;
+
+    try{
+        delete progressDialog;
+    }
+    catch(...)
+    {
+        std::cout<<"Couldn't delete progressDialog."<<std::endl;
+    }
+
 
         progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
         connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
@@ -408,18 +424,6 @@ void MainWindow::FillUsefulGuessesScrollArea()
 // INITIAL SETUP OF LETTERSCONTAINER
 void MainWindow::SetupLettersContainer()
 {
-//    if (letterContainerLoaded)
-//        delete lettersContainer;
-
-//    try{
-//        if (lettersContainer)
-//            delete lettersContainer;
-//    }
-//    catch(...)
-//    {
-//        std::cout<<"Couldn't delete letterscontainer."<<std::endl;
-//    }
-
     // Letter container geometry
 //    int width = std::stoi(settingsFile->get("NoOfCharacters"));
 //    int height = stoi(settingsFile->get("NoOfGuesses"));
