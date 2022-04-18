@@ -93,6 +93,14 @@ void Game::setTotalGuesses(const unsigned int i) {
     totalGuesses = i;
 }
 
+unsigned int Game::getTotalAnswers() const {
+    return totalPossAnswers;
+}
+
+void Game::setTotalAnswers(const unsigned int i) {
+    totalPossAnswers = i;
+}
+
 answerWord Game::getCurrentAnswer() const {
     return currentAnswer;
 }
@@ -127,6 +135,7 @@ int Game::readUnprocAnswers() {
     }
     answerInFile.close();
     totalPossAnswers = i;
+    //std::cout << "Number of answers: " << totalPossAnswers << std::endl;
     return error;
 }
 
@@ -157,6 +166,7 @@ int Game::readUnprocGuesses() {
     }
     guessInFile.close();
     totalPossGuesses = i;
+    //std::cout << "Number of guesses: " << totalPossGuesses << std::endl;
     return error;
 }
 
@@ -372,6 +382,7 @@ unsigned int Game::getAnswerIndex() {
 void Game::randomAnswer() {
     //Program will crash if totalPossAnswers is < 1; therefore error handling is used
     try {
+        //std::cout << "Total poss answers: " << totalPossAnswers << std::endl;
         if (totalPossAnswers < 1) {
             throw(totalPossAnswers);
         } else {
@@ -406,8 +417,8 @@ void Game::reset() {
     possGuessIndex = 0;
     totalGuesses = 0;
 
-    totalPossGuesses = possGuessVector.size() + 1;
-    totalPossAnswers = possAnswerVector.size() + 1;
+    totalPossGuesses = possGuessVector.size();
+    totalPossAnswers = possAnswerVector.size();
 }
 
 void Game::setValidAnswers() {

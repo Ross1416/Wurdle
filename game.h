@@ -74,6 +74,8 @@ public:
     unsigned int getAnswerIndex();
     unsigned int getTotalGuesses() const;
     void setTotalGuesses(const unsigned int i);
+    unsigned int getTotalAnswers() const;
+    void setTotalAnswers(const unsigned int i);
     answerWord getCurrentAnswer() const;
     void setCurrentAnswer(const std::string s, const unsigned int n);
 
