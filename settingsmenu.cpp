@@ -25,6 +25,7 @@ settingsMenu::settingsMenu(SettingsFileHandler* settings, QWidget *parent) :
     connect(ui->answerListBrowseBtn, &QPushButton::clicked, this, &settingsMenu::browseForAnswerList);
     connect(ui->guessListBrowseBtn, &QPushButton::clicked, this, &settingsMenu::browseForGuessList);
     connect(ui->dialogBtnBox, &QDialogButtonBox::accepted, this, &settingsMenu::ok);
+    connect(ui->dialogBtnBox, &QDialogButtonBox::rejected, this, &settingsMenu::cancel);
 }
 
 // DESTRUCTOR
@@ -70,6 +71,7 @@ void settingsMenu::cancel()
 void settingsMenu::closeEvent(QCloseEvent *event)
 {
     event->accept();
+    this->close();
     emit quit_signal();
 
 }
