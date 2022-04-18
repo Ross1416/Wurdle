@@ -43,8 +43,8 @@ void settingsMenu::Setup()
     ui->noCharactersSpinBox->setValue(stoi(settingsFile->get("NoOfCharacters")));
 
     // LANGUAGES
-    ui->languageComboBox->addItem(tr("English"));
-    ui->languageComboBox->addItem(tr("French"));
+    ui->languageComboBox->addItem("English");
+    ui->languageComboBox->addItem("French");
     ui->languageComboBox->setCurrentText(QString::fromStdString(settingsFile->get("Language")));
 }
 

@@ -158,7 +158,7 @@ void MainWindow::Precompute()
         std::cout<<"Couldn't delete progressDialog."<<std::endl;
     }
 
-    progressDialog = new QProgressDialog("Precomputing colours...", "Abort", 0, 100,this);
+    progressDialog = new QProgressDialog(tr("Precomputing colours..."), tr("Abort"), 0, 100,this);
     connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
     progressDialog->setFixedSize(QSize(200,100));
     progressDialog->show();
@@ -205,7 +205,7 @@ void MainWindow::CalcEntropies()
     }
 
 
-        progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
+        progressDialog = new QProgressDialog(tr("Calculating entropies..."), tr("Abort"), 0, 100, this);
         connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
         progressDialog->setFixedSize(QSize(200,100));
         progressDialog->show();
@@ -224,14 +224,14 @@ void MainWindow::CalcEntropies()
 // UPDATE PROGRESS BAR FOR PRECOMPUTE COLOURS
 void MainWindow::updateGenerateUsefulGuessesColoursProgress(int percent)
 {
-    progressDialog->setLabelText("Precomputing colours...");
+    progressDialog->setLabelText(tr("Precomputing colours..."));
     progressDialog->setValue(percent);
 }
 
 // UPDATE PROGRESS BAR FOR CALCULATING ENTROPY
 void MainWindow::updateGenerateUsefulGuessesEntropyProgress(int percent)
 {
-    progressDialog->setLabelText("Calculating entropy...");
+    progressDialog->setLabelText(tr("Calculating entropies..."));
     progressDialog->setValue(percent);
 }
 
@@ -304,9 +304,8 @@ void MainWindow::GameLost()
 {
     // Create message box
     QMessageBox msgBox;
-    msgBox.setText(tr("You lost!"));
-    std::string text = "The correct word was " + game->getCurrentAnswer().getContent();
-    msgBox.setInformativeText(QString::fromStdString(text));
+    msgBox.setText(tr("You lost!\nThe correct word was: "));
+    msgBox.setInformativeText(QString::fromStdString(game->getCurrentAnswer().getContent()));
     msgBox.setStandardButtons(QMessageBox::Retry | QMessageBox::Close);
     int btn = msgBox.exec();
 
@@ -710,12 +709,10 @@ void MainWindow::Translate()
     // Load the correct translator depending on selected language
     if (language == "English")
     {
-//        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_en.qm");
         result = translator.load(":/lang_en.qm");
     }
     else if (language == "French")
     {
-//        t.load("C:/Users/ringl/Desktop/Uni Classes/Y2S2/EE273/Project/Wurdle-QT/Wurdle/lang_fr.qm");
         result = translator.load(":/lang_fr.qm");
     }
 
