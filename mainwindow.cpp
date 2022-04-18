@@ -99,17 +99,8 @@ void MainWindow::Retry()
     game->reset();
     game->randomAnswer();
 
-    // ##### Used for testing #####
-
-    std::cout<<"Enter desired answer integer: ";
-    std::string input;
-    std::cin >> input;
-    game->setAnswer(stoi(input));
-
-    std::cout<<"Your chosen answer is: " << game->getCurrentAnswer().getContent()<<std::endl;
-
-    // #### End of testing #####
-
+    // Used for testing
+    game->setAnswer(50);
 
 
     // Delete ui elements to allow them to be replaced
