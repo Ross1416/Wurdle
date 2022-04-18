@@ -131,12 +131,12 @@ void MainWindow::Precompute()
     // Disable mainwindow so nothing can be changed while loading
     this->setEnabled(false);
 
-    // Setup progress dialog
-    if (progressDialog)
-    {
-//        std::cout<<"exists => deleting"<<std::endl;
-        delete progressDialog;
-    }
+//    // Setup progress dialog
+//    if (progressDialog)
+//    {
+////        std::cout<<"exists => deleting"<<std::endl;
+//        delete progressDialog;
+//    }
 //    else
 //        std::cout<<"not exists"<<std::endl;
 
@@ -170,11 +170,11 @@ void MainWindow::CalcEntropies()
         // Setup progress dialog
 //        if (progressDialog)
 //            delete progressDialog;
-        if (progressDialog)
-        {
-//            std::cout<<"exists => deleting"<<std::endl;
-            delete progressDialog;
-        }
+//        if (progressDialog)
+//        {
+////            std::cout<<"exists => deleting"<<std::endl;
+//            delete progressDialog;
+//        }
 //        else
 //            std::cout<<"not exists"<<std::endl;
 
