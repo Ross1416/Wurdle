@@ -172,11 +172,11 @@ void MainWindow::CalcEntropies()
 //            delete progressDialog;
         if (progressDialog)
         {
-            std::cout<<"exists => deleting"<<std::endl;
+//            std::cout<<"exists => deleting"<<std::endl;
             delete progressDialog;
         }
-        else
-            std::cout<<"not exists"<<std::endl;
+//        else
+//            std::cout<<"not exists"<<std::endl;
 
         progressDialog = new QProgressDialog("Calculating entropies...", "Abort", 0, 100, this);
         connect(progressDialog, SIGNAL(canceled()), this, SLOT(CancelGenerateUsefulGuesses()));
@@ -540,8 +540,8 @@ void MainWindow::OpenSettingsMenu()
 // CALLED WHEN SETTINGS OK BTN IS PRESSED
 void MainWindow::GetSettings()
 {
-    if (lettersContainer)
-        delete lettersContainer;
+//    if (lettersContainer)
+//        delete lettersContainer;
     delete ui->containerWidget->layout();
     delete ui->validAnswersScrollArea->widget();
 
