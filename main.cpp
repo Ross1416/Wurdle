@@ -1,7 +1,6 @@
-// mainwindow.cpp
+// main.cpp
 // Author: Angus Mulligan & Ross Inglis
 // Last modified: 17/04/22
-
 
 #include <QApplication>
 

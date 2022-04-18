@@ -1,3 +1,7 @@
+// letterscontainer.cpp
+// Author: Ross Inglis
+// Last modified: 12/04/22
+
 #include "letterscontainer.h"
 
 #include<iostream>

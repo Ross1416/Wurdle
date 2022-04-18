@@ -1,4 +1,4 @@
-// mainwindow.cpp
+// letterwidget.h
 // Author: Ross Inglis
 // Last modified: 12/04/22
 
